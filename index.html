@@ -3,166 +3,402 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Your Name</title>
+  <title>Changjian Liu</title>
+  <meta name="description" content="Changjian Liu | Academic Homepage" />
   <style>
+    :root {
+      --bg: #f5f7fb;
+      --card: #ffffff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --line: #e5e7eb;
+      --accent: #2563eb;
+      --accent-soft: #eff6ff;
+      --sidebar: #0f172a;
+      --sidebar-text: #e5e7eb;
+    }
+
+    * { box-sizing: border-box; }
+
     body {
       margin: 0;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
-      background: #f7f8fa;
-      color: #222;
-      line-height: 1.7;
+      background: linear-gradient(180deg, #f8fafc 0%, #f3f4f6 100%);
+      color: var(--text);
+      line-height: 1.72;
     }
-    .container {
-      max-width: 980px;
-      margin: 40px auto;
-      background: white;
-      border-radius: 18px;
-      box-shadow: 0 8px 30px rgba(0,0,0,0.08);
-      overflow: hidden;
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    a:hover { text-decoration: underline; }
+
+    .wrap {
+      max-width: 1120px;
+      margin: 32px auto;
+      padding: 0 16px;
+    }
+
+    .layout {
       display: grid;
-      grid-template-columns: 280px 1fr;
+      grid-template-columns: 300px 1fr;
+      gap: 24px;
+      align-items: start;
     }
+
     .sidebar {
-      background: #1f2937;
-      color: white;
-      padding: 32px 24px;
-      text-align: center;
+      position: sticky;
+      top: 24px;
+      background: linear-gradient(180deg, #111827 0%, #0f172a 100%);
+      color: var(--sidebar-text);
+      border-radius: 22px;
+      padding: 30px 24px;
+      box-shadow: 0 16px 40px rgba(15, 23, 42, 0.16);
     }
+
     .avatar {
       width: 130px;
       height: 130px;
       border-radius: 50%;
-      background: #374151;
-      margin: 0 auto 20px;
+      margin: 0 auto 18px;
+      background: radial-gradient(circle at 30% 30%, #334155, #1e293b);
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 42px;
-      font-weight: bold;
-    }
-    .name {
-      font-size: 28px;
       font-weight: 700;
+      letter-spacing: 1px;
+      color: #fff;
+      overflow: hidden;
+      border: 3px solid rgba(255,255,255,0.14);
+    }
+
+    .avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .name {
+      text-align: center;
+      font-size: 30px;
+      font-weight: 800;
+      line-height: 1.2;
       margin-bottom: 6px;
     }
+
+    .cn-name {
+      text-align: center;
+      font-size: 16px;
+      color: #cbd5e1;
+      margin-bottom: 8px;
+    }
+
     .subtitle {
+      text-align: center;
       font-size: 15px;
-      color: #d1d5db;
+      color: #cbd5e1;
+      margin-bottom: 24px;
+    }
+
+    .contact {
+      display: grid;
+      gap: 10px;
       margin-bottom: 20px;
-    }
-    .sidebar a {
-      color: #93c5fd;
-      text-decoration: none;
-    }
-    .sidebar p {
-      margin: 8px 0;
       font-size: 14px;
     }
+
+    .contact-item {
+      padding: 10px 12px;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.06);
+      word-break: break-word;
+    }
+
+    .contact-item strong {
+      color: #fff;
+      display: inline-block;
+      min-width: 64px;
+    }
+
+    .sidebar-note {
+      margin-top: 18px;
+      padding-top: 18px;
+      border-top: 1px solid rgba(255,255,255,0.12);
+      color: #cbd5e1;
+      font-size: 14px;
+    }
+
     .main {
-      padding: 36px 42px;
+      display: grid;
+      gap: 20px;
     }
-    h1, h2 {
-      margin-top: 0;
-      color: #111827;
+
+    .card {
+      background: var(--card);
+      border: 1px solid rgba(15, 23, 42, 0.05);
+      border-radius: 22px;
+      padding: 28px 30px;
+      box-shadow: 0 14px 34px rgba(15, 23, 42, 0.06);
     }
+
+    h1 {
+      margin: 0 0 10px;
+      font-size: 33px;
+      line-height: 1.2;
+    }
+
     h2 {
-      margin-top: 28px;
-      border-bottom: 2px solid #e5e7eb;
-      padding-bottom: 8px;
-      font-size: 22px;
+      margin: 0 0 14px;
+      font-size: 24px;
+      line-height: 1.25;
     }
-    .news-item, .pub-item, .exp-item {
-      margin-bottom: 14px;
+
+    .intro {
+      font-size: 16px;
+      color: #374151;
     }
-    .pub-title {
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .pill {
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: #1d4ed8;
+      font-size: 13px;
       font-weight: 600;
     }
+
+    .item {
+      padding: 16px 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .item:first-of-type { border-top: none; padding-top: 2px; }
+
+    .item-title {
+      font-size: 17px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .item-meta {
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 6px;
+    }
+
+    .item-desc {
+      font-size: 15px;
+      color: #374151;
+    }
+
     .tag {
       display: inline-block;
-      font-size: 12px;
+      margin-left: 8px;
       padding: 2px 8px;
       border-radius: 999px;
-      background: #e5e7eb;
-      margin-left: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      background: #eef2ff;
+      color: #4338ca;
+      vertical-align: middle;
     }
-    @media (max-width: 800px) {
-      .container {
-        grid-template-columns: 1fr;
-      }
-      .main {
-        padding: 28px 22px;
-      }
+
+    .small-note {
+      color: var(--muted);
+      font-size: 14px;
+      margin-top: 8px;
+    }
+
+    .footer {
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+      padding: 4px 0 18px;
+    }
+
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr; }
+      .sidebar { position: static; }
+    }
+
+    @media (max-width: 640px) {
+      .card { padding: 22px 18px; }
+      .sidebar { padding: 24px 18px; }
+      h1 { font-size: 28px; }
+      h2 { font-size: 22px; }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <aside class="sidebar">
-      <div class="avatar">Y</div>
-      <div class="name">Your Name</div>
-      <div class="subtitle">Master Student / Researcher</div>
+  <div class="wrap">
+    <div class="layout">
+      <aside class="sidebar">
+        <div class="avatar">
+          <!-- If you upload avatar.jpg to the repo, replace the line below with:
+               <img src="avatar.jpg" alt="Changjian Liu" /> -->
+          CL
+        </div>
+        <div class="name">Changjian Liu</div>
+        <div class="cn-name">刘昌健</div>
+        <div class="subtitle">Master Student · Researcher</div>
 
-      <p>Peking University</p>
-      <p>Spatio-temporal Big Data</p>
-      <p>Advertising Algorithms / Causal Inference</p>
+        <div class="contact">
+          <div class="contact-item"><strong>Email</strong> <a href="mailto:cjliu25@stu.pku.edu.cn">cjliu25@stu.pku.edu.cn</a></div>
+          <div class="contact-item"><strong>Scholar</strong> <a href="https://scholar.google.com/citations?user=x3w5EG0AAAAJ&hl=zh-TW" target="_blank" rel="noopener">Google Scholar</a></div>
+          <div class="contact-item"><strong>GitHub</strong> <a href="https://github.com/Whitneylcj" target="_blank" rel="noopener">Whitneylcj</a></div>
+          <div class="contact-item"><strong>Location</strong> Peking University, Beijing</div>
+        </div>
 
-      <p><a href="mailto:your_email@example.com">your_email@example.com</a></p>
-      <p><a href="https://github.com/your_github_username" target="_blank">GitHub</a></p>
-      <p><a href="#" target="_blank">Google Scholar</a></p>
-      <p><a href="#" target="_blank">CV</a></p>
-    </aside>
+        <div class="sidebar-note">
+          Research interests include causal inference, advertising algorithms, uplift modeling, GeoAI, spatial-temporal learning, and robust decision-making under distribution shift.
+        </div>
+      </aside>
 
-    <main class="main">
-      <h1>About Me</h1>
-      <p>
-        I am a master student at Peking University, working on spatio-temporal big data,
-        advertising algorithms, uplift modeling, and causal inference.
-        My recent interests focus on robust decision-making under distribution shift
-        and observational data.
-      </p>
+      <main class="main">
+        <section class="card">
+          <h1>About Me</h1>
+          <div class="intro">
+            I am a master's student at Peking University, majoring in spatio-temporal big data.
+            My research spans spatial intelligence, graph neural networks, causal inference, and advertising algorithms.
+            Recently, I have been working on stable treatment-response learning from non-stationary observational time series, as well as uplift modeling and decision optimization in large-scale industrial systems.
+          </div>
+          <div class="pill-row">
+            <span class="pill">Causal Inference</span>
+            <span class="pill">Advertising Algorithms</span>
+            <span class="pill">Uplift Modeling</span>
+            <span class="pill">GeoAI</span>
+            <span class="pill">Graph Neural Networks</span>
+            <span class="pill">Spatial-Temporal Learning</span>
+          </div>
+        </section>
 
-      <h2>Research Interests</h2>
-      <p>
-        Causal inference, advertising algorithms, uplift modeling, decision intelligence,
-        GeoAI, spatial-temporal learning.
-      </p>
+        <section class="card">
+          <h2>News</h2>
+          <div class="item">
+            <div class="item-desc">[2026.04] Personal academic homepage launched.</div>
+          </div>
+          <div class="item">
+            <div class="item-desc">[2026.04] Working on stable treatment-response learning from non-stationary observational time series for real-world decision systems.</div>
+          </div>
+          <div class="item">
+            <div class="item-desc">[2025-2026] Conducting research and internship projects on advertising algorithms, pricing, uplift modeling, and causal decision-making.</div>
+          </div>
+        </section>
 
-      <h2>News</h2>
-      <div class="news-item">[2026.04] Add your latest news here.</div>
-      <div class="news-item">[2026.03] Add another news item here.</div>
+        <section class="card">
+          <h2>Education</h2>
+          <div class="item">
+            <div class="item-title">Peking University</div>
+            <div class="item-meta">M.S. in Spatio-temporal Big Data · 2025.09 – Present</div>
+          </div>
+          <div class="item">
+            <div class="item-title">China University of Geosciences, Beijing</div>
+            <div class="item-meta">B.Eng. in Computer Science and Technology · 2021.09 – 2025.06</div>
+          </div>
+        </section>
 
-      <h2>Publications</h2>
-      <div class="pub-item">
-        <span class="pub-title">Paper Title 1</span>
-        <span class="tag">Under Review</span><br/>
-        Author A, <strong>Your Name</strong>, Author C<br/>
-        Conference / Journal, 2026
-      </div>
-      <div class="pub-item">
-        <span class="pub-title">Paper Title 2</span><br/>
-        Author A, <strong>Your Name</strong>, Author C<br/>
-        Conference / Journal, 2025
-      </div>
+        <section class="card">
+          <h2>Selected Publications</h2>
+          <div class="item">
+            <div class="item-title">Integrating trajectory data and demographic characteristics: a trajectory semantic model for predicting travel flow and conducting interaction analysis <span class="tag">First Author</span></div>
+            <div class="item-meta">International Journal of Digital Earth</div>
+            <div class="item-desc">Topic: graph neural networks and spatial-temporal forecasting.</div>
+          </div>
+          <div class="item">
+            <div class="item-title">SH2EM: A Meta-Learning Framework for Explainable Spatial Regression via Global Homogeneity and Local Heterogeneity Modeling <span class="tag">Under Review</span></div>
+            <div class="item-meta">First Author</div>
+            <div class="item-desc">Topic: meta-learning, few-shot prediction, and explainable spatial regression.</div>
+          </div>
+          <div class="item">
+            <div class="item-title">VisitFrequency-Diffusion: Leveraging Recurrent Visits for Long-Term Individual Trajectory Forecasting <span class="tag">SIGSPATIAL'25</span></div>
+            <div class="item-meta">Fourth Author · ACM SIGSPATIAL 2025</div>
+            <div class="item-desc">Topic: generative modeling and human trajectory forecasting.</div>
+          </div>
+          <div class="item">
+            <div class="item-title">High precision prediction of time-varying photovoltaic power based on dynamic adjacency matrix and temporal spectral graph convolution network</div>
+            <div class="item-meta">Energy Conversion and Management · Fourth Author</div>
+            <div class="item-desc">Topic: graph neural networks and temporal prediction.</div>
+          </div>
+          <div class="item">
+            <div class="item-title">Recovering Stable Treatment Response from Non-stationary Observational Time Series <span class="tag">In Progress</span></div>
+            <div class="item-meta">NeurIPS submission in preparation</div>
+            <div class="item-desc">An orthogonal approach for estimating product price-response curves from non-RCT and temporally non-stationary observational data.</div>
+          </div>
+          <div class="small-note">You can later add paper links, PDFs, or code repositories under each item.</div>
+        </section>
 
-      <h2>Experience</h2>
-      <div class="exp-item">
-        <strong>Alibaba / Alimama</strong>, Research Intern<br/>
-        2025 - Present
-      </div>
+        <section class="card">
+          <h2>Research Experience</h2>
+          <div class="item">
+            <div class="item-title">Spatial Data and Graph Neural Networks</div>
+            <div class="item-desc">Worked on spatial-temporal forecasting, trajectory modeling, and explainable spatial regression, with publications in top SCI journals and SIGSPATIAL.</div>
+          </div>
+          <div class="item">
+            <div class="item-title">Causal Inference and Decision Modeling</div>
+            <div class="item-desc">Focused on stable treatment-response estimation under non-stationarity, continuous decision problems, and observational causal learning for industrial applications.</div>
+          </div>
+        </section>
 
-      <h2>Education</h2>
-      <div class="exp-item">
-        <strong>Peking University</strong><br/>
-        Master in related field
-      </div>
-      <div class="exp-item">
-        <strong>China University of Geosciences, Beijing</strong><br/>
-        Bachelor
-      </div>
+        <section class="card">
+          <h2>Industry Experience</h2>
+          <div class="item">
+            <div class="item-title">Alibaba Group · Alimama</div>
+            <div class="item-meta">Research Intern · 2025.11 – Present</div>
+            <div class="item-desc">Worked on pricing for managed marketing products and reduced marketing cost by 30% without sacrificing GMV. Also developed a unified uplift model and downstream allocation scheme for advertising and equity interventions.</div>
+          </div>
+          <div class="item">
+            <div class="item-title">DiDi</div>
+            <div class="item-meta">User Subsidy and Strategy Delivery Intern · 2025.06 – 2025.10</div>
+            <div class="item-desc">Built short-term LTV prediction under different coupon-package strategies, modeled treatment effects across discount levels, used multi-task learning and uncertainty modeling, and optimized intervention allocation under budget constraints. An online A/B test improved purchase rate by 6% and ROI by 3%.</div>
+          </div>
+        </section>
 
-      <h2>Service</h2>
-      <p>Reviewer / Teaching assistant / Academic service items can go here.</p>
-    </main>
+        <section class="card">
+          <h2>Honors and Awards</h2>
+          <div class="item">
+            <div class="item-title">National Scholarship for Undergraduate Students</div>
+          </div>
+          <div class="item">
+            <div class="item-title">Xiaomi Scholarship</div>
+          </div>
+          <div class="item">
+            <div class="item-title">Second Prize, China Undergraduate Mathematical Contest in Modeling</div>
+          </div>
+          <div class="item">
+            <div class="item-title">First Prize, China Undergraduate Computer Design Competition</div>
+          </div>
+          <div class="item">
+            <div class="item-title">National-level Innovation and Entrepreneurship Project Leader</div>
+          </div>
+          <div class="item">
+            <div class="item-title">Merit Student, Outstanding Party Member, Outstanding Student Cadre</div>
+          </div>
+          <div class="small-note">So far, I have received 5 national-level awards and 10 provincial or ministerial-level awards.</div>
+        </section>
+
+        <section class="card">
+          <h2>Skills</h2>
+          <div class="item">
+            <div class="item-desc">Programming: C, C++, Python</div>
+          </div>
+          <div class="item">
+            <div class="item-desc">Frameworks and Areas: PyTorch, recommender systems, causal inference, spatial analysis</div>
+          </div>
+        </section>
+      </main>
+    </div>
+    <div class="footer">Last updated: April 2026</div>
   </div>
 </body>
 </html>
