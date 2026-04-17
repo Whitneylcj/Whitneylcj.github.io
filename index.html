@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Your Name</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      background: #f7f8fa;
+      color: #222;
+      line-height: 1.7;
+    }
+    .container {
+      max-width: 980px;
+      margin: 40px auto;
+      background: white;
+      border-radius: 18px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 280px 1fr;
+    }
+    .sidebar {
+      background: #1f2937;
+      color: white;
+      padding: 32px 24px;
+      text-align: center;
+    }
+    .avatar {
+      width: 130px;
+      height: 130px;
+      border-radius: 50%;
+      background: #374151;
+      margin: 0 auto 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 42px;
+      font-weight: bold;
+    }
+    .name {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .subtitle {
+      font-size: 15px;
+      color: #d1d5db;
+      margin-bottom: 20px;
+    }
+    .sidebar a {
+      color: #93c5fd;
+      text-decoration: none;
+    }
+    .sidebar p {
+      margin: 8px 0;
+      font-size: 14px;
+    }
+    .main {
+      padding: 36px 42px;
+    }
+    h1, h2 {
+      margin-top: 0;
+      color: #111827;
+    }
+    h2 {
+      margin-top: 28px;
+      border-bottom: 2px solid #e5e7eb;
+      padding-bottom: 8px;
+      font-size: 22px;
+    }
+    .news-item, .pub-item, .exp-item {
+      margin-bottom: 14px;
+    }
+    .pub-title {
+      font-weight: 600;
+    }
+    .tag {
+      display: inline-block;
+      font-size: 12px;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: #e5e7eb;
+      margin-left: 6px;
+    }
+    @media (max-width: 800px) {
+      .container {
+        grid-template-columns: 1fr;
+      }
+      .main {
+        padding: 28px 22px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <aside class="sidebar">
+      <div class="avatar">Y</div>
+      <div class="name">Your Name</div>
+      <div class="subtitle">Master Student / Researcher</div>
+
+      <p>Peking University</p>
+      <p>Spatio-temporal Big Data</p>
+      <p>Advertising Algorithms / Causal Inference</p>
+
+      <p><a href="mailto:your_email@example.com">your_email@example.com</a></p>
+      <p><a href="https://github.com/your_github_username" target="_blank">GitHub</a></p>
+      <p><a href="#" target="_blank">Google Scholar</a></p>
+      <p><a href="#" target="_blank">CV</a></p>
+    </aside>
+
+    <main class="main">
+      <h1>About Me</h1>
+      <p>
+        I am a master student at Peking University, working on spatio-temporal big data,
+        advertising algorithms, uplift modeling, and causal inference.
+        My recent interests focus on robust decision-making under distribution shift
+        and observational data.
+      </p>
+
+      <h2>Research Interests</h2>
+      <p>
+        Causal inference, advertising algorithms, uplift modeling, decision intelligence,
+        GeoAI, spatial-temporal learning.
+      </p>
+
+      <h2>News</h2>
+      <div class="news-item">[2026.04] Add your latest news here.</div>
+      <div class="news-item">[2026.03] Add another news item here.</div>
+
+      <h2>Publications</h2>
+      <div class="pub-item">
+        <span class="pub-title">Paper Title 1</span>
+        <span class="tag">Under Review</span><br/>
+        Author A, <strong>Your Name</strong>, Author C<br/>
+        Conference / Journal, 2026
+      </div>
+      <div class="pub-item">
+        <span class="pub-title">Paper Title 2</span><br/>
+        Author A, <strong>Your Name</strong>, Author C<br/>
+        Conference / Journal, 2025
+      </div>
+
+      <h2>Experience</h2>
+      <div class="exp-item">
+        <strong>Alibaba / Alimama</strong>, Research Intern<br/>
+        2025 - Present
+      </div>
+
+      <h2>Education</h2>
+      <div class="exp-item">
+        <strong>Peking University</strong><br/>
+        Master in related field
+      </div>
+      <div class="exp-item">
+        <strong>China University of Geosciences, Beijing</strong><br/>
+        Bachelor
+      </div>
+
+      <h2>Service</h2>
+      <p>Reviewer / Teaching assistant / Academic service items can go here.</p>
+    </main>
+  </div>
+</body>
+</html>
