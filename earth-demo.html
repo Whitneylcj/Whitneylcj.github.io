@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Spatial Demo | Changjian Liu</title>
+  <style>
+    :root{--bg:#030712;--fg:#e5eefc;--muted:#9fb0cb;--line:rgba(148,163,184,.18)}
+    *{box-sizing:border-box}
+    body{margin:0;background:radial-gradient(circle at top, rgba(96,165,250,.14), transparent 26%), #020611;color:var(--fg);font-family:Inter,system-ui,-apple-system,sans-serif;overflow:hidden}
+    a{color:inherit;text-decoration:none}
+    #container{position:fixed;inset:0}
+    .hud{position:fixed;inset:20px auto auto 20px;z-index:10;display:flex;flex-direction:column;gap:12px;max-width:min(440px, calc(100vw - 40px))}
+    .panel{padding:16px 18px;border-radius:20px;background:rgba(7,14,27,.62);backdrop-filter:blur(16px);border:1px solid var(--line);box-shadow:0 16px 44px rgba(0,0,0,.35)}
+    .tag{display:inline-flex;padding:6px 10px;border-radius:999px;background:rgba(103,232,249,.10);color:#b9f7ff;font-size:12px;letter-spacing:.05em;text-transform:uppercase}
+    h1{font-size:28px;line-height:1.1;margin:10px 0 10px;font-family:"Space Grotesk", Inter, sans-serif}
+    p{margin:0;color:var(--muted);line-height:1.7}
+    .controls{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+    .btn{display:inline-flex;align-items:center;justify-content:center;padding:10px 14px;border-radius:12px;border:1px solid var(--line);background:rgba(255,255,255,.04);font-weight:600}
+    .btn.primary{background:linear-gradient(135deg,#2563eb,#7c3aed);border:none;color:white}
+    .footer-note{position:fixed;right:20px;bottom:18px;z-index:10;padding:10px 14px;border-radius:14px;background:rgba(7,14,27,.56);backdrop-filter:blur(14px);border:1px solid var(--line);font-size:13px;color:var(--muted)}
+    @media (max-width: 680px){.hud{inset:12px auto auto 12px}.panel{padding:14px}.footer-note{left:12px;right:12px;bottom:12px}}
+  </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="hud">
+    <div class="panel">
+      <span class="tag">Spatial Demo</span>
+      <h1>Interactive Earth Viewer</h1>
+      <p>
+        A lightweight 3D Earth page adds a stronger spatial identity to the homepage. Drag to rotate.
+        You can later extend this into a trajectory-flow demo, OD arcs, or a spatio-temporal research showcase.
+      </p>
+      <div class="controls">
+        <a class="btn primary" href="index.html">Back to Homepage</a>
+        <button class="btn" id="resetBtn">Reset View</button>
+        <button class="btn" id="toggleSpinBtn">Pause Auto-Rotation</button>
+      </div>
+    </div>
+  </div>
+  <div id="container"></div>
+  <div class="footer-note">Drag to rotate · Scroll disabled for a cleaner full-screen experience</div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script>
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    camera.position.z = 2;
+
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    renderer.setPixelRatio(window.devicePixelRatio);
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    document.getElementById('container').appendChild(renderer.domElement);
+
+    const geometry = new THREE.SphereGeometry(1, 64, 64);
+    const textureLoader = new THREE.TextureLoader();
+    const map = textureLoader.load('https://threejs.org/examples/textures/planets/earth_atmos_2048.jpg');
+    const bumpMap = textureLoader.load('https://threejs.org/examples/textures/planets/earth_normal_2048.jpg');
+    const specularMap = textureLoader.load('https://threejs.org/examples/textures/planets/earth_specular_2048.jpg');
+
+    const material = new THREE.MeshPhongMaterial({
+      map,
+      bumpMap,
+      bumpScale: 0.05,
+      specularMap,
+      specular: new THREE.Color(0x333333),
+      shininess: 5,
+    });
+
+    const earth = new THREE.Mesh(geometry, material);
+    scene.add(earth);
+
+    const ambientLight = new THREE.AmbientLight(0x404040, 1.1);
+    scene.add(ambientLight);
+
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 1.4);
+    directionalLight.position.set(2, 1, 3).normalize();
+    scene.add(directionalLight);
+
+    const stars = new THREE.Group();
+    for (let i = 0; i < 900; i++) {
+      const starGeo = new THREE.SphereGeometry(Math.random() * 0.01 + 0.002, 6, 6);
+      const starMat = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: Math.random() * 0.8 + 0.2 });
+      const star = new THREE.Mesh(starGeo, starMat);
+      const radius = 10 + Math.random() * 40;
+      const theta = Math.random() * Math.PI * 2;
+      const phi = Math.acos(2 * Math.random() - 1);
+      star.position.set(
+        radius * Math.sin(phi) * Math.cos(theta),
+        radius * Math.sin(phi) * Math.sin(theta),
+        radius * Math.cos(phi)
+      );
+      stars.add(star);
+    }
+    scene.add(stars);
+
+    let isDragging = false;
+    let autoSpin = true;
+    let previousMousePosition = { x: 0, y: 0 };
+    const initialRotation = { x: 0.25, y: 0.55 };
+    earth.rotation.set(initialRotation.x, initialRotation.y, 0);
+
+    function onMouseDown(event) {
+      isDragging = true;
+      previousMousePosition = { x: event.clientX, y: event.clientY };
+    }
+
+    function onMouseMove(event) {
+      if (!isDragging) return;
+      const deltaX = event.clientX - previousMousePosition.x;
+      const deltaY = event.clientY - previousMousePosition.y;
+      earth.rotation.y += deltaX * 0.01;
+      earth.rotation.x += deltaY * 0.01;
+      previousMousePosition = { x: event.clientX, y: event.clientY };
+    }
+
+    function onMouseUpOrLeave() { isDragging = false; }
+    function onContextMenu(event) { event.preventDefault(); }
+
+    renderer.domElement.addEventListener('mousedown', onMouseDown, false);
+    window.addEventListener('mousemove', onMouseMove, false);
+    window.addEventListener('mouseup', onMouseUpOrLeave, false);
+    window.addEventListener('mouseleave', onMouseUpOrLeave, false);
+    renderer.domElement.addEventListener('contextmenu', onContextMenu, false);
+
+    function onWindowResize() {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    }
+    window.addEventListener('resize', onWindowResize, false);
+
+    document.getElementById('resetBtn').addEventListener('click', () => {
+      earth.rotation.set(initialRotation.x, initialRotation.y, 0);
+    });
+
+    const toggleBtn = document.getElementById('toggleSpinBtn');
+    toggleBtn.addEventListener('click', () => {
+      autoSpin = !autoSpin;
+      toggleBtn.textContent = autoSpin ? 'Pause Auto-Rotation' : 'Resume Auto-Rotation';
+    });
+
+    function animate() {
+      requestAnimationFrame(animate);
+      if (!isDragging && autoSpin) earth.rotation.y += 0.0015;
+      stars.rotation.y += 0.0002;
+      renderer.render(scene, camera);
+    }
+    animate();
+  </script>
+</body>
+</html>
