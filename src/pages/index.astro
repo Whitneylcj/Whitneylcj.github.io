@@ -1,0 +1,262 @@
+---
+import HeroField from "@components/HeroField";
+import SiteLayout from "@layouts/SiteLayout.astro";
+import {
+  experience,
+  honors,
+  infoPanels,
+  profile,
+  publications,
+  researchAreas
+} from "@data/site";
+
+const heroStats = [
+  { label: "Core field", value: "Spatial Intelligence" },
+  { label: "Decision layer", value: "Causal response learning" },
+  { label: "Applied systems", value: "Pricing, uplift, allocation" }
+];
+
+const scholarLink = profile.contacts.find((contact) => contact.label === "Google Scholar");
+const currentYear = new Date().getFullYear();
+---
+
+<SiteLayout>
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a class="brand" href="#top" aria-label="Changjian Liu homepage">
+        <span class="brand-mark">{profile.initials}</span>
+        <span class="brand-text">
+          <strong>{profile.name}</strong>
+          <small>Spatial x Causal x Decision</small>
+        </span>
+      </a>
+      <nav class="site-nav" aria-label="Primary navigation">
+        <a href="#about">About</a>
+        <a href="#research">Research</a>
+        <a href="#publications">Publications</a>
+        <a href="#experience">Experience</a>
+        <a href="/earth-demo/">Spatial Demo</a>
+      </nav>
+      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle color theme" aria-pressed="false">
+        Light
+      </button>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero" aria-labelledby="hero-title">
+      <HeroField client:load />
+      <div class="container hero-content">
+        <p class="section-label">Academic Homepage · Spatial Intelligence</p>
+        <h1 id="hero-title">{profile.name}</h1>
+        <p class="hero-subtitle">Spatial Intelligence / Causal Inference / Decision Systems</p>
+        <p class="hero-summary">{profile.summary}</p>
+        <div class="hero-actions" aria-label="Primary actions">
+          <a class="button button-primary" href="#publications">View Publications</a>
+          <a class="button" href="/earth-demo/">Open Spatial Demo</a>
+        </div>
+        <div class="hero-links" aria-label="Profile links">
+          {
+            profile.contacts.map((contact) => (
+              <a
+                href={contact.href}
+                target={contact.external ? "_blank" : undefined}
+                rel={contact.external ? "noreferrer" : undefined}
+              >
+                {contact.label}
+              </a>
+            ))
+          }
+          <a href="#docs">CV / Docs</a>
+        </div>
+      </div>
+      <div class="container hero-signals" aria-label="Research signals">
+        {
+          heroStats.map((stat) => (
+            <div class="signal">
+              <span>{stat.label}</span>
+              <strong>{stat.value}</strong>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <section class="container section about-section" id="about" aria-labelledby="about-title">
+      <div class="section-heading">
+        <p class="section-label">About</p>
+        <h2 id="about-title">Researcher profile</h2>
+      </div>
+      <div class="about-grid">
+        <div class="about-copy">
+          <p>
+            I am currently pursuing my master's degree in <strong>Spatio-Temporal Big Data</strong> at
+            <strong> Peking University</strong>, after completing my bachelor's degree in
+            <strong> Computer Science and Technology</strong> at
+            <strong> China University of Geosciences, Beijing</strong>.
+          </p>
+          <p>
+            My academic background sits at the intersection of spatial intelligence and modern machine learning.
+            On the application side, I work on industrial decision systems, including pricing, advertising
+            optimization, and causal decision-making.
+          </p>
+        </div>
+        <aside class="profile-panel" aria-label="Profile summary">
+          <div class="avatar-shell">
+            <img
+              src="/avatar.jpg"
+              alt="Changjian Liu avatar"
+              loading="lazy"
+              onerror="this.hidden=true"
+            />
+            <span class="avatar-fallback">{profile.initials}</span>
+          </div>
+          <div>
+            <h3>{profile.title}</h3>
+            <p>{profile.affiliation} · {profile.location}</p>
+            <div class="focus-list">
+              {profile.focus.map((item) => <span>{item}</span>)}
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="container section" id="research" aria-labelledby="research-title">
+      <div class="section-heading section-heading-row">
+        <div>
+          <p class="section-label">Research</p>
+          <h2 id="research-title">Research directions</h2>
+        </div>
+        <p class="section-note">Methods that connect spatial structure, response estimation, and real decisions.</p>
+      </div>
+      <div class="research-grid">
+        {
+          researchAreas.map((area) => (
+            <article class="info-card">
+              <p class="card-kicker">{area.keywords[0]}</p>
+              <h3>{area.title}</h3>
+              <p>{area.summary}</p>
+              <div class="tag-row">
+                {area.keywords.map((keyword) => <span>{keyword}</span>)}
+              </div>
+            </article>
+          ))
+        }
+      </div>
+    </section>
+
+    <section class="container section" id="publications" aria-labelledby="publications-title">
+      <div class="section-heading section-heading-row">
+        <div>
+          <p class="section-label">Publications</p>
+          <h2 id="publications-title">Selected work</h2>
+        </div>
+        {
+          scholarLink && (
+            <a class="text-link" href={scholarLink.href} target="_blank" rel="noreferrer">
+              Full list on Google Scholar
+            </a>
+          )
+        }
+      </div>
+      <div class="publication-list">
+        {
+          publications.map((publication) => (
+            <article class="publication-card">
+              <div class="publication-year">{publication.year}</div>
+              <div class="publication-body">
+                <h3>{publication.title}</h3>
+                <p class="publication-meta">{publication.venue} · {publication.role}</p>
+                <div class="tag-row">
+                  {publication.keywords.map((keyword) => <span>{keyword}</span>)}
+                </div>
+              </div>
+            </article>
+          ))
+        }
+      </div>
+    </section>
+
+    <section class="container section split-section" id="experience" aria-labelledby="experience-title">
+      <div>
+        <div class="section-heading">
+          <p class="section-label">Experience</p>
+          <h2 id="experience-title">Decision systems in practice</h2>
+        </div>
+        <div class="timeline">
+          {
+            experience.map((item) => (
+              <article class="timeline-item">
+                <p class="timeline-date">{item.date}</p>
+                <h3>{item.organization}</h3>
+                <p>{item.summary}</p>
+                <ul>
+                  {item.highlights.map((highlight) => <li>{highlight}</li>)}
+                </ul>
+              </article>
+            ))
+          }
+        </div>
+      </div>
+      <aside class="honors-panel" aria-label="Honors">
+        <p class="section-label">Honors</p>
+        <h2>Recognition</h2>
+        <ul class="honors-list">
+          {honors.map((honor) => <li>{honor.title}</li>)}
+        </ul>
+      </aside>
+    </section>
+
+    <section class="container section demo-section" id="spatial-demo" aria-labelledby="demo-title">
+      <div class="demo-band">
+        <div>
+          <p class="section-label">Interactive Demo</p>
+          <h2 id="demo-title">A spatial showcase ready for richer research demos</h2>
+          <p>
+            The dedicated Earth page is now an Astro route with a React island. It can evolve into trajectory-flow
+            playback, OD arcs, city heatmaps, or a lightweight explanation layer for spatial models.
+          </p>
+        </div>
+        <a class="button button-primary" href="/earth-demo/">Launch Demo</a>
+      </div>
+    </section>
+
+    <section class="container section" id="docs" aria-labelledby="docs-title">
+      <div class="section-heading">
+        <p class="section-label">Docs</p>
+        <h2 id="docs-title">Operational hooks</h2>
+      </div>
+      <div class="docs-grid">
+        {
+          infoPanels.map((panel) => (
+            <article class="info-card">
+              <h3>{panel.title}</h3>
+              <p>{panel.body}</p>
+              {panel.note && <p class="muted">{panel.note}</p>}
+            </article>
+          ))
+        }
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-wrap">
+      <p>© {currentYear} {profile.name}. Built with Astro for GitHub Pages.</p>
+      <div class="footer-links">
+        {
+          profile.contacts.map((contact) => (
+            <a
+              href={contact.href}
+              target={contact.external ? "_blank" : undefined}
+              rel={contact.external ? "noreferrer" : undefined}
+            >
+              {contact.label}
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </footer>
+</SiteLayout>

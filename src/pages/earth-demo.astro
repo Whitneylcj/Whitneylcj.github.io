@@ -1,0 +1,11 @@
+---
+import EarthViewer from "@components/EarthViewer";
+import SiteLayout from "@layouts/SiteLayout.astro";
+---
+
+<SiteLayout
+  title="Spatial Demo | Changjian Liu"
+  description="Interactive Three.js Earth viewer for Changjian Liu's spatial intelligence homepage."
+>
+  <EarthViewer client:only="react" />
+</SiteLayout>
