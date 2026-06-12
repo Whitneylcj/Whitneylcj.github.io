@@ -1,6 +1,6 @@
 # Changjian Liu Personal Website
 
-Astro + React + Three.js homepage for `Whitneylcj.github.io`, with a typed News system and a privacy-preserving visitor heatmap backend.
+Astro + React + Three.js homepage for `Whitneylcj.github.io`, with typed News and Blog systems, a satellite-textured Earth hero, and a privacy-preserving visitor heatmap backend.
 
 ## Commands
 
@@ -19,13 +19,20 @@ npm run worker:deploy
 
 - `src/pages/index.astro` - homepage
 - `src/pages/news/` - News list and detail pages
-- `src/pages/earth-demo.astro` - interactive spatial demo
+- `src/pages/blog/` - Blog list and long-form research note detail pages
+- `src/pages/earth-demo.astro` - legacy compatibility page for the former spatial demo URL
 - `src/data/site.ts` - structured profile, research, publication, experience, and honor data
 - `src/data/visitorStats.ts` - fallback visitor map data and country catalog
 - `src/content/news/` - MDX news entries
+- `src/content/blog/` - MDX blog entries
 - `src/components/` - React islands for canvas and Three.js experiences
+- `public/assets/earth/` - Earth visual assets for the homepage hero
 - `workers/visitor-analytics/` - Cloudflare Workers + D1 visitor analytics API
 - `.github/workflows/deploy.yml` - GitHub Pages deployment workflow
+
+## Assets
+
+The homepage Earth texture uses NASA Blue Marble: Next Generation imagery. Credit: NASA Earth Observatory.
 
 ## Deployment
 

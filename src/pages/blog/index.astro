@@ -1,0 +1,86 @@
+---
+import { getCollection } from "astro:content";
+import SiteLayout from "@layouts/SiteLayout.astro";
+import { profile } from "@data/site";
+
+const blogEntries = (await getCollection("blog"))
+  .filter((entry) => !entry.data.draft)
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+
+const featuredEntry = blogEntries.find((entry) => entry.data.featured) ?? blogEntries[0];
+const secondaryEntries = featuredEntry
+  ? blogEntries.filter((entry) => entry.id !== featuredEntry.id)
+  : blogEntries;
+
+function blogSlug(id: string) {
+  return id.replace(/\.mdx?$/, "");
+}
+
+function formatDate(date: Date) {
+  return new Intl.DateTimeFormat("en", { month: "short", day: "numeric", year: "numeric" }).format(date);
+}
+---
+
+<SiteLayout title={`Blog | ${profile.name}`} description={`Research notes and essays from ${profile.name}.`}>
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a class="brand" href="/" aria-label="Back to homepage">
+        <span class="brand-mark">{profile.initials}</span>
+        <span class="brand-text">
+          <strong>{profile.name}</strong>
+          <small>Research notes</small>
+        </span>
+      </a>
+      <nav class="site-nav" aria-label="Blog navigation">
+        <a href="/#about">About</a>
+        <a href="/#publications">Publications</a>
+        <a href="/news/">News</a>
+        <a href="/blog/">Blog</a>
+      </nav>
+      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle color theme" aria-pressed="true">
+        Dark
+      </button>
+    </div>
+  </header>
+
+  <main class="subpage-main">
+    <section class="container subpage-hero">
+      <p class="section-label">Blog</p>
+      <h1>Research notes</h1>
+      <p>Long-form notes on spatial intelligence, causal inference, response modeling, and decision systems.</p>
+    </section>
+
+    <section class="container section blog-index-section" aria-label="Blog posts">
+      {
+        featuredEntry && (
+          <div class="blog-editorial-grid">
+            <article class="blog-feature-card">
+              <p class="card-kicker">{featuredEntry.data.category}</p>
+              <time datetime={featuredEntry.data.date.toISOString()}>{formatDate(featuredEntry.data.date)}</time>
+              <h2>
+                <a href={`/blog/${blogSlug(featuredEntry.id)}/`}>{featuredEntry.data.title}</a>
+              </h2>
+              <p>{featuredEntry.data.summary}</p>
+              <div class="tag-row">
+                {featuredEntry.data.tags.map((tag) => <span>{tag}</span>)}
+              </div>
+            </article>
+            <div class="blog-compact-list">
+              {secondaryEntries.map((entry) => (
+                <article class="blog-compact-item">
+                  <div>
+                    <p>{entry.data.category}</p>
+                    <h3>
+                      <a href={`/blog/${blogSlug(entry.id)}/`}>{entry.data.title}</a>
+                    </h3>
+                  </div>
+                  <time datetime={entry.data.date.toISOString()}>{formatDate(entry.data.date)}</time>
+                </article>
+              ))}
+            </div>
+          </div>
+        )
+      }
+    </section>
+  </main>
+</SiteLayout>

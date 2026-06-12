@@ -147,14 +147,14 @@ export default function VisitorWorldMap({ fallback, apiBase }: Props) {
           {countryFeatures.map((country) => {
             const numericCode = String(country.id ?? "").padStart(3, "0");
             const visits = visitsByNumericCode.get(numericCode) ?? 0;
-            const intensity = visits > 0 ? Math.max(0.16, Math.log1p(visits) / Math.log1p(maxVisits)) : 0;
-            const fill = visits > 0 ? `rgba(8, 124, 118, ${0.18 + intensity * 0.74})` : undefined;
+            const intensity = visits > 0 ? Math.max(0.24, Math.log1p(visits) / Math.log1p(maxVisits)) : 0;
+            const fill = visits > 0 ? `rgba(8, 124, 118, ${0.26 + intensity * 0.72})` : undefined;
             return (
               <path
                 key={numericCode}
                 d={path(country) ?? undefined}
                 className="map-country"
-                fill={fill}
+                style={fill ? { fill } : undefined}
               >
                 <title>{visits > 0 ? `${visits.toLocaleString("en")} visits` : "No visits yet"}</title>
               </path>

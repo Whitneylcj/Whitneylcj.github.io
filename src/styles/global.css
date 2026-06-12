@@ -213,30 +213,88 @@ button {
 .hero {
   position: relative;
   display: grid;
-  min-height: calc(100svh - 150px);
+  min-height: calc(100svh - 118px);
   overflow: hidden;
   border-bottom: 1px solid var(--line);
+  background:
+    radial-gradient(circle at 77% 45%, rgba(8, 124, 118, 0.16), transparent 30%),
+    radial-gradient(circle at 88% 18%, rgba(109, 74, 203, 0.14), transparent 26%),
+    linear-gradient(110deg, rgba(255, 255, 255, 0.98) 0%, rgba(255, 255, 255, 0.92) 48%, rgba(231, 244, 246, 0.74) 100%);
+}
+
+:root[data-theme="dark"] .hero {
+  background:
+    radial-gradient(circle at 76% 44%, rgba(110, 231, 216, 0.18), transparent 32%),
+    radial-gradient(circle at 88% 18%, rgba(196, 167, 255, 0.18), transparent 28%),
+    linear-gradient(110deg, rgba(8, 11, 15, 0.99) 0%, rgba(8, 11, 15, 0.92) 50%, rgba(8, 20, 28, 0.86) 100%);
+}
+
+.hero::before {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  content: "";
+  pointer-events: none;
+  background:
+    linear-gradient(
+      90deg,
+      var(--bg) 0%,
+      color-mix(in srgb, var(--bg) 98%, transparent) 42%,
+      color-mix(in srgb, var(--bg) 62%, transparent) 62%,
+      transparent 80%
+    ),
+    linear-gradient(180deg, transparent 62%, var(--bg) 100%);
 }
 
 .hero::after {
   position: absolute;
   inset: auto 0 0;
+  z-index: 1;
   height: 34%;
   content: "";
   pointer-events: none;
   background: linear-gradient(0deg, var(--bg), transparent);
 }
 
-.hero-field-canvas {
+.hero-earth-field {
   position: absolute;
   inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.hero-earth-field canvas {
+  display: block;
   width: 100%;
   height: 100%;
 }
 
+.hero-earth-fallback {
+  position: absolute;
+  right: max(-120px, -7vw);
+  top: 10%;
+  width: min(54vw, 680px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  opacity: 0;
+  background:
+    radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 0.45), transparent 22%),
+    url("/assets/earth/blue-marble-2048.jpg") center / cover;
+  box-shadow:
+    inset -60px -20px 90px rgba(0, 0, 0, 0.24),
+    0 30px 90px rgba(8, 124, 118, 0.18);
+  transition: opacity 260ms ease;
+}
+
+.hero-earth-field.is-fallback .hero-earth-fallback {
+  opacity: 0.56;
+}
+
 .hero-content {
   position: relative;
-  z-index: 1;
+  z-index: 2;
   align-self: center;
   padding: 54px 0 26px;
 }
@@ -258,7 +316,7 @@ button {
 }
 
 .hero-subtitle {
-  max-width: 760px;
+  max-width: 660px;
   margin: 20px 0 0;
   color: var(--soft);
   font-size: 27px;
@@ -267,7 +325,7 @@ button {
 }
 
 .hero-summary {
-  max-width: 720px;
+  max-width: 650px;
   margin: 22px 0 0;
   color: var(--muted);
   font-size: 18px;
@@ -307,7 +365,7 @@ button {
 
 .hero-signals {
   position: relative;
-  z-index: 1;
+  z-index: 2;
   display: grid;
   align-self: end;
   grid-template-columns: repeat(3, 1fr);
@@ -401,6 +459,9 @@ button {
 .honors-panel,
 .info-card,
 .news-card,
+.blog-home-card,
+.blog-feature-card,
+.blog-compact-item,
 .publication-card,
 .reference-card,
 .demo-band,
@@ -501,7 +562,8 @@ button {
 }
 
 .latest-news-grid,
-.reference-grid {
+.reference-grid,
+.blog-home-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 18px;
@@ -512,11 +574,15 @@ button {
 }
 
 .news-card,
+.blog-home-card,
 .reference-card {
   padding: 22px;
 }
 
-.news-card time {
+.news-card time,
+.blog-home-card time,
+.blog-feature-card time,
+.blog-compact-item time {
   display: block;
   margin-bottom: 10px;
   color: var(--cyan);
@@ -526,14 +592,31 @@ button {
 }
 
 .news-card h2,
-.news-card h3 {
+.news-card h3,
+.blog-home-card h3 {
   margin: 0 0 12px;
   font-size: 21px;
   line-height: 1.3;
 }
 
-.news-card a:hover {
+.news-card a:hover,
+.blog-home-card a:hover,
+.blog-feature-card a:hover,
+.blog-compact-item a:hover {
   color: var(--cyan);
+}
+
+.blog-home-card {
+  min-height: 250px;
+  background:
+    linear-gradient(180deg, rgba(8, 124, 118, 0.055), transparent 44%),
+    var(--surface);
+}
+
+.blog-home-card p:not(.card-kicker) {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.7;
 }
 
 .reference-card {
@@ -751,6 +834,277 @@ button {
 
 .news-body p {
   margin: 0 0 18px;
+}
+
+.blog-index-section {
+  padding-top: 34px;
+}
+
+.blog-editorial-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(320px, 0.85fr);
+  gap: 18px;
+  align-items: stretch;
+}
+
+.blog-feature-card {
+  min-height: 360px;
+  padding: 30px;
+  background:
+    linear-gradient(135deg, rgba(8, 124, 118, 0.1), transparent 42%),
+    linear-gradient(315deg, rgba(109, 74, 203, 0.08), transparent 36%),
+    var(--surface);
+}
+
+.blog-feature-card h2 {
+  max-width: 720px;
+  margin: 14px 0 16px;
+  font-family: "Space Grotesk", Inter, sans-serif;
+  font-size: 40px;
+  line-height: 1.06;
+}
+
+.blog-feature-card p:not(.card-kicker) {
+  max-width: 720px;
+  margin: 0;
+  color: var(--muted);
+  font-size: 18px;
+  line-height: 1.72;
+}
+
+.blog-compact-list {
+  display: grid;
+  gap: 12px;
+}
+
+.blog-compact-item {
+  display: flex;
+  min-height: 132px;
+  align-items: start;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 20px;
+  box-shadow: none;
+}
+
+.blog-compact-item p {
+  margin: 0 0 8px;
+  color: var(--gold);
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.blog-compact-item h3 {
+  margin: 0;
+  font-size: 20px;
+  line-height: 1.32;
+}
+
+.blog-compact-item time {
+  min-width: 102px;
+  margin: 0;
+  text-align: right;
+}
+
+.blog-detail {
+  padding: 78px 0;
+}
+
+.blog-detail-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 820px) 220px;
+  gap: 52px;
+  align-items: start;
+}
+
+.blog-article-main {
+  min-width: 0;
+}
+
+.blog-detail h1 {
+  max-width: 820px;
+  margin: 0;
+  font-family: "Space Grotesk", Inter, sans-serif;
+  font-size: 56px;
+  line-height: 1;
+}
+
+.blog-detail time {
+  display: block;
+  margin-top: 18px;
+  color: var(--cyan);
+  font-size: 14px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.blog-summary {
+  margin: 22px 0 0;
+  color: var(--muted);
+  font-size: 19px;
+  line-height: 1.7;
+}
+
+.blog-hero-image {
+  display: block;
+  width: 100%;
+  max-height: 360px;
+  margin-top: 30px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  object-fit: cover;
+  box-shadow: var(--shadow);
+}
+
+.blog-body {
+  margin-top: 36px;
+  border-top: 1px solid var(--line);
+  padding-top: 30px;
+  color: var(--soft);
+  font-size: 18px;
+  line-height: 1.86;
+}
+
+.blog-body h2,
+.blog-body h3 {
+  font-family: "Space Grotesk", Inter, sans-serif;
+  line-height: 1.16;
+}
+
+.blog-body h2 {
+  margin: 42px 0 16px;
+  font-size: 31px;
+}
+
+.blog-body h3 {
+  margin: 30px 0 12px;
+  font-size: 24px;
+}
+
+.blog-body p,
+.blog-body ul,
+.blog-body ol {
+  margin: 0 0 20px;
+}
+
+.blog-body li + li {
+  margin-top: 8px;
+}
+
+.blog-body a {
+  color: var(--cyan);
+  font-weight: 700;
+}
+
+.blog-body pre,
+.blog-body .math-block {
+  overflow-x: auto;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: #f3f7f7;
+}
+
+:root[data-theme="dark"] .blog-body pre,
+:root[data-theme="dark"] .blog-body .math-block {
+  background: rgba(255, 255, 255, 0.055);
+}
+
+.blog-body pre {
+  padding: 18px;
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+.blog-body code {
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: 0.92em;
+}
+
+.blog-body :not(pre) > code {
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 0.12em 0.35em;
+  background: rgba(8, 124, 118, 0.06);
+}
+
+.blog-body .math-block {
+  margin: 24px 0;
+  padding: 18px 20px;
+  color: var(--text);
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+.blog-body .math-block p {
+  margin: 0;
+}
+
+.blog-body blockquote {
+  margin: 28px 0;
+  border-left: 3px solid var(--cyan);
+  padding: 4px 0 4px 18px;
+  color: var(--muted);
+}
+
+.blog-body figure {
+  margin: 30px 0;
+}
+
+.blog-body figure img {
+  display: block;
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+
+.blog-body figcaption {
+  margin-top: 10px;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.blog-toc {
+  position: sticky;
+  top: calc(var(--header-height) + 24px);
+  border-left: 1px solid var(--line);
+  padding-left: 18px;
+}
+
+.blog-toc p {
+  margin: 0 0 14px;
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.blog-toc ol {
+  display: grid;
+  gap: 9px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.blog-toc a {
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.blog-toc a:hover {
+  color: var(--text);
+}
+
+.blog-toc .toc-depth-3 {
+  padding-left: 12px;
+}
+
+.legacy-demo-page {
+  min-height: calc(100svh - var(--header-height));
 }
 
 .visitor-shell {
@@ -978,11 +1332,18 @@ button {
   .research-grid,
   .docs-grid,
   .latest-news-grid,
+  .blog-home-grid,
   .reference-grid,
   .about-grid,
   .split-section,
-  .visitor-shell {
+  .visitor-shell,
+  .blog-editorial-grid,
+  .blog-detail-grid {
     grid-template-columns: 1fr;
+  }
+
+  .blog-toc {
+    display: none;
   }
 
   .visitor-map-panel {
@@ -1062,7 +1423,9 @@ button {
   .demo-band h2,
   .visitor-copy h2,
   .subpage-hero h1,
-  .news-detail h1 {
+  .news-detail h1,
+  .blog-detail h1,
+  .blog-feature-card h2 {
     font-size: 29px;
   }
 
@@ -1076,6 +1439,9 @@ button {
 
   .info-card,
   .news-card,
+  .blog-home-card,
+  .blog-feature-card,
+  .blog-compact-item,
   .reference-card,
   .publication-card,
   .timeline-item,
@@ -1099,8 +1465,34 @@ button {
   }
 
   .subpage-hero,
-  .news-detail {
+  .news-detail,
+  .blog-detail {
     padding: 48px 0;
+  }
+
+  .blog-body,
+  .news-body {
+    font-size: 16px;
+  }
+
+  .blog-compact-item {
+    display: grid;
+  }
+
+  .blog-compact-item time {
+    min-width: 0;
+    text-align: left;
+  }
+
+  .hero-earth-fallback {
+    right: -42%;
+    top: 58%;
+    width: 76vw;
+    opacity: 0.22;
+  }
+
+  .hero-earth-field {
+    opacity: 0.72;
   }
 
   .earth-hud {

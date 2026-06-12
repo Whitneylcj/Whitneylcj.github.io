@@ -1,11 +1,45 @@
 ---
-import EarthViewer from "@components/EarthViewer";
 import SiteLayout from "@layouts/SiteLayout.astro";
+import { profile } from "@data/site";
 ---
 
 <SiteLayout
-  title="Spatial Demo | Changjian Liu"
-  description="Interactive Three.js Earth viewer for Changjian Liu's spatial intelligence homepage."
+  title="Spatial Background | Changjian Liu"
+  description="The spatial Earth visual has moved into Changjian Liu's homepage hero."
 >
-  <EarthViewer client:only="react" />
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a class="brand" href="/" aria-label="Back to homepage">
+        <span class="brand-mark">{profile.initials}</span>
+        <span class="brand-text">
+          <strong>{profile.name}</strong>
+          <small>Spatial background</small>
+        </span>
+      </a>
+      <nav class="site-nav" aria-label="Legacy page navigation">
+        <a href="/#about">About</a>
+        <a href="/#publications">Publications</a>
+        <a href="/news/">News</a>
+        <a href="/blog/">Blog</a>
+      </nav>
+      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle color theme" aria-pressed="true">
+        Dark
+      </button>
+    </div>
+  </header>
+
+  <main class="subpage-main">
+    <section class="container subpage-hero legacy-demo-page">
+      <p class="section-label">Spatial Visual</p>
+      <h1>The Earth visual now lives on the homepage.</h1>
+      <p>
+        This legacy URL is preserved for old links. The former interaction page has been replaced by a quieter
+        satellite-textured Earth background in the homepage hero.
+      </p>
+      <div class="hero-actions">
+        <a class="button button-primary" href="/">Back to Homepage</a>
+        <a class="button" href="/blog/">Read Blog</a>
+      </div>
+    </section>
+  </main>
 </SiteLayout>

@@ -1,6 +1,6 @@
 ---
 import { getCollection } from "astro:content";
-import HeroField from "@components/HeroField";
+import HeroEarthField from "@components/HeroEarthField";
 import VisitorWorldMap from "@components/VisitorWorldMap";
 import SiteLayout from "@layouts/SiteLayout.astro";
 import { fallbackVisitorSummary } from "@data/visitorStats";
@@ -26,9 +26,17 @@ const newsEntries = (await getCollection("news")).sort(
   (a, b) => b.data.date.getTime() - a.data.date.getTime()
 );
 const latestNews = newsEntries.slice(0, 3);
+const blogEntries = (await getCollection("blog"))
+  .filter((entry) => !entry.data.draft)
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+const latestBlog = blogEntries.filter((entry) => entry.data.featured).slice(0, 3);
 const visitorApiBase = import.meta.env.PUBLIC_VISITOR_API_BASE;
 
 function newsSlug(id: string) {
+  return id.replace(/\.mdx?$/, "");
+}
+
+function blogSlug(id: string) {
   return id.replace(/\.mdx?$/, "");
 }
 
@@ -52,9 +60,9 @@ function formatDate(date: Date) {
         <a href="#research">Research</a>
         <a href="#publications">Publications</a>
         <a href="/news/">News</a>
+        <a href="/blog/">Blog</a>
         <a href="#experience">Experience</a>
         <a href="#visitors">Visitors</a>
-        <a href="/earth-demo/">Spatial Demo</a>
       </nav>
       <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle color theme" aria-pressed="false">
         Dark
@@ -64,7 +72,7 @@ function formatDate(date: Date) {
 
   <main id="top">
     <section class="hero" aria-labelledby="hero-title">
-      <HeroField client:load />
+      <HeroEarthField client:load />
       <div class="container hero-content">
         <p class="section-label">Academic Homepage · Spatial Intelligence</p>
         <h1 id="hero-title">{profile.name}</h1>
@@ -72,7 +80,7 @@ function formatDate(date: Date) {
         <p class="hero-summary">{profile.summary}</p>
         <div class="hero-actions" aria-label="Primary actions">
           <a class="button button-primary" href="#publications">View Publications</a>
-          <a class="button" href="/earth-demo/">Open Spatial Demo</a>
+          <a class="button" href="/blog/">Read Research Notes</a>
         </div>
         <div class="hero-links" aria-label="Profile links">
           {
@@ -118,6 +126,33 @@ function formatDate(date: Date) {
                 <a href={entry.data.externalUrl ?? `/news/${newsSlug(entry.id)}/`}>
                   {entry.data.title}
                 </a>
+              </h3>
+              <p>{entry.data.summary}</p>
+              <div class="tag-row">
+                {entry.data.tags.map((tag) => <span>{tag}</span>)}
+              </div>
+            </article>
+          ))
+        }
+      </div>
+    </section>
+
+    <section class="container section blog-home-section" id="blog" aria-labelledby="blog-title">
+      <div class="section-heading section-heading-row">
+        <div>
+          <p class="section-label">Blog</p>
+          <h2 id="blog-title">Research notes</h2>
+        </div>
+        <a class="text-link" href="/blog/">All posts</a>
+      </div>
+      <div class="blog-home-grid">
+        {
+          latestBlog.map((entry) => (
+            <article class="blog-home-card">
+              <p class="card-kicker">{entry.data.category}</p>
+              <time datetime={entry.data.date.toISOString()}>{formatDate(entry.data.date)}</time>
+              <h3>
+                <a href={`/blog/${blogSlug(entry.id)}/`}>{entry.data.title}</a>
               </h3>
               <p>{entry.data.summary}</p>
               <div class="tag-row">
@@ -253,20 +288,6 @@ function formatDate(date: Date) {
           {honors.map((honor) => <li>{honor.title}</li>)}
         </ul>
       </aside>
-    </section>
-
-    <section class="container section demo-section" id="spatial-demo" aria-labelledby="demo-title">
-      <div class="demo-band">
-        <div>
-          <p class="section-label">Interactive Demo</p>
-          <h2 id="demo-title">A spatial showcase ready for richer research demos</h2>
-          <p>
-            The dedicated Earth page is now an Astro route with a React island. It can evolve into trajectory-flow
-            playback, OD arcs, city heatmaps, or a lightweight explanation layer for spatial models.
-          </p>
-        </div>
-        <a class="button button-primary" href="/earth-demo/">Launch Demo</a>
-      </div>
     </section>
 
     <section class="container section" id="visitors" aria-labelledby="visitors-title">

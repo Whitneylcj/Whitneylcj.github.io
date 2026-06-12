@@ -1,0 +1,27 @@
+---
+title: "From OD Flows to Decision Systems"
+date: 2026-06-10
+summary: "A short technical outline for connecting spatial flow modeling with downstream allocation, pricing, and intervention decisions."
+category: "Engineering Notes"
+tags: ["OD flows", "decision systems", "spatio-temporal modeling"]
+featured: false
+draft: false
+---
+
+## The Bridge
+
+Origin-destination models are often evaluated as prediction systems, but many real applications need them as decision inputs. The modeling target should therefore preserve the quantities that downstream optimizers actually consume.
+
+## Minimal Pipeline
+
+```text
+spatio-temporal logs
+  -> flow representation
+  -> response model
+  -> constrained decision layer
+  -> monitored deployment
+```
+
+## Evaluation
+
+The evaluation should include prediction error, stability under shifted contexts, and the quality of the induced decision. This blog category will collect implementation notes around those interfaces.
