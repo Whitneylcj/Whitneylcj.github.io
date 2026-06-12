@@ -3,4 +3,5 @@ dist/
 .astro/
 .DS_Store
 .idea/
+**/.wrangler/
 npm-debug.log*

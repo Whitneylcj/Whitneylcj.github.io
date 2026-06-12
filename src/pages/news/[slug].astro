@@ -1,0 +1,63 @@
+---
+import { getCollection, render, type CollectionEntry } from "astro:content";
+import SiteLayout from "@layouts/SiteLayout.astro";
+import { profile } from "@data/site";
+
+type Props = {
+  entry: CollectionEntry<"news">;
+};
+
+export async function getStaticPaths() {
+  const entries = await getCollection("news");
+  return entries.map((entry) => ({
+    params: { slug: entry.id.replace(/\.mdx?$/, "") },
+    props: { entry }
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+
+function formatDate(date: Date) {
+  return new Intl.DateTimeFormat("en", { month: "long", day: "numeric", year: "numeric" }).format(date);
+}
+---
+
+<SiteLayout title={`${entry.data.title} | ${profile.name}`} description={entry.data.summary}>
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a class="brand" href="/" aria-label="Back to homepage">
+        <span class="brand-mark">{profile.initials}</span>
+        <span class="brand-text">
+          <strong>{profile.name}</strong>
+          <small>News and updates</small>
+        </span>
+      </a>
+      <nav class="site-nav" aria-label="News navigation">
+        <a href="/#about">About</a>
+        <a href="/#publications">Publications</a>
+        <a href="/news/">News</a>
+        <a href="/earth-demo/">Spatial Demo</a>
+      </nav>
+      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle color theme" aria-pressed="true">
+        Dark
+      </button>
+    </div>
+  </header>
+
+  <main class="subpage-main">
+    <article class="container news-detail">
+      <a class="text-link" href="/news/">Back to all news</a>
+      <p class="section-label">News</p>
+      <h1>{entry.data.title}</h1>
+      <time datetime={entry.data.date.toISOString()}>{formatDate(entry.data.date)}</time>
+      <p class="news-summary">{entry.data.summary}</p>
+      <div class="tag-row">
+        {entry.data.tags.map((tag) => <span>{tag}</span>)}
+      </div>
+      <div class="news-body">
+        <Content />
+      </div>
+    </article>
+  </main>
+</SiteLayout>

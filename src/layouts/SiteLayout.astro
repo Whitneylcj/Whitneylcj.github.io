@@ -13,7 +13,7 @@ const {
 ---
 
 <!doctype html>
-<html lang="en" data-theme="dark">
+<html lang="en" data-theme="light">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -29,7 +29,7 @@ const {
     <script is:inline>
       (() => {
         const stored = localStorage.getItem("site-theme");
-        const theme = stored === "light" ? "light" : "dark";
+        const theme = stored === "dark" ? "dark" : "light";
         document.documentElement.dataset.theme = theme;
       })();
     </script>
@@ -49,7 +49,7 @@ const {
           }
         };
 
-        setTheme(root.dataset.theme === "light" ? "light" : "dark");
+        setTheme(root.dataset.theme === "dark" ? "dark" : "light");
         button?.addEventListener("click", () => {
           setTheme(root.dataset.theme === "light" ? "dark" : "light");
         });

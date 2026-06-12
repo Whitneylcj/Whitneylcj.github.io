@@ -48,6 +48,12 @@ export type InfoPanel = {
   note?: string;
 };
 
+export type ReferenceSite = {
+  name: string;
+  href: string;
+  takeaway: string;
+};
+
 export const profile: Profile = {
   name: "Changjian Liu",
   initials: "CL",
@@ -175,5 +181,38 @@ export const infoPanels: InfoPanel[] = [
     body:
       "The homepage links directly to Google Scholar now. Automated citation numbers can be added later through a scheduled GitHub Action.",
     note: "The first version keeps citation display manual and stable."
+  }
+];
+
+export const referenceSites: ReferenceSite[] = [
+  {
+    name: "Jon Barron",
+    href: "https://jonbarron.info/",
+    takeaway: "Dense but readable research list with clear project and paper links."
+  },
+  {
+    name: "Deepak Pathak",
+    href: "https://www.cs.cmu.edu/~dpathak/",
+    takeaway: "Practical News section paired with representative publications."
+  },
+  {
+    name: "Lilian Weng",
+    href: "https://lilianweng.github.io/",
+    takeaway: "Strong model for long-form research notes and technical writing."
+  },
+  {
+    name: "Carl Vondrick",
+    href: "https://www.cs.columbia.edu/~vondrick/",
+    takeaway: "Clean academic structure with easy scanning across research outputs."
+  },
+  {
+    name: "Andrej Karpathy",
+    href: "https://karpathy.ai/",
+    takeaway: "Minimal personal brand and concise entry points to deeper content."
+  },
+  {
+    name: "Keunhong Park",
+    href: "https://keunhong.com/",
+    takeaway: "Modern young-researcher homepage with portfolio-like clarity."
   }
 ];

@@ -1,12 +1,16 @@
 ---
+import { getCollection } from "astro:content";
 import HeroField from "@components/HeroField";
+import VisitorWorldMap from "@components/VisitorWorldMap";
 import SiteLayout from "@layouts/SiteLayout.astro";
+import { fallbackVisitorSummary } from "@data/visitorStats";
 import {
   experience,
   honors,
   infoPanels,
   profile,
   publications,
+  referenceSites,
   researchAreas
 } from "@data/site";
 
@@ -18,6 +22,19 @@ const heroStats = [
 
 const scholarLink = profile.contacts.find((contact) => contact.label === "Google Scholar");
 const currentYear = new Date().getFullYear();
+const newsEntries = (await getCollection("news")).sort(
+  (a, b) => b.data.date.getTime() - a.data.date.getTime()
+);
+const latestNews = newsEntries.slice(0, 3);
+const visitorApiBase = import.meta.env.PUBLIC_VISITOR_API_BASE;
+
+function newsSlug(id: string) {
+  return id.replace(/\.mdx?$/, "");
+}
+
+function formatDate(date: Date) {
+  return new Intl.DateTimeFormat("en", { month: "short", day: "numeric", year: "numeric" }).format(date);
+}
 ---
 
 <SiteLayout>
@@ -34,11 +51,13 @@ const currentYear = new Date().getFullYear();
         <a href="#about">About</a>
         <a href="#research">Research</a>
         <a href="#publications">Publications</a>
+        <a href="/news/">News</a>
         <a href="#experience">Experience</a>
+        <a href="#visitors">Visitors</a>
         <a href="/earth-demo/">Spatial Demo</a>
       </nav>
       <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle color theme" aria-pressed="false">
-        Light
+        Dark
       </button>
     </div>
   </header>
@@ -77,6 +96,34 @@ const currentYear = new Date().getFullYear();
               <span>{stat.label}</span>
               <strong>{stat.value}</strong>
             </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <section class="container section" id="news" aria-labelledby="news-title">
+      <div class="section-heading section-heading-row">
+        <div>
+          <p class="section-label">News</p>
+          <h2 id="news-title">Latest updates</h2>
+        </div>
+        <a class="text-link" href="/news/">All news</a>
+      </div>
+      <div class="latest-news-grid">
+        {
+          latestNews.map((entry) => (
+            <article class="news-card">
+              <time datetime={entry.data.date.toISOString()}>{formatDate(entry.data.date)}</time>
+              <h3>
+                <a href={entry.data.externalUrl ?? `/news/${newsSlug(entry.id)}/`}>
+                  {entry.data.title}
+                </a>
+              </h3>
+              <p>{entry.data.summary}</p>
+              <div class="tag-row">
+                {entry.data.tags.map((tag) => <span>{tag}</span>)}
+              </div>
+            </article>
           ))
         }
       </div>
@@ -219,6 +266,30 @@ const currentYear = new Date().getFullYear();
           </p>
         </div>
         <a class="button button-primary" href="/earth-demo/">Launch Demo</a>
+      </div>
+    </section>
+
+    <section class="container section" id="visitors" aria-labelledby="visitors-title">
+      <VisitorWorldMap client:load fallback={fallbackVisitorSummary} apiBase={visitorApiBase} />
+    </section>
+
+    <section class="container section" id="references" aria-labelledby="references-title">
+      <div class="section-heading section-heading-row">
+        <div>
+          <p class="section-label">References</p>
+          <h2 id="references-title">Academic sites worth learning from</h2>
+        </div>
+        <p class="section-note">A small reference board for future homepage design iterations.</p>
+      </div>
+      <div class="reference-grid">
+        {
+          referenceSites.map((site) => (
+            <a class="reference-card" href={site.href} target="_blank" rel="noreferrer">
+              <strong>{site.name}</strong>
+              <span>{site.takeaway}</span>
+            </a>
+          ))
+        }
       </div>
     </section>
 

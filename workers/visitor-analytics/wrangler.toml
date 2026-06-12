@@ -1,0 +1,9 @@
+name = "personal-website-visitors"
+main = "src/index.ts"
+compatibility_date = "2026-06-12"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "personal-website-visitors"
+database_id = "8a327208-c921-48b6-8e33-6e111c2bf83a"
+migrations_dir = "migrations"

@@ -17,6 +17,8 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      PUBLIC_VISITOR_API_BASE: ${{ vars.PUBLIC_VISITOR_API_BASE }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6

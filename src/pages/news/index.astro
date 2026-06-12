@@ -1,0 +1,69 @@
+---
+import { getCollection } from "astro:content";
+import SiteLayout from "@layouts/SiteLayout.astro";
+import { profile } from "@data/site";
+
+const newsEntries = (await getCollection("news")).sort(
+  (a, b) => b.data.date.getTime() - a.data.date.getTime()
+);
+
+function newsSlug(id: string) {
+  return id.replace(/\.mdx?$/, "");
+}
+
+function formatDate(date: Date) {
+  return new Intl.DateTimeFormat("en", { month: "short", day: "numeric", year: "numeric" }).format(date);
+}
+---
+
+<SiteLayout title={`News | ${profile.name}`} description={`Latest news and updates from ${profile.name}.`}>
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a class="brand" href="/" aria-label="Back to homepage">
+        <span class="brand-mark">{profile.initials}</span>
+        <span class="brand-text">
+          <strong>{profile.name}</strong>
+          <small>News and updates</small>
+        </span>
+      </a>
+      <nav class="site-nav" aria-label="News navigation">
+        <a href="/#about">About</a>
+        <a href="/#publications">Publications</a>
+        <a href="/news/">News</a>
+        <a href="/earth-demo/">Spatial Demo</a>
+      </nav>
+      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle color theme" aria-pressed="true">
+        Dark
+      </button>
+    </div>
+  </header>
+
+  <main class="subpage-main">
+    <section class="container subpage-hero">
+      <p class="section-label">News</p>
+      <h1>Recent updates</h1>
+      <p>Short notes on publications, site updates, research demos, and project milestones.</p>
+    </section>
+
+    <section class="container section news-list-section" aria-label="All news">
+      <div class="news-list">
+        {
+          newsEntries.map((entry) => (
+            <article class="news-card">
+              <time datetime={entry.data.date.toISOString()}>{formatDate(entry.data.date)}</time>
+              <h2>
+                <a href={entry.data.externalUrl ?? `/news/${newsSlug(entry.id)}/`}>
+                  {entry.data.title}
+                </a>
+              </h2>
+              <p>{entry.data.summary}</p>
+              <div class="tag-row">
+                {entry.data.tags.map((tag) => <span>{tag}</span>)}
+              </div>
+            </article>
+          ))
+        }
+      </div>
+    </section>
+  </main>
+</SiteLayout>

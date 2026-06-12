@@ -68,7 +68,10 @@ export default function HeroField() {
       context.beginPath();
       context.moveTo(startX, startY);
       context.quadraticCurveTo(controlX, controlY, endX, endY);
-      context.strokeStyle = index % 2 === 0 ? "rgba(110, 231, 216, 0.42)" : "rgba(196, 167, 255, 0.34)";
+      const isLight = document.documentElement.dataset.theme !== "dark";
+      context.strokeStyle = index % 2 === 0
+        ? (isLight ? "rgba(8, 124, 118, 0.38)" : "rgba(110, 231, 216, 0.42)")
+        : (isLight ? "rgba(109, 74, 203, 0.28)" : "rgba(196, 167, 255, 0.34)");
       context.lineWidth = 1.3;
       context.setLineDash([8, 14]);
       context.lineDashOffset = -time * 32 - index * 7;
@@ -90,15 +93,22 @@ export default function HeroField() {
     const draw = () => {
       time += 0.016;
       context.clearRect(0, 0, width, height);
+      const isLight = document.documentElement.dataset.theme !== "dark";
 
       const backdrop = context.createLinearGradient(0, 0, width, height);
-      backdrop.addColorStop(0, "rgba(7, 12, 16, 0.96)");
-      backdrop.addColorStop(0.48, "rgba(13, 23, 27, 0.90)");
-      backdrop.addColorStop(1, "rgba(19, 14, 31, 0.94)");
+      if (isLight) {
+        backdrop.addColorStop(0, "rgba(255, 255, 255, 0.98)");
+        backdrop.addColorStop(0.5, "rgba(247, 251, 251, 0.95)");
+        backdrop.addColorStop(1, "rgba(239, 243, 255, 0.94)");
+      } else {
+        backdrop.addColorStop(0, "rgba(7, 12, 16, 0.96)");
+        backdrop.addColorStop(0.48, "rgba(13, 23, 27, 0.90)");
+        backdrop.addColorStop(1, "rgba(19, 14, 31, 0.94)");
+      }
       context.fillStyle = backdrop;
       context.fillRect(0, 0, width, height);
 
-      context.strokeStyle = "rgba(255, 255, 255, 0.055)";
+      context.strokeStyle = isLight ? "rgba(15, 32, 36, 0.07)" : "rgba(255, 255, 255, 0.055)";
       context.lineWidth = 1;
       for (let x = 0; x < width; x += 72) {
         context.beginPath();
@@ -121,7 +131,7 @@ export default function HeroField() {
         context.beginPath();
         context.arc(x, y, particle.size * (0.55 + particle.depth), 0, Math.PI * 2);
         context.fillStyle = particle.color;
-        context.globalAlpha = 0.18 + particle.depth * 0.42;
+        context.globalAlpha = isLight ? 0.12 + particle.depth * 0.28 : 0.18 + particle.depth * 0.42;
         context.fill();
         context.globalAlpha = 1;
       });
@@ -138,7 +148,7 @@ export default function HeroField() {
         const y = node.y * height + pointer.y * 16;
         context.beginPath();
         context.arc(x, y, pulse + 12, 0, Math.PI * 2);
-        context.fillStyle = "rgba(110, 231, 216, 0.08)";
+        context.fillStyle = isLight ? "rgba(8, 124, 118, 0.09)" : "rgba(110, 231, 216, 0.08)";
         context.fill();
         context.beginPath();
         context.arc(x, y, pulse, 0, Math.PI * 2);
