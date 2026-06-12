@@ -7,7 +7,6 @@ import { fallbackVisitorSummary } from "@data/visitorStats";
 import {
   experience,
   honors,
-  infoPanels,
   profile,
   publications,
   referenceSites,
@@ -94,7 +93,6 @@ function formatDate(date: Date) {
               </a>
             ))
           }
-          <a href="#docs">CV / Docs</a>
         </div>
       </div>
       <div class="container hero-signals" aria-label="Research signals">
@@ -314,23 +312,6 @@ function formatDate(date: Date) {
       </div>
     </section>
 
-    <section class="container section" id="docs" aria-labelledby="docs-title">
-      <div class="section-heading">
-        <p class="section-label">Docs</p>
-        <h2 id="docs-title">Operational hooks</h2>
-      </div>
-      <div class="docs-grid">
-        {
-          infoPanels.map((panel) => (
-            <article class="info-card">
-              <h3>{panel.title}</h3>
-              <p>{panel.body}</p>
-              {panel.note && <p class="muted">{panel.note}</p>}
-            </article>
-          ))
-        }
-      </div>
-    </section>
   </main>
 
   <footer class="site-footer">

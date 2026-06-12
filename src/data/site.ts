@@ -42,12 +42,6 @@ export type Honor = {
   title: string;
 };
 
-export type InfoPanel = {
-  title: string;
-  body: string;
-  note?: string;
-};
-
 export type ReferenceSite = {
   name: string;
   href: string;
@@ -167,21 +161,6 @@ export const honors: Honor[] = [
   { title: "National First Prize, China Computer Design Competition" },
   { title: "National Innovation Project Leader" },
   { title: "Outstanding Student / Outstanding Party Member / Outstanding Class Cadre" }
-];
-
-export const infoPanels: InfoPanel[] = [
-  {
-    title: "Site analytics / visit map",
-    body:
-      "The Astro structure keeps a clean slot for privacy-friendly analytics or a public visit map widget.",
-    note: "Recommended later: GoatCounter, added through a lightweight script island."
-  },
-  {
-    title: "Citation display",
-    body:
-      "The homepage links directly to Google Scholar now. Automated citation numbers can be added later through a scheduled GitHub Action.",
-    note: "The first version keeps citation display manual and stable."
-  }
 ];
 
 export const referenceSites: ReferenceSite[] = [
