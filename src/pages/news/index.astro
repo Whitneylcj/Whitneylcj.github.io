@@ -6,6 +6,20 @@ import { profile } from "@data/site";
 const newsEntries = (await getCollection("news")).sort(
   (a, b) => b.data.date.getTime() - a.data.date.getTime()
 );
+const pageDescription = `Latest news and updates from ${profile.name}.`;
+const collectionJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  name: `News | ${profile.name}`,
+  description: pageDescription,
+  url: "https://whitneylcj.github.io/news/",
+  hasPart: newsEntries.map((entry) => ({
+    "@type": "Article",
+    headline: entry.data.title,
+    url: entry.data.externalUrl ?? `https://whitneylcj.github.io/news/${entry.id.replace(/\.mdx?$/, "")}/`,
+    datePublished: entry.data.date.toISOString()
+  }))
+};
 
 function newsSlug(id: string) {
   return id.replace(/\.mdx?$/, "");
@@ -16,7 +30,12 @@ function formatDate(date: Date) {
 }
 ---
 
-<SiteLayout title={`News | ${profile.name}`} description={`Latest news and updates from ${profile.name}.`}>
+<SiteLayout
+  title={`News | ${profile.name}`}
+  description={pageDescription}
+  canonicalPath="/news/"
+  jsonLd={collectionJsonLd}
+>
   <header class="site-header">
     <div class="container nav-wrap">
       <a class="brand" href="/" aria-label="Back to homepage">

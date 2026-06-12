@@ -17,13 +17,46 @@ export async function getStaticPaths() {
 
 const { entry } = Astro.props;
 const { Content } = await render(entry);
+const slug = entry.id.replace(/\.mdx?$/, "");
+const canonicalPath = `/news/${slug}/`;
+const canonicalUrl = new URL(canonicalPath, "https://whitneylcj.github.io").toString();
+const articleJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline: entry.data.title,
+  description: entry.data.summary,
+  datePublished: entry.data.date.toISOString(),
+  dateModified: entry.data.date.toISOString(),
+  author: {
+    "@type": "Person",
+    "@id": "https://whitneylcj.github.io/#person",
+    name: profile.name
+  },
+  publisher: {
+    "@type": "Person",
+    "@id": "https://whitneylcj.github.io/#person",
+    name: profile.name
+  },
+  mainEntityOfPage: canonicalUrl,
+  url: canonicalUrl,
+  keywords: entry.data.tags,
+  articleSection: "News"
+};
 
 function formatDate(date: Date) {
   return new Intl.DateTimeFormat("en", { month: "long", day: "numeric", year: "numeric" }).format(date);
 }
 ---
 
-<SiteLayout title={`${entry.data.title} | ${profile.name}`} description={entry.data.summary}>
+<SiteLayout
+  title={`${entry.data.title} | ${profile.name}`}
+  description={entry.data.summary}
+  canonicalPath={canonicalPath}
+  type="article"
+  publishedDate={entry.data.date}
+  updatedDate={entry.data.date}
+  jsonLd={articleJsonLd}
+>
   <header class="site-header">
     <div class="container nav-wrap">
       <a class="brand" href="/" aria-label="Back to homepage">

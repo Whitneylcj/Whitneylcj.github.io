@@ -11,6 +11,20 @@ const featuredEntry = blogEntries.find((entry) => entry.data.featured) ?? blogEn
 const secondaryEntries = featuredEntry
   ? blogEntries.filter((entry) => entry.id !== featuredEntry.id)
   : blogEntries;
+const pageDescription = `Research notes and essays from ${profile.name}.`;
+const collectionJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  name: `Blog | ${profile.name}`,
+  description: pageDescription,
+  url: "https://whitneylcj.github.io/blog/",
+  hasPart: blogEntries.map((entry) => ({
+    "@type": "BlogPosting",
+    headline: entry.data.title,
+    url: `https://whitneylcj.github.io/blog/${entry.id.replace(/\.mdx?$/, "")}/`,
+    datePublished: entry.data.date.toISOString()
+  }))
+};
 
 function blogSlug(id: string) {
   return id.replace(/\.mdx?$/, "");
@@ -21,7 +35,12 @@ function formatDate(date: Date) {
 }
 ---
 
-<SiteLayout title={`Blog | ${profile.name}`} description={`Research notes and essays from ${profile.name}.`}>
+<SiteLayout
+  title={`Blog | ${profile.name}`}
+  description={pageDescription}
+  canonicalPath="/blog/"
+  jsonLd={collectionJsonLd}
+>
   <header class="site-header">
     <div class="container nav-wrap">
       <a class="brand" href="/" aria-label="Back to homepage">

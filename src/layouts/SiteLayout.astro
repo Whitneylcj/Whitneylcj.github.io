@@ -1,15 +1,67 @@
 ---
 import "../styles/global.css";
+import { profile } from "@data/site";
 
 type Props = {
   title?: string;
   description?: string;
+  canonicalPath?: string;
+  image?: string;
+  type?: "website" | "article";
+  publishedDate?: Date | string;
+  updatedDate?: Date | string;
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[];
 };
 
+const defaultTitle = "Changjian Liu | Spatial Intelligence, Causal Inference, and Decision Systems";
+const siteDescription =
+  "Changjian Liu's academic homepage for spatial intelligence, GeoAI, causal inference, advertising algorithms, uplift modeling, and decision systems.";
+
 const {
-  title = "Changjian Liu | Spatial Intelligence, Causal Inference, and Decision Systems",
-  description = "Changjian Liu's academic homepage for spatial intelligence, GeoAI, causal inference, advertising algorithms, uplift modeling, and decision systems."
+  title = defaultTitle,
+  description = siteDescription,
+  canonicalPath,
+  image = "/assets/earth/blue-marble-2048.jpg",
+  type = "website",
+  publishedDate,
+  updatedDate,
+  jsonLd
 } = Astro.props;
+
+const site = Astro.site ?? new URL("https://whitneylcj.github.io");
+const canonicalUrl = new URL(canonicalPath ?? Astro.url.pathname, site).toString();
+const imageUrl = new URL(image, site).toString();
+const publishedIso = publishedDate ? new Date(publishedDate).toISOString() : undefined;
+const updatedIso = updatedDate ? new Date(updatedDate).toISOString() : undefined;
+const sameAs = profile.contacts.filter((contact) => contact.external).map((contact) => contact.href);
+const baseJsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": new URL("/#website", site).toString(),
+    name: `${profile.name} Academic Homepage`,
+    url: new URL("/", site).toString(),
+    description: siteDescription,
+    inLanguage: "en"
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "@id": new URL("/#person", site).toString(),
+    name: profile.name,
+    url: new URL("/", site).toString(),
+    email: profile.email,
+    jobTitle: profile.title,
+    affiliation: {
+      "@type": "CollegeOrUniversity",
+      name: profile.affiliation
+    },
+    sameAs,
+    knowsAbout: profile.focus
+  }
+];
+const pageJsonLd = Array.isArray(jsonLd) ? jsonLd : jsonLd ? [jsonLd] : [];
+const jsonLdItems = [...baseJsonLd, ...pageJsonLd];
 ---
 
 <!doctype html>
@@ -18,8 +70,24 @@ const {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
-    <meta name="theme-color" content="#080b0f" />
+    <meta name="robots" content="index, follow" />
+    <meta name="theme-color" content="#f7fbfb" />
     <title>{title}</title>
+    <link rel="canonical" href={canonicalUrl} />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <meta property="og:site_name" content={`${profile.name} Academic Homepage`} />
+    <meta property="og:type" content={type} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={imageUrl} />
+    <meta property="og:locale" content="en_US" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={imageUrl} />
+    {publishedIso && <meta property="article:published_time" content={publishedIso} />}
+    {updatedIso && <meta property="article:modified_time" content={updatedIso} />}
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -33,6 +101,7 @@ const {
         document.documentElement.dataset.theme = theme;
       })();
     </script>
+    {jsonLdItems.map((item) => <script type="application/ld+json" set:html={JSON.stringify(item)} />)}
   </head>
   <body>
     <slot />

@@ -1,11 +1,22 @@
 ---
 import SiteLayout from "@layouts/SiteLayout.astro";
 import { profile } from "@data/site";
+
+const pageDescription = "The spatial Earth visual has moved into Changjian Liu's homepage hero.";
+const pageJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  name: "Spatial Background | Changjian Liu",
+  description: pageDescription,
+  url: "https://whitneylcj.github.io/earth-demo/"
+};
 ---
 
 <SiteLayout
   title="Spatial Background | Changjian Liu"
-  description="The spatial Earth visual has moved into Changjian Liu's homepage hero."
+  description={pageDescription}
+  canonicalPath="/earth-demo/"
+  jsonLd={pageJsonLd}
 >
   <header class="site-header">
     <div class="container nav-wrap">

@@ -18,6 +18,18 @@ const heroStats = [
   { label: "Decision layer", value: "Causal response learning" },
   { label: "Applied systems", value: "Pricing, uplift, allocation" }
 ];
+const homepageJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "ProfilePage",
+  name: `${profile.name} Academic Homepage`,
+  description: profile.summary,
+  url: "https://whitneylcj.github.io/",
+  mainEntity: {
+    "@type": "Person",
+    "@id": "https://whitneylcj.github.io/#person",
+    name: profile.name
+  }
+};
 
 const scholarLink = profile.contacts.find((contact) => contact.label === "Google Scholar");
 const currentYear = new Date().getFullYear();
@@ -44,7 +56,7 @@ function formatDate(date: Date) {
 }
 ---
 
-<SiteLayout>
+<SiteLayout description={profile.summary} canonicalPath="/" jsonLd={homepageJsonLd}>
   <header class="site-header">
     <div class="container nav-wrap">
       <a class="brand" href="#top" aria-label="Changjian Liu homepage">
