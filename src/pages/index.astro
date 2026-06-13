@@ -242,7 +242,10 @@ function formatDate(date: Date) {
       <div class="section-heading section-heading-row">
         <div>
           <p class="section-label">Publications</p>
-          <h2 id="publications-title">Selected work</h2>
+          <h2 id="publications-title">
+            Publications <span>(representative papers are <mark>highlighted</mark>)</span>
+          </h2>
+          <p class="publication-updated">Last update: Jun 2026</p>
         </div>
         {
           scholarLink && (
@@ -255,14 +258,35 @@ function formatDate(date: Date) {
       <div class="publication-list">
         {
           publications.map((publication) => (
-            <article class="publication-card">
-              <div class="publication-year">{publication.year}</div>
+            <article class={`publication-card${publication.featured ? " publication-card-featured" : ""}`}>
+              <div class="publication-figure">
+                <img src={publication.figure} alt={publication.figureAlt} loading="lazy" />
+              </div>
               <div class="publication-body">
                 <h3>{publication.title}</h3>
-                <p class="publication-meta">{publication.venue} · {publication.role}</p>
+                <p class="publication-authors">{publication.authors}</p>
+                <p class="publication-meta">{publication.venue} · {publication.year} · {publication.role}</p>
+                <p class="publication-summary">{publication.summary}</p>
                 <div class="tag-row">
                   {publication.keywords.map((keyword) => <span>{keyword}</span>)}
                 </div>
+                {
+                  publication.links?.some((link) => link.href) && (
+                    <div class="publication-links" aria-label={`${publication.title} links`}>
+                      {publication.links
+                        .filter((link) => link.href)
+                        .map((link) => (
+                          <a
+                            href={link.href}
+                            target={link.external ? "_blank" : undefined}
+                            rel={link.external ? "noreferrer" : undefined}
+                          >
+                            {link.label}
+                          </a>
+                        ))}
+                    </div>
+                  )
+                }
               </div>
             </article>
           ))

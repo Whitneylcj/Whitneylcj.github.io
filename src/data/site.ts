@@ -25,10 +25,21 @@ export type ResearchArea = {
 export type Publication = {
   year: string;
   title: string;
+  authors: string;
   venue: string;
   role: string;
+  summary: string;
+  figure: string;
+  figureAlt: string;
+  featured?: boolean;
   keywords: string[];
-  links?: Contact[];
+  links?: PublicationLink[];
+};
+
+export type PublicationLink = {
+  label: string;
+  href?: string;
+  external?: boolean;
 };
 
 export type Experience = {
@@ -99,35 +110,94 @@ export const researchAreas: ResearchArea[] = [
 
 export const publications: Publication[] = [
   {
-    year: "2025",
+    year: "2024",
     title:
       "Integrating trajectory data and demographic characteristics: a trajectory semantic model for predicting travel flow and conducting interaction analysis",
-    venue: "International Journal of Digital Earth",
+    authors: "Changjian Liu, Shuhui Gong, Hui Su, Jianwei Chen, Honglei Guo, Jifeng He, Changfeng Jing, Yu Liu",
+    venue: "International Journal of Digital Earth 17(1), 2392842",
     role: "First Author",
-    keywords: ["graph neural networks", "spatio-temporal prediction", "mobility flow modeling"]
+    summary:
+      "A trajectory semantic modeling framework that combines movement traces with demographic structure for travel-flow prediction and interaction analysis.",
+    figure: "/assets/publications/trajectory-semantic-flow.png",
+    figureAlt:
+      "Figure from the trajectory semantic model paper, showing spatial dependence modelling and temporal dependence modelling.",
+    featured: true,
+    keywords: ["graph neural networks", "spatio-temporal prediction", "mobility flow modeling"],
+    links: [
+      {
+        label: "webpage",
+        href: "https://www.tandfonline.com/doi/abs/10.1080/17538947.2024.2392842",
+        external: true
+      },
+      {
+        label: "pdf",
+        href: "https://www.tandfonline.com/doi/pdf/10.1080/17538947.2024.2392842",
+        external: true
+      },
+      {
+        label: "scholar",
+        href: "https://scholar.google.com/citations?view_op=view_citation&hl=zh-TW&user=x3w5EG0AAAAJ&citation_for_view=x3w5EG0AAAAJ:u5HHmVD_uO8C",
+        external: true
+      }
+    ]
   },
   {
-    year: "Under Review",
+    year: "2026",
     title:
-      "SH2EM: A Meta-Learning Framework for Explainable Spatial Regression via Global Homogeneity and Local Heterogeneity Modeling",
-    venue: "Manuscript under review",
-    role: "First Author",
-    keywords: ["meta-learning", "small-sample prediction", "explainable spatial regression"]
+      "High precision prediction of time-varying photovoltaic power based on dynamic adjacency matrix and temporal spectral graph convolution network",
+    authors: "Honglei Guo, Zhenchan Su, Zhiwei Wang, Guiren Zhan, Changjian Liu, Ling Bu",
+    venue: "Energy Conversion and Management: X 30, 101676",
+    role: "Co-Author",
+    summary:
+      "A dynamic graph forecasting model for time-varying photovoltaic power prediction under volatile renewable-energy generation patterns.",
+    figure: "/assets/publications/photovoltaic-graph-forecast.jpg",
+    figureAlt:
+      "Figure 1 from the photovoltaic power forecasting paper, showing the workflow and schematic diagram of the proposed model.",
+    keywords: ["graph neural networks", "photovoltaic forecasting", "dynamic adjacency"],
+    links: [
+      {
+        label: "webpage",
+        href: "https://www.sciencedirect.com/science/article/pii/S2590174526001595",
+        external: true
+      },
+      {
+        label: "scholar",
+        href: "https://scholar.google.com/citations?view_op=view_citation&hl=zh-TW&user=x3w5EG0AAAAJ&citation_for_view=x3w5EG0AAAAJ:9yKSN-GCB0IC",
+        external: true
+      }
+    ]
   },
   {
     year: "2025",
     title:
       "VisitFrequency-Diffusion: Leveraging Recurrent Visits for Long-Term Individual Trajectory Forecasting",
-    venue: "SIGSPATIAL '25",
-    role: "Fourth Author",
-    keywords: ["generative modeling", "human mobility", "long-horizon trajectory forecasting"]
-  },
-  {
-    year: "Current",
-    title: "Recovering stable treatment response from temporally non-stationary observational data",
-    venue: "Planned submission to NeurIPS",
-    role: "Lead project",
-    keywords: ["causal inference", "non-RCT logs", "temporal non-stationarity", "response estimation"]
+    authors: "Ziyan Yang, Shuhui Gong, Xinqi Liu, Jiahao Lv, Changjian Liu, Jilin Hu, Hongbin Pei",
+    venue: "Proceedings of the 33rd ACM International Conference on Advances in Geographic Information Systems, 1190-1193",
+    role: "Co-Author",
+    summary:
+      "A generative trajectory forecasting study that uses recurrent visit patterns to improve long-horizon individual mobility prediction.",
+    figure: "/assets/publications/visitfrequency-diffusion.png",
+    figureAlt:
+      "Figure from the VisitFrequency-Diffusion paper, showing diffusion-based trajectory generation and trajectory refinement.",
+    featured: true,
+    keywords: ["generative modeling", "human mobility", "long-horizon trajectory forecasting"],
+    links: [
+      {
+        label: "webpage",
+        href: "https://dl.acm.org/doi/abs/10.1145/3748636.3763227",
+        external: true
+      },
+      {
+        label: "pdf",
+        href: "https://dl.acm.org/doi/pdf/10.1145/3748636.3763227",
+        external: true
+      },
+      {
+        label: "scholar",
+        href: "https://scholar.google.com/citations?view_op=view_citation&hl=zh-TW&user=x3w5EG0AAAAJ&citation_for_view=x3w5EG0AAAAJ:d1gkVwhDpl0C",
+        external: true
+      }
+    ]
   }
 ];
 
