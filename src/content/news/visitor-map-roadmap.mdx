@@ -1,7 +1,7 @@
 ---
 title: "Visitor analytics map roadmap"
 date: 2026-06-11
-summary: "A country-level visitor heatmap is being added with a privacy-preserving Cloudflare Workers and D1 backend."
+summary: "A region-level visitor heatmap is being added with a privacy-preserving Cloudflare Workers and D1 backend."
 tags:
   - Analytics
   - Cloudflare
@@ -9,6 +9,6 @@ tags:
 featured: true
 ---
 
-The visitor map is designed around country-level aggregation only.
+The visitor map is designed around region-level aggregation.
 
-The backend records a country code and a daily counter. It does not store IP addresses, browser fingerprints, or city-level location data.
+The backend records daily counters for country and first-level administrative regions, with optional city labels for aggregated display. It does not store IP addresses or browser fingerprints.

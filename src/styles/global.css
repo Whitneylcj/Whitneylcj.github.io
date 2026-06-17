@@ -1219,7 +1219,7 @@ button {
 
 .visitor-metrics {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 10px;
   margin-top: 24px;
 }
@@ -1279,6 +1279,25 @@ button {
   stroke: rgba(255, 255, 255, 0.12);
 }
 
+.map-region-point {
+  pointer-events: none;
+}
+
+.map-region-pulse {
+  fill: #7c3aed;
+}
+
+.map-region-dot {
+  fill: #0f766e;
+  stroke: rgba(255, 255, 255, 0.9);
+  stroke-width: 1.4;
+}
+
+:root[data-theme="dark"] .map-region-dot {
+  fill: #5eead4;
+  stroke: rgba(9, 14, 18, 0.85);
+}
+
 .visitor-map-footer {
   display: flex;
   justify-content: space-between;
@@ -1316,6 +1335,17 @@ button {
   color: var(--muted);
 }
 
+.visitor-ranking li span {
+  min-width: 0;
+}
+
+.visitor-ranking li small {
+  display: block;
+  margin-top: 2px;
+  color: var(--faint);
+  font-size: 12px;
+}
+
 .visitor-ranking li:last-child {
   border-bottom: 0;
   padding-bottom: 0;
@@ -1323,6 +1353,32 @@ button {
 
 .visitor-ranking strong {
   color: var(--text);
+}
+
+.visitor-city-signals {
+  border-top: 1px solid var(--line);
+  margin-top: 18px;
+  padding-top: 16px;
+}
+
+.visitor-city-signals h4 {
+  margin: 0 0 12px;
+  color: var(--muted);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.visitor-city-signals ul {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.visitor-city-signals li {
+  padding-bottom: 8px;
 }
 
 .earth-stage {
@@ -1530,7 +1586,7 @@ button {
   }
 
   .visitor-metrics {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .visitor-map {
