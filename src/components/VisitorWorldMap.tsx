@@ -65,7 +65,15 @@ function formatDate(value: string) {
 }
 
 export default function VisitorWorldMap({ fallback, apiBase }: Props) {
-  const [summary, setSummary] = useState<VisitorSummary>(fallback);
+  const [summary, setSummary] = useState<VisitorSummary | null>(() => (apiBase ? null : fallback));
+  const isLoading = summary === null;
+  const displaySummary: VisitorSummary =
+    summary ?? {
+      source: "fallback",
+      total: 0,
+      countries: [],
+      lastUpdated: ""
+    };
 
   const countryFeatures = useMemo(() => {
     const collection = feature(topoCountries, topoCountries.objects.countries) as GeoJSON.FeatureCollection;
@@ -74,12 +82,12 @@ export default function VisitorWorldMap({ fallback, apiBase }: Props) {
 
   const visitsByNumericCode = useMemo(() => {
     const map = new Map<string, number>();
-    summary.countries.forEach((country) => map.set(country.numericCode, country.visits));
+    displaySummary.countries.forEach((country) => map.set(country.numericCode, country.visits));
     return map;
-  }, [summary]);
+  }, [displaySummary]);
 
-  const maxVisits = Math.max(...summary.countries.map((country) => country.visits), 1);
-  const topCountries = summary.countries.slice(0, 6);
+  const maxVisits = Math.max(...displaySummary.countries.map((country) => country.visits), 1);
+  const topCountries = displaySummary.countries.slice(0, 6);
   const projection = geoNaturalEarth1().scale(165).translate([480, 250]);
   const path = geoPath(projection);
 
@@ -104,7 +112,10 @@ export default function VisitorWorldMap({ fallback, apiBase }: Props) {
           mode: "cors",
           signal: controller.signal
         });
-        if (!response.ok) return;
+        if (!response.ok) {
+          setSummary(fallback);
+          return;
+        }
         const payload = (await response.json()) as ApiSummary;
         setSummary(normalizeSummary(payload, fallback));
       } catch {
@@ -127,15 +138,15 @@ export default function VisitorWorldMap({ fallback, apiBase }: Props) {
         </p>
         <div className="visitor-metrics" aria-label="Visitor summary">
           <div>
-            <strong>{summary.total.toLocaleString("en")}</strong>
+            <strong>{isLoading ? "..." : displaySummary.total.toLocaleString("en")}</strong>
             <span>Total visits</span>
           </div>
           <div>
-            <strong>{summary.countries.length}</strong>
+            <strong>{isLoading ? "..." : displaySummary.countries.length}</strong>
             <span>Countries</span>
           </div>
           <div>
-            <strong>{summary.source === "api" ? "Live" : "Fallback"}</strong>
+            <strong>{isLoading ? "Loading" : displaySummary.source === "api" ? "Live" : "Fallback"}</strong>
             <span>Data source</span>
           </div>
         </div>
@@ -162,7 +173,7 @@ export default function VisitorWorldMap({ fallback, apiBase }: Props) {
           })}
         </svg>
         <div className="visitor-map-footer">
-          <span>Updated {formatDate(summary.lastUpdated)}</span>
+          <span>Updated {isLoading ? "Loading live data" : formatDate(displaySummary.lastUpdated)}</span>
           <span>Country-level only · No IP storage</span>
         </div>
       </div>
@@ -170,12 +181,19 @@ export default function VisitorWorldMap({ fallback, apiBase }: Props) {
       <aside className="visitor-ranking" aria-label="Top countries">
         <h3>Top countries</h3>
         <ol>
-          {topCountries.map((country) => (
-            <li key={country.countryCode}>
-              <span>{country.countryName}</span>
-              <strong>{country.visits.toLocaleString("en")}</strong>
+          {isLoading ? (
+            <li>
+              <span>Loading live data</span>
+              <strong>...</strong>
             </li>
-          ))}
+          ) : (
+            topCountries.map((country) => (
+              <li key={country.countryCode}>
+                <span>{country.countryName}</span>
+                <strong>{country.visits.toLocaleString("en")}</strong>
+              </li>
+            ))
+          )}
         </ol>
       </aside>
     </section>

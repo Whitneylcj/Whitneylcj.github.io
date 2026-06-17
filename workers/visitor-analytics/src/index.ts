@@ -4,6 +4,7 @@ export interface Env {
 
 const ALLOWED_ORIGINS = new Set([
   "https://whitneylcj.github.io",
+  "https://changjianliu.cn",
   "http://127.0.0.1:4321",
   "http://localhost:4321"
 ]);

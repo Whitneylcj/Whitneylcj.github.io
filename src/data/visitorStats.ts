@@ -21,9 +21,12 @@ export const countryCatalog: Record<string, { name: string; numeric: string }> =
   FR: { name: "France", numeric: "250" },
   GB: { name: "United Kingdom", numeric: "826" },
   IN: { name: "India", numeric: "356" },
+  IE: { name: "Ireland", numeric: "372" },
   JP: { name: "Japan", numeric: "392" },
   KR: { name: "South Korea", numeric: "410" },
   NL: { name: "Netherlands", numeric: "528" },
+  PL: { name: "Poland", numeric: "616" },
+  PT: { name: "Portugal", numeric: "620" },
   SG: { name: "Singapore", numeric: "702" },
   US: { name: "United States", numeric: "840" }
 };
