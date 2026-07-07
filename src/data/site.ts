@@ -125,6 +125,33 @@ export const publications: Publication[] = [
     keywords: ["causal action geometry", "temporal non-stationarity", "orthogonal learning"]
   },
   {
+    year: "2026",
+    title:
+      "OpFlow: Learning Opportunity-Conditioned Choice Potentials for Robust OD Flow Prediction",
+    authors: "Changjian Liu, Yong Gao, Yuqing Wang, Leyi Su, Honglei Guo, Zhiyang Wang, Xiaoyu Wang, Fan Zhang",
+    venue: "arXiv preprint, arXiv:2607.03200",
+    role: "First Author",
+    summary:
+      "A mechanism-constrained framework for robust origin-destination flow prediction that learns row-centered choice potentials and separates transferable allocation laws from origin demand scale.",
+    figure: "/assets/publications/opflow-arxiv-preview.png",
+    figureAlt:
+      "First-page preview of the OpFlow arXiv preprint, showing the paper title, author list, and abstract.",
+    featured: true,
+    keywords: ["OD flow prediction", "choice potentials", "distribution shift"],
+    links: [
+      {
+        label: "arXiv",
+        href: "https://arxiv.org/abs/2607.03200",
+        external: true
+      },
+      {
+        label: "pdf",
+        href: "https://arxiv.org/pdf/2607.03200",
+        external: true
+      }
+    ]
+  },
+  {
     year: "2024",
     title:
       "Integrating trajectory data and demographic characteristics: a trajectory semantic model for predicting travel flow and conducting interaction analysis",
