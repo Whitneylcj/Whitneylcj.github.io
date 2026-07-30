@@ -9,7 +9,6 @@ import {
   honors,
   profile,
   publications,
-  referenceSites,
   researchAreas
 } from "@data/site";
 
@@ -56,24 +55,22 @@ function formatDate(date: Date) {
 }
 ---
 
-<SiteLayout description={profile.summary} canonicalPath="/" jsonLd={homepageJsonLd}>
+<SiteLayout description={profile.summary} canonicalPath="/" jsonLd={homepageJsonLd} bodyClass="home-page">
   <header class="site-header">
     <div class="container nav-wrap">
       <a class="brand" href="#top" aria-label="Changjian Liu homepage">
         <span class="brand-mark">{profile.initials}</span>
         <span class="brand-text">
           <strong>{profile.name}</strong>
-          <small>Spatial x Causal x Decision</small>
+          <small>GeoAI · Machine Learning · Decision</small>
         </span>
       </a>
       <nav class="site-nav" aria-label="Primary navigation">
         <a href="#about">About</a>
         <a href="#research">Research</a>
         <a href="#publications">Publications</a>
-        <a href="/news/">News</a>
-        <a href="/blog/">Blog</a>
         <a href="#experience">Experience</a>
-        <a href="#visitors">Visitors</a>
+        <a href="/blog/">Notes</a>
       </nav>
       <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle color theme" aria-pressed="false">
         Dark
@@ -85,13 +82,13 @@ function formatDate(date: Date) {
     <section class="hero" aria-labelledby="hero-title">
       <HeroEarthField client:load />
       <div class="container hero-content">
-        <p class="section-label">Academic Homepage · Spatial Intelligence</p>
+        <p class="section-label">GeoAI · Machine Learning · Decision</p>
         <h1 id="hero-title">{profile.name}</h1>
-        <p class="hero-subtitle">Spatial Intelligence / Causal Inference / Decision Systems</p>
+        <p class="hero-subtitle">Spatial intelligence for learning and decision-making.</p>
         <p class="hero-summary">{profile.summary}</p>
         <div class="hero-actions" aria-label="Primary actions">
-          <a class="button button-primary" href="#publications">View Publications</a>
-          <a class="button" href="/blog/">Read Research Notes</a>
+          <a class="button button-primary" href="#publications">Selected publications</a>
+          <a class="button" href="/blog/">Research notes</a>
         </div>
         <div class="hero-links" aria-label="Profile links">
           {
@@ -196,12 +193,12 @@ function formatDate(date: Date) {
         <aside class="profile-panel" aria-label="Profile summary">
           <div class="avatar-shell">
             <img
-              src="/avatar.jpg"
-              alt="Changjian Liu avatar"
+              src="/assets/profile/changjian-lifestyle.jpg"
+              alt="Changjian Liu holding a small figurine in front of illustrated Beijing landmarks"
+              width="768"
+              height="1024"
               loading="lazy"
-              onerror="this.hidden=true"
             />
-            <span class="avatar-fallback">{profile.initials}</span>
           </div>
           <div>
             <h3>{profile.title}</h3>
@@ -245,7 +242,7 @@ function formatDate(date: Date) {
           <h2 id="publications-title">
             Publications <span>(representative papers are <mark>highlighted</mark>)</span>
           </h2>
-          <p class="publication-updated">Last update: Jun 2026</p>
+          <p class="publication-updated">Last update: Jul 2026</p>
         </div>
         {
           scholarLink && (
@@ -271,19 +268,28 @@ function formatDate(date: Date) {
                   {publication.keywords.map((keyword) => <span>{keyword}</span>)}
                 </div>
                 {
-                  publication.links?.some((link) => link.href) && (
+                  publication.links?.length && (
                     <div class="publication-links" aria-label={`${publication.title} links`}>
                       {publication.links
-                        .filter((link) => link.href)
-                        .map((link) => (
-                          <a
-                            href={link.href}
-                            target={link.external ? "_blank" : undefined}
-                            rel={link.external ? "noreferrer" : undefined}
-                          >
-                            {link.label}
-                          </a>
-                        ))}
+                        .map((link) =>
+                          link.href ? (
+                            <a
+                              href={link.href}
+                              target={link.external ? "_blank" : undefined}
+                              rel={link.external ? "noreferrer" : undefined}
+                            >
+                              {link.label}
+                            </a>
+                          ) : (
+                            <span
+                              class="publication-link-disabled"
+                              aria-disabled="true"
+                              title={`${link.label} link coming soon`}
+                            >
+                              {link.label}
+                            </span>
+                          )
+                        )}
                     </div>
                   )
                 }
@@ -326,26 +332,6 @@ function formatDate(date: Date) {
 
     <section class="container section" id="visitors" aria-labelledby="visitors-title">
       <VisitorWorldMap client:load fallback={fallbackVisitorSummary} apiBase={visitorApiBase} />
-    </section>
-
-    <section class="container section" id="references" aria-labelledby="references-title">
-      <div class="section-heading section-heading-row">
-        <div>
-          <p class="section-label">References</p>
-          <h2 id="references-title">Academic sites worth learning from</h2>
-        </div>
-        <p class="section-note">A small reference board for future homepage design iterations.</p>
-      </div>
-      <div class="reference-grid">
-        {
-          referenceSites.map((site) => (
-            <a class="reference-card" href={site.href} target="_blank" rel="noreferrer">
-              <strong>{site.name}</strong>
-              <span>{site.takeaway}</span>
-            </a>
-          ))
-        }
-      </div>
     </section>
 
   </main>

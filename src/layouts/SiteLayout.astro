@@ -11,6 +11,7 @@ type Props = {
   publishedDate?: Date | string;
   updatedDate?: Date | string;
   jsonLd?: Record<string, unknown> | Record<string, unknown>[];
+  bodyClass?: string;
 };
 
 const defaultTitle = "Changjian Liu | Spatial Intelligence, Causal Inference, and Decision Systems";
@@ -25,7 +26,8 @@ const {
   type = "website",
   publishedDate,
   updatedDate,
-  jsonLd
+  jsonLd,
+  bodyClass
 } = Astro.props;
 
 const site = Astro.site ?? new URL("https://whitneylcj.github.io");
@@ -103,7 +105,7 @@ const jsonLdItems = [...baseJsonLd, ...pageJsonLd];
     </script>
     {jsonLdItems.map((item) => <script type="application/ld+json" set:html={JSON.stringify(item)} />)}
   </head>
-  <body>
+  <body class={bodyClass}>
     <slot />
     <script is:inline>
       (() => {

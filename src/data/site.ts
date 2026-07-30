@@ -110,6 +110,30 @@ export const researchAreas: ResearchArea[] = [
 
 export const publications: Publication[] = [
   {
+    year: "2027",
+    title: "Multi-channel Uplift Policy Learning",
+    authors:
+      "Changjian Liu, Tianyu Wang, Xiaoxuan Deng, Wentao Zhu, Yuwei Xu, Junqi Jin, Yong Gao, Chuan Yu, Jian Xu, Bo Zheng",
+    venue: "Submitted to KDD 2027 Applied Data Science (ADS) Track",
+    role: "First Author",
+    summary:
+      "ReAlloc formulates fixed-budget multi-channel marketing as simplex-constrained uplift policy learning, combining an orthogonal teacher, explanation-guided student, and support-aware local reallocation for stable production decisions.",
+    figure: "/assets/publications/multichannel-uplift-realloc.png",
+    figureAlt:
+      "Conceptual illustration of ReAlloc, contrasting local supported reallocation with unsafe global predict-then-optimize extrapolation.",
+    featured: true,
+    keywords: ["multi-channel uplift", "causal policy learning", "resource allocation"],
+    links: [
+      {
+        label: "pdf",
+        href: "/assets/publications/multichannel-uplift-policy-learning.pdf"
+      },
+      {
+        label: "arXiv"
+      }
+    ]
+  },
+  {
     year: "2026",
     title:
       "Learning Deployable Causal Action Geometry under Temporal Non-Stationarity",

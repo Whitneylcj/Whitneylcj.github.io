@@ -1,0 +1,16 @@
+---
+title: "KDD ADS submission on multi-channel uplift policy learning"
+date: 2026-07-30
+summary: "A KDD 2027 ADS submission introduces ReAlloc for support-aware causal reallocation across multiple marketing channels."
+tags:
+  - KDD
+  - Uplift Modeling
+  - Decision Intelligence
+featured: true
+---
+
+We submitted **Multi-channel Uplift Policy Learning** to the KDD 2027 Applied Data Science (ADS) Track.
+
+The paper studies how an e-commerce platform should allocate a fixed marketing budget across multiple channels when historical decisions are confounded and global optimization can extrapolate beyond observed support.
+
+It introduces **ReAlloc**, a fast-slow causal framework in which an orthogonal teacher estimates local response gradients from recent logs, an explanation-guided student distills them into a structured marginal field, and a support-aware policy performs conservative reallocations. Simulations, offline production-log evaluation, and large-scale Taobao A/B tests show simultaneous gains in pay order and income.

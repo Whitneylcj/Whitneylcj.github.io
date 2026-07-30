@@ -243,14 +243,14 @@ export default function VisitorWorldMap({ fallback, apiBase }: Props) {
       <div className="visitor-map-panel">
         <svg className="visitor-map" viewBox="0 0 960 500" role="img" aria-label="World visitor heatmap">
           <rect x="0" y="0" width="960" height="500" rx="8" className="map-ocean" />
-          {countryFeatures.map((country) => {
+          {countryFeatures.map((country, index) => {
             const numericCode = String(country.id ?? "").padStart(3, "0");
             const visits = visitsByNumericCode.get(numericCode) ?? 0;
             const intensity = visits > 0 ? Math.max(0.24, Math.log1p(visits) / Math.log1p(maxVisits)) : 0;
             const fill = visits > 0 ? `rgba(8, 124, 118, ${0.26 + intensity * 0.72})` : undefined;
             return (
               <path
-                key={numericCode}
+                key={`${numericCode}-${country.properties?.name ?? index}`}
                 d={path(country) ?? undefined}
                 className="map-country"
                 style={fill ? { fill } : undefined}
