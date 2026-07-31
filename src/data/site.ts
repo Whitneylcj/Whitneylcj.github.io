@@ -129,7 +129,9 @@ export const publications: Publication[] = [
         href: "/assets/publications/multichannel-uplift-policy-learning.pdf"
       },
       {
-        label: "arXiv"
+        label: "arXiv",
+        href: "https://arxiv.org/abs/2607.28182",
+        external: true
       }
     ]
   },
