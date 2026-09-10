@@ -1,5 +1,6 @@
 ---
 import "../styles/global.css";
+import "../styles/research.css";
 import { profile } from "@data/site";
 
 type Props = {
@@ -14,9 +15,9 @@ type Props = {
   bodyClass?: string;
 };
 
-const defaultTitle = "Changjian Liu | Spatial Intelligence, Causal Inference, and Decision Systems";
+const defaultTitle = "Changjian Liu | Agentic RL & LLM Decision Making";
 const siteDescription =
-  "Changjian Liu's academic homepage for spatial intelligence, GeoAI, causal inference, advertising algorithms, uplift modeling, and decision systems.";
+  "Changjian Liu studies agentic reinforcement learning, LLM decision making, and embodied agents. Master’s student at Peking University and research intern at Galbot.";
 
 const {
   title = defaultTitle,
@@ -73,7 +74,7 @@ const jsonLdItems = [...baseJsonLd, ...pageJsonLd];
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
     <meta name="robots" content="index, follow" />
-    <meta name="theme-color" content="#f7fbfb" />
+    <meta name="theme-color" content="#ffffff" />
     <title>{title}</title>
     <link rel="canonical" href={canonicalUrl} />
     <link rel="sitemap" href="/sitemap-index.xml" />
@@ -93,12 +94,13 @@ const jsonLdItems = [...baseJsonLd, ...pageJsonLd];
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;650;700;800&family=IBM+Plex+Serif:wght@400;500&display=swap"
       rel="stylesheet"
     />
     <script is:inline>
       (() => {
-        const stored = localStorage.getItem("site-theme");
+        let stored;
+        try { stored = localStorage.getItem("site-theme"); } catch {}
         const theme = stored === "dark" ? "dark" : "light";
         document.documentElement.dataset.theme = theme;
       })();
@@ -113,9 +115,9 @@ const jsonLdItems = [...baseJsonLd, ...pageJsonLd];
         const button = document.getElementById("themeToggle");
         const setTheme = (theme) => {
           root.dataset.theme = theme;
-          localStorage.setItem("site-theme", theme);
+          try { localStorage.setItem("site-theme", theme); } catch {}
           if (button) {
-            button.setAttribute("aria-pressed", String(theme === "light"));
+            button.setAttribute("aria-pressed", String(theme === "dark"));
             button.textContent = theme === "light" ? "Dark" : "Light";
           }
         };

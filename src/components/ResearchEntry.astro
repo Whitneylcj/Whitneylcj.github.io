@@ -1,0 +1,18 @@
+---
+import type { Publication } from "@data/site";
+type Props = { paper: Publication; compact?: boolean };
+const { paper, compact = false } = Astro.props;
+---
+<article class:list={["research-entry", { "research-entry-compact": compact, "research-entry-agent": paper.group === "agents" }]}>
+  {paper.figure && !compact && <div class="research-figure" aria-hidden="true"><img src={paper.figure} alt="" width="320" height="200" loading="lazy" /></div>}
+  <div class="research-entry-body">
+    <div class="research-entry-status"><span>{paper.venue}{paper.group === "spatial" && /^\d{4}$/.test(paper.year) && !/submitted/i.test(paper.venue) ? ` (${paper.year})` : ""}</span><span>{paper.role}</span></div>
+    <h4>{paper.title}</h4>
+    {paper.authors && <p class="research-authors">{paper.authors.split("Changjian Liu").map((part, index) => <>{index > 0 && <strong>Changjian Liu</strong>}{part}</>)}</p>}
+    <p class="research-description">{paper.summary}</p>
+    <div class="research-entry-bottom">
+      {!compact && <ul class="research-tags" aria-label="Topics">{paper.keywords.map(keyword => <li>{keyword}</li>)}</ul>}
+      {paper.links?.some(link => link.href) && <div class="research-links">{paper.links.filter(link => link.href).map(link => <a href={link.href} target={link.external ? "_blank" : undefined} rel={link.external ? "noopener noreferrer" : undefined}>{link.label === "pdf" ? "PDF" : link.label === "webpage" ? "Paper" : link.label === "scholar" ? "Scholar" : link.label}</a>)}</div>}
+    </div>
+  </div>
+</article>

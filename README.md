@@ -1,6 +1,6 @@
 # Changjian Liu Personal Website
 
-Astro + React + Three.js homepage for `Whitneylcj.github.io`, with typed News and Blog systems, a satellite-textured Earth hero, and a privacy-preserving visitor heatmap backend.
+Academic homepage for `Whitneylcj.github.io`, focused on Agentic RL, LLM decision making, and embodied agents. Built with Astro, typed News/Blog collections, and an optional React visitor map.
 
 ## Commands
 
@@ -25,14 +25,17 @@ npm run worker:deploy
 - `src/data/visitorStats.ts` - fallback visitor map data and country catalog
 - `src/content/news/` - MDX news entries
 - `src/content/blog/` - MDX blog entries
-- `src/components/` - React islands for canvas and Three.js experiences
+- `src/components/AgentLoop.astro` - responsive conceptual reasoning/action/feedback illustration
+- `src/components/ResearchEntry.astro` - research entries with explicit publication/submission status
+- `src/styles/research.css` - current homepage design and shared visual tokens
+- `src/components/` - research presentation and optional React visitor map
 - `public/assets/earth/` - Earth visual assets for the homepage hero
 - `workers/visitor-analytics/` - Cloudflare Workers + D1 visitor analytics API
 - `.github/workflows/deploy.yml` - GitHub Pages deployment workflow
 
 ## Assets
 
-The homepage Earth texture uses NASA Blue Marble: Next Generation imagery. Credit: NASA Earth Observatory.
+The homepage uses the existing personal photograph. Archived Earth assets use NASA Blue Marble: Next Generation imagery (NASA Earth Observatory). The Earth is no longer the homepage hero.
 
 ## Deployment
 
@@ -47,4 +50,10 @@ To enable live visitor analytics:
 5. In GitHub repository settings, add an Actions variable:
    `PUBLIC_VISITOR_API_BASE=https://<worker-name>.<subdomain>.workers.dev`
 
-If `PUBLIC_VISITOR_API_BASE` is not configured, the site still builds and shows fallback visitor data.
+If `PUBLIC_VISITOR_API_BASE` is not configured, the visitor section is omitted. If the configured API is unavailable, the map shows an unavailable state instead of fabricated traffic.
+
+## Content maintenance
+
+Profile, research, experience, and education live in `src/data/site.ts`. Research is grouped as `agents`, `decisions`, and `spatial`; the last group appears in an expandable bibliography. Keep ongoing work, submissions, revisions, and publications distinct. Venue years on submissions are not publication dates.
+
+The September 2026 refresh uses the supplied CV and the Galbot internship update. The CV itself, phone number, and private contact handles are not bundled into the public site. Local review notes and screenshots belong in ignored `reports/` directories.

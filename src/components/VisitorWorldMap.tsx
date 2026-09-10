@@ -67,7 +67,7 @@ function normalizeSummary(payload: ApiSummary, fallback: VisitorSummary): Visito
     .filter((item): item is VisitorSummary["countries"][number] => Boolean(item))
     .sort((a, b) => b.visits - a.visits);
 
-  if (countries.length === 0) return fallback;
+
   const regions = normalizeRegions(payload.regions ?? []);
   const cities = normalizeRegions(payload.cities ?? []);
 
@@ -134,6 +134,7 @@ function formatDate(value: string) {
 export default function VisitorWorldMap({ fallback, apiBase }: Props) {
   const [summary, setSummary] = useState<VisitorSummary | null>(() => (apiBase ? null : fallback));
   const isLoading = summary === null;
+  const isUnavailable = summary?.source === "fallback";
   const displaySummary: VisitorSummary =
     summary ?? {
       source: "fallback",
@@ -215,26 +216,25 @@ export default function VisitorWorldMap({ fallback, apiBase }: Props) {
     <section className="visitor-shell" aria-labelledby="visitors-title">
       <div className="visitor-copy">
         <p className="section-label">Visitor Analytics</p>
-        <h2 id="visitors-title">Global research reach</h2>
+        <h2 id="visitors-title">Readers around the world</h2>
         <p>
-          Region-level visitor aggregation for the academic homepage. The production path uses a
-          Cloudflare Worker and D1, without storing IP addresses.
+          Aggregated visits over the last 30 days. IP addresses are not stored.
         </p>
         <div className="visitor-metrics" aria-label="Visitor summary">
           <div>
-            <strong>{isLoading ? "..." : displaySummary.total.toLocaleString("en")}</strong>
-            <span>Total visits</span>
+            <strong>{isLoading ? "..." : isUnavailable ? "—" : displaySummary.total.toLocaleString("en")}</strong>
+            <span>Visits · last 30 days</span>
           </div>
           <div>
-            <strong>{isLoading ? "..." : displaySummary.countries.length}</strong>
-            <span>Countries</span>
+            <strong>{isLoading ? "..." : isUnavailable ? "—" : displaySummary.countries.length}</strong>
+            <span>Countries shown</span>
           </div>
           <div>
-            <strong>{isLoading ? "..." : displaySummary.regions.length}</strong>
-            <span>Regions</span>
+            <strong>{isLoading ? "..." : isUnavailable ? "—" : displaySummary.regions.length}</strong>
+            <span>Regions shown</span>
           </div>
           <div>
-            <strong>{isLoading ? "Loading" : displaySummary.source === "api" ? "Live" : "Fallback"}</strong>
+            <strong>{isLoading ? "Loading" : displaySummary.source === "api" ? "Live" : "Unavailable"}</strong>
             <span>Data source</span>
           </div>
         </div>
@@ -280,7 +280,7 @@ export default function VisitorWorldMap({ fallback, apiBase }: Props) {
           })}
         </svg>
         <div className="visitor-map-footer">
-          <span>Updated {isLoading ? "Loading live data" : formatDate(displaySummary.lastUpdated)}</span>
+          <span>{isLoading ? "Loading visitor data" : isUnavailable ? "Visitor data is currently unavailable" : `Updated ${formatDate(displaySummary.lastUpdated)}`}</span>
           <span>Region aggregate · No IP storage</span>
         </div>
       </div>

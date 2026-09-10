@@ -1,357 +1,67 @@
 ---
 import { getCollection } from "astro:content";
-import HeroEarthField from "@components/HeroEarthField";
-import VisitorWorldMap from "@components/VisitorWorldMap";
 import SiteLayout from "@layouts/SiteLayout.astro";
+import ResearchEntry from "@components/ResearchEntry.astro";
+import AgentLoop from "@components/AgentLoop.astro";
+import VisitorWorldMap from "@components/VisitorWorldMap";
 import { fallbackVisitorSummary } from "@data/visitorStats";
-import {
-  experience,
-  honors,
-  profile,
-  publications,
-  researchAreas
-} from "@data/site";
-
-const heroStats = [
-  { label: "Core field", value: "Spatial Intelligence" },
-  { label: "Decision layer", value: "Causal response learning" },
-  { label: "Applied systems", value: "Pricing, uplift, allocation" }
-];
-const homepageJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "ProfilePage",
-  name: `${profile.name} Academic Homepage`,
-  description: profile.summary,
-  url: "https://whitneylcj.github.io/",
-  mainEntity: {
-    "@type": "Person",
-    "@id": "https://whitneylcj.github.io/#person",
-    name: profile.name
-  }
+import { education, experience, honors, profile, publications, researchAreas } from "@data/site";
+const groups = {
+  agents: publications.filter(p => p.group === "agents"),
+  decisions: publications.filter(p => p.group === "decisions"),
+  spatial: publications.filter(p => p.group === "spatial")
 };
-
-const scholarLink = profile.contacts.find((contact) => contact.label === "Google Scholar");
-const currentYear = new Date().getFullYear();
-const newsEntries = (await getCollection("news")).sort(
-  (a, b) => b.data.date.getTime() - a.data.date.getTime()
-);
-const latestNews = newsEntries.slice(0, 3);
-const blogEntries = (await getCollection("blog"))
-  .filter((entry) => !entry.data.draft)
-  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
-const latestBlog = blogEntries.filter((entry) => entry.data.featured).slice(0, 3);
+const news = (await getCollection("news")).sort((a,b) => b.data.date.getTime()-a.data.date.getTime()).slice(0,3);
+const notes = (await getCollection("blog")).filter(p => !p.data.draft && p.data.featured).sort((a,b) => b.data.date.getTime()-a.data.date.getTime()).slice(0,2);
 const visitorApiBase = import.meta.env.PUBLIC_VISITOR_API_BASE;
-
-function newsSlug(id: string) {
-  return id.replace(/\.mdx?$/, "");
-}
-
-function blogSlug(id: string) {
-  return id.replace(/\.mdx?$/, "");
-}
-
-function formatDate(date: Date) {
-  return new Intl.DateTimeFormat("en", { month: "short", day: "numeric", year: "numeric" }).format(date);
-}
+const slug = (id: string) => id.replace(/\.mdx?$/, "");
+const dateLabel = (date: Date) => new Intl.DateTimeFormat("en", {month:"short",year:"numeric",timeZone:"UTC"}).format(date);
+const homepageJsonLd = {"@context":"https://schema.org", "@type":"ProfilePage", name:`${profile.name} Academic Homepage`, description:profile.summary, url:"https://whitneylcj.github.io/", mainEntity:{"@type":"Person", "@id":"https://whitneylcj.github.io/#person",name:profile.name}};
 ---
-
-<SiteLayout description={profile.summary} canonicalPath="/" jsonLd={homepageJsonLd} bodyClass="home-page">
-  <header class="site-header">
-    <div class="container nav-wrap">
-      <a class="brand" href="#top" aria-label="Changjian Liu homepage">
-        <span class="brand-mark">{profile.initials}</span>
-        <span class="brand-text">
-          <strong>{profile.name}</strong>
-          <small>GeoAI · Machine Learning · Decision</small>
-        </span>
-      </a>
-      <nav class="site-nav" aria-label="Primary navigation">
-        <a href="#about">About</a>
-        <a href="#research">Research</a>
-        <a href="#publications">Publications</a>
-        <a href="#experience">Experience</a>
-        <a href="/blog/">Notes</a>
-      </nav>
-      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle color theme" aria-pressed="false">
-        Dark
-      </button>
+<SiteLayout description={profile.summary} canonicalPath="/" jsonLd={homepageJsonLd} bodyClass="research-home">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="research-header">
+    <div class="research-container research-nav">
+      <a class="research-brand" href="#top">Changjian Liu<span lang="zh">刘昌健</span></a>
+      <nav aria-label="Primary navigation"><a href="#research">Research</a><a href="#experience">Experience</a><a href="/blog/">Notes</a><a href="#contact">Contact</a></nav>
+      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle dark mode" aria-pressed="false">Dark</button>
     </div>
   </header>
-
-  <main id="top">
-    <section class="hero" aria-labelledby="hero-title">
-      <HeroEarthField client:load />
-      <div class="container hero-content">
-        <p class="section-label">GeoAI · Machine Learning · Decision</p>
-        <h1 id="hero-title">{profile.name}</h1>
-        <p class="hero-subtitle">Spatial intelligence for learning and decision-making.</p>
-        <p class="hero-summary">{profile.summary}</p>
-        <div class="hero-actions" aria-label="Primary actions">
-          <a class="button button-primary" href="#publications">Selected publications</a>
-          <a class="button" href="/blog/">Research notes</a>
+  <main id="main-content">
+    <div id="top" class="research-container">
+      <section class="research-hero" id="about" aria-labelledby="intro-title">
+        <div class="intro-copy">
+          <p class="intro-affiliation">Agentic RL <span>/</span> LLM decision making</p>
+          <h1 id="intro-title">Changjian Liu</h1>
+          <p class="intro-statement">Learning to reason, decide, and act.</p>
+          <p class="intro-description">{profile.summary}</p>
+          <p class="intro-current">I am a master’s student at <strong>Peking University</strong> and a research intern at <strong>Galbot</strong>, working on agentic approaches to embodied reasoning and task execution.</p>
+          <div class="intro-links" aria-label="Profile links">{profile.contacts.map(link => <a href={link.href} target={link.external ? "_blank" : undefined} rel={link.external ? "noopener noreferrer" : undefined}>{link.label}</a>)}</div>
         </div>
-        <div class="hero-links" aria-label="Profile links">
-          {
-            profile.contacts.map((contact) => (
-              <a
-                href={contact.href}
-                target={contact.external ? "_blank" : undefined}
-                rel={contact.external ? "noreferrer" : undefined}
-              >
-                {contact.label}
-              </a>
-            ))
-          }
-        </div>
-      </div>
-      <div class="container hero-signals" aria-label="Research signals">
-        {
-          heroStats.map((stat) => (
-            <div class="signal">
-              <span>{stat.label}</span>
-              <strong>{stat.value}</strong>
-            </div>
-          ))
-        }
-      </div>
-    </section>
-
-    <section class="container section" id="news" aria-labelledby="news-title">
-      <div class="section-heading section-heading-row">
-        <div>
-          <p class="section-label">News</p>
-          <h2 id="news-title">Latest updates</h2>
-        </div>
-        <a class="text-link" href="/news/">All news</a>
-      </div>
-      <div class="latest-news-grid">
-        {
-          latestNews.map((entry) => (
-            <article class="news-card">
-              <time datetime={entry.data.date.toISOString()}>{formatDate(entry.data.date)}</time>
-              <h3>
-                <a href={entry.data.externalUrl ?? `/news/${newsSlug(entry.id)}/`}>
-                  {entry.data.title}
-                </a>
-              </h3>
-              <p>{entry.data.summary}</p>
-              <div class="tag-row">
-                {entry.data.tags.map((tag) => <span>{tag}</span>)}
-              </div>
-            </article>
-          ))
-        }
-      </div>
-    </section>
-
-    <section class="container section blog-home-section" id="blog" aria-labelledby="blog-title">
-      <div class="section-heading section-heading-row">
-        <div>
-          <p class="section-label">Blog</p>
-          <h2 id="blog-title">Research notes</h2>
-        </div>
-        <a class="text-link" href="/blog/">All posts</a>
-      </div>
-      <div class="blog-home-grid">
-        {
-          latestBlog.map((entry) => (
-            <article class="blog-home-card">
-              <p class="card-kicker">{entry.data.category}</p>
-              <time datetime={entry.data.date.toISOString()}>{formatDate(entry.data.date)}</time>
-              <h3>
-                <a href={`/blog/${blogSlug(entry.id)}/`}>{entry.data.title}</a>
-              </h3>
-              <p>{entry.data.summary}</p>
-              <div class="tag-row">
-                {entry.data.tags.map((tag) => <span>{tag}</span>)}
-              </div>
-            </article>
-          ))
-        }
-      </div>
-    </section>
-
-    <section class="container section about-section" id="about" aria-labelledby="about-title">
-      <div class="section-heading">
-        <p class="section-label">About</p>
-        <h2 id="about-title">Researcher profile</h2>
-      </div>
-      <div class="about-grid">
-        <div class="about-copy">
-          <p>
-            I am currently pursuing my master's degree in <strong>Spatio-Temporal Big Data</strong> at
-            <strong> Peking University</strong>, after completing my bachelor's degree in
-            <strong> Computer Science and Technology</strong> at
-            <strong> China University of Geosciences, Beijing</strong>.
-          </p>
-          <p>
-            My academic background sits at the intersection of spatial intelligence and modern machine learning.
-            On the application side, I work on industrial decision systems, including pricing, advertising
-            optimization, and causal decision-making.
-          </p>
-        </div>
-        <aside class="profile-panel" aria-label="Profile summary">
-          <div class="avatar-shell">
-            <img
-              src="/assets/profile/changjian-lifestyle.jpg"
-              alt="Changjian Liu holding a small figurine in front of illustrated Beijing landmarks"
-              width="768"
-              height="1024"
-              loading="lazy"
-            />
-          </div>
-          <div>
-            <h3>{profile.title}</h3>
-            <p>{profile.affiliation} · {profile.location}</p>
-            <div class="focus-list">
-              {profile.focus.map((item) => <span>{item}</span>)}
-            </div>
-          </div>
+        <aside class="intro-aside" aria-label="Portrait and current work">
+          <img class="intro-portrait" src="/assets/profile/changjian-lifestyle.jpg" alt="Changjian Liu in Beijing" width="768" height="1024" fetchpriority="high" />
+          <div class="current-position"><span class="current-dot" aria-hidden="true"></span><div><strong>Now at Galbot</strong><span>Embodied intelligence brain</span><span>Research internship · Sep 2026–present</span></div></div>
         </aside>
-      </div>
-    </section>
-
-    <section class="container section" id="research" aria-labelledby="research-title">
-      <div class="section-heading section-heading-row">
-        <div>
-          <p class="section-label">Research</p>
-          <h2 id="research-title">Research directions</h2>
-        </div>
-        <p class="section-note">Methods that connect spatial structure, response estimation, and real decisions.</p>
-      </div>
-      <div class="research-grid">
-        {
-          researchAreas.map((area) => (
-            <article class="info-card">
-              <p class="card-kicker">{area.keywords[0]}</p>
-              <h3>{area.title}</h3>
-              <p>{area.summary}</p>
-              <div class="tag-row">
-                {area.keywords.map((keyword) => <span>{keyword}</span>)}
-              </div>
-            </article>
-          ))
-        }
-      </div>
-    </section>
-
-    <section class="container section" id="publications" aria-labelledby="publications-title">
-      <div class="section-heading section-heading-row">
-        <div>
-          <p class="section-label">Publications</p>
-          <h2 id="publications-title">
-            Publications <span>(representative papers are <mark>highlighted</mark>)</span>
-          </h2>
-          <p class="publication-updated">Last update: Jul 2026</p>
-        </div>
-        {
-          scholarLink && (
-            <a class="text-link" href={scholarLink.href} target="_blank" rel="noreferrer">
-              Full list on Google Scholar
-            </a>
-          )
-        }
-      </div>
-      <div class="publication-list">
-        {
-          publications.map((publication) => (
-            <article class={`publication-card${publication.featured ? " publication-card-featured" : ""}`}>
-              <div class="publication-figure">
-                <img src={publication.figure} alt={publication.figureAlt} loading="lazy" />
-              </div>
-              <div class="publication-body">
-                <h3>{publication.title}</h3>
-                <p class="publication-authors">{publication.authors}</p>
-                <p class="publication-meta">{publication.venue} · {publication.year} · {publication.role}</p>
-                <p class="publication-summary">{publication.summary}</p>
-                <div class="tag-row">
-                  {publication.keywords.map((keyword) => <span>{keyword}</span>)}
-                </div>
-                {
-                  publication.links?.length && (
-                    <div class="publication-links" aria-label={`${publication.title} links`}>
-                      {publication.links
-                        .map((link) =>
-                          link.href ? (
-                            <a
-                              href={link.href}
-                              target={link.external ? "_blank" : undefined}
-                              rel={link.external ? "noreferrer" : undefined}
-                            >
-                              {link.label}
-                            </a>
-                          ) : (
-                            <span
-                              class="publication-link-disabled"
-                              aria-disabled="true"
-                              title={`${link.label} link coming soon`}
-                            >
-                              {link.label}
-                            </span>
-                          )
-                        )}
-                    </div>
-                  )
-                }
-              </div>
-            </article>
-          ))
-        }
-      </div>
-    </section>
-
-    <section class="container section split-section" id="experience" aria-labelledby="experience-title">
-      <div>
-        <div class="section-heading">
-          <p class="section-label">Experience</p>
-          <h2 id="experience-title">Decision systems in practice</h2>
-        </div>
-        <div class="timeline">
-          {
-            experience.map((item) => (
-              <article class="timeline-item">
-                <p class="timeline-date">{item.date}</p>
-                <h3>{item.organization}</h3>
-                <p>{item.summary}</p>
-                <ul>
-                  {item.highlights.map((highlight) => <li>{highlight}</li>)}
-                </ul>
-              </article>
-            ))
-          }
-        </div>
-      </div>
-      <aside class="honors-panel" aria-label="Honors">
-        <p class="section-label">Honors</p>
-        <h2>Recognition</h2>
-        <ul class="honors-list">
-          {honors.map((honor) => <li>{honor.title}</li>)}
-        </ul>
-      </aside>
-    </section>
-
-    <section class="container section" id="visitors" aria-labelledby="visitors-title">
-      <VisitorWorldMap client:load fallback={fallbackVisitorSummary} apiBase={visitorApiBase} />
-    </section>
-
-  </main>
-
-  <footer class="site-footer">
-    <div class="container footer-wrap">
-      <p>© {currentYear} {profile.name}. Built with Astro for GitHub Pages.</p>
-      <div class="footer-links">
-        {
-          profile.contacts.map((contact) => (
-            <a
-              href={contact.href}
-              target={contact.external ? "_blank" : undefined}
-              rel={contact.external ? "noreferrer" : undefined}
-            >
-              {contact.label}
-            </a>
-          ))
-        }
-      </div>
+      </section>
+      <AgentLoop />
+      <section class="research-section questions-section" id="research" aria-labelledby="questions-title">
+        <div class="section-intro"><h2 id="questions-title">Research interests</h2><p>From learning signals to real-world decisions.</p></div>
+        <div class="question-list">{researchAreas.map(area => <article><h3>{area.title}</h3><p>{area.summary}</p><ul class="research-tags">{area.keywords.map(keyword => <li>{keyword}</li>)}</ul></article>)}</div>
+      </section>
+      <section class="research-section" id="publications" aria-labelledby="work-title">
+        <div class="section-heading-v2"><div><h2 id="work-title">Selected research</h2><p>Current projects, submissions, and published work.</p></div><a class="quiet-link" href={profile.contacts.find(c => c.label === "Google Scholar")?.href} target="_blank" rel="noopener noreferrer">Google Scholar</a></div>
+        <div class="research-group agent-group"><h3>LLMs &amp; agentic learning</h3><div class="agent-entries">{groups.agents.map(paper => <ResearchEntry paper={paper} />)}</div></div>
+        <div class="research-group"><h3>Causal decision making</h3><div>{groups.decisions.map(paper => <ResearchEntry paper={paper} />)}</div></div>
+        <details class="earlier-research"><summary><span>Graph learning &amp; GeoAI</span><span class="earlier-count">{groups.spatial.length} works</span><span class="details-icon" aria-hidden="true">+</span></summary><p class="earlier-intro">My earlier work on structured environments, mobility, and generalization.</p>{groups.spatial.map(paper => <ResearchEntry paper={paper} compact />)}</details>
+      </section>
+      <section class="research-section experience-section" id="experience" aria-labelledby="experience-title"><div class="section-intro"><h2 id="experience-title">Experience</h2><p>Learning and decision systems in practice.</p></div><div class="experience-list">{experience.map((item, index) => <article class:list={["experience-row", {"experience-current": index === 0}]}><p class="experience-date">{item.date}</p><h3>{item.organization}</h3><p class="experience-role">{item.role}</p><p>{item.summary}</p></article>)}</div></section>
+      <section class="research-section education-section" aria-labelledby="education-title"><div class="section-intro"><h2 id="education-title">Education</h2></div><div>{education.map(item => <article class="education-row"><div><h3>{item.organization}</h3><p>{item.degree}</p></div><span>{item.date}</span></article>)}<details class="honors-details"><summary>Selected honors</summary><ul>{honors.map(honor => <li>{honor.title}</li>)}</ul></details></div></section>
+      <section class="research-section updates-section" aria-label="Writing and updates">
+        <div id="blog"><div class="section-heading-v2"><h2>Research notes</h2><a class="quiet-link" href="/blog/">All notes</a></div>{notes.map(entry => <article class="note-row"><p class="note-category">{entry.data.category}</p><h3><a href={`/blog/${slug(entry.id)}/`}>{entry.data.title}</a></h3><p>{entry.data.summary}</p></article>)}</div>
+        <div id="news"><div class="section-heading-v2"><h2>Updates</h2><a class="quiet-link" href="/news/">All news</a></div>{news.map(entry => <article class="update-row"><time datetime={entry.data.date.toISOString()}>{dateLabel(entry.data.date)}</time><div><h3><a href={entry.data.externalUrl ?? `/news/${slug(entry.id)}/`}>{entry.data.title}</a></h3><p>{entry.data.summary}</p></div></article>)}</div>
+      </section>
+      {visitorApiBase && <section class="research-section" id="visitors"><VisitorWorldMap client:visible fallback={fallbackVisitorSummary} apiBase={visitorApiBase} /></section>}
+      <footer class="research-footer" id="contact"><div><h2>Let’s connect.</h2><p>I’m interested in exchanging ideas on agent learning,<br class="desktop-break"/> LLM decision making, and embodied intelligence.</p><a class="contact-email" href={`mailto:${profile.email}`}>{profile.email}</a></div><div class="footer-aside"><p>Changjian Liu <span lang="zh">刘昌健</span></p><p>Beijing, China</p><p>© {new Date().getFullYear()}</p><a href="#top">Back to top</a></div></footer>
     </div>
-  </footer>
+  </main>
 </SiteLayout>
