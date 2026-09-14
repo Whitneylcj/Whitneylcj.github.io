@@ -57,3 +57,11 @@ If `PUBLIC_VISITOR_API_BASE` is not configured, the visitor section is omitted. 
 Profile, research, experience, and education live in `src/data/site.ts`. Research is grouped as `agents`, `decisions`, and `spatial`; the last group appears in an expandable bibliography. Keep ongoing work, submissions, revisions, and publications distinct. Venue years on submissions are not publication dates.
 
 The September 2026 refresh uses the supplied CV and the Galbot internship update. The CV itself, phone number, and private contact handles are not bundled into the public site. Local review notes and screenshots belong in ignored `reports/` directories.
+
+## Brand assets
+
+- `public/assets/brand/changjian-liu-logo.png` is the original supplied logo, kept byte-for-byte unchanged.
+- `src/components/BrandLogo.astro` clips the outer whitespace via SVG viewports. Headers use the monogram with adjacent readable text; the footer uses the complete logo.
+- `public/favicon.png` is a 64px browser rendering of the same monogram viewport on a white square, kept small for browser tabs.
+- Default link previews use the supplied PNG rather than the old Earth image. Article-specific preview images still take precedence.
+- White backplates preserve the original black and blue colors in both themes.

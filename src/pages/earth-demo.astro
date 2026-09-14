@@ -1,5 +1,6 @@
 ---
 import SiteLayout from "@layouts/SiteLayout.astro";
+import BrandLogo from "@components/BrandLogo.astro";
 import { profile } from "@data/site";
 
 const pageDescription = "An archive note on the spatial visual from an earlier version of Changjian Liu's homepage.";
@@ -21,7 +22,7 @@ const pageJsonLd = {
   <header class="site-header">
     <div class="container nav-wrap">
       <a class="brand" href="/" aria-label="Back to homepage">
-        <span class="brand-mark">{profile.initials}</span>
+        <BrandLogo />
         <span class="brand-text">
           <strong>{profile.name}</strong>
           <small>Spatial background</small>

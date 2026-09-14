@@ -1,6 +1,7 @@
 ---
 import { getCollection } from "astro:content";
 import SiteLayout from "@layouts/SiteLayout.astro";
+import BrandLogo from "@components/BrandLogo.astro";
 import ResearchEntry from "@components/ResearchEntry.astro";
 import AgentLoop from "@components/AgentLoop.astro";
 import VisitorWorldMap from "@components/VisitorWorldMap";
@@ -22,7 +23,7 @@ const homepageJsonLd = {"@context":"https://schema.org", "@type":"ProfilePage", 
   <a class="skip-link" href="#main-content">Skip to content</a>
   <header class="research-header">
     <div class="research-container research-nav">
-      <a class="research-brand" href="#top">Changjian Liu<span lang="zh">刘昌健</span></a>
+      <a class="research-brand" href="#top"><BrandLogo /><span class="research-brand-name">Changjian Liu</span><span class="research-brand-chinese" lang="zh">刘昌健</span></a>
       <nav aria-label="Primary navigation"><a href="#research">Research</a><a href="#experience">Experience</a><a href="/blog/">Notes</a><a href="#contact">Contact</a></nav>
       <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle dark mode" aria-pressed="false">Dark</button>
     </div>
@@ -61,7 +62,7 @@ const homepageJsonLd = {"@context":"https://schema.org", "@type":"ProfilePage", 
         <div id="news"><div class="section-heading-v2"><h2>Updates</h2><a class="quiet-link" href="/news/">All news</a></div>{news.map(entry => <article class="update-row"><time datetime={entry.data.date.toISOString()}>{dateLabel(entry.data.date)}</time><div><h3><a href={entry.data.externalUrl ?? `/news/${slug(entry.id)}/`}>{entry.data.title}</a></h3><p>{entry.data.summary}</p></div></article>)}</div>
       </section>
       {visitorApiBase && <section class="research-section" id="visitors"><VisitorWorldMap client:visible fallback={fallbackVisitorSummary} apiBase={visitorApiBase} /></section>}
-      <footer class="research-footer" id="contact"><div><h2>Let’s connect.</h2><p>I’m interested in exchanging ideas on agent learning,<br class="desktop-break"/> LLM decision making, and embodied intelligence.</p><a class="contact-email" href={`mailto:${profile.email}`}>{profile.email}</a></div><div class="footer-aside"><p>Changjian Liu <span lang="zh">刘昌健</span></p><p>Beijing, China</p><p>© {new Date().getFullYear()}</p><a href="#top">Back to top</a></div></footer>
+      <footer class="research-footer" id="contact"><div><h2>Let’s connect.</h2><p>I’m interested in exchanging ideas on agent learning,<br class="desktop-break"/> LLM decision making, and embodied intelligence.</p><a class="contact-email" href={`mailto:${profile.email}`}>{profile.email}</a></div><div class="footer-aside"><a class="footer-logo-link" href="#top" aria-label="Changjian Liu homepage"><BrandLogo full decorative={false} /></a><p>Beijing, China</p><p>© {new Date().getFullYear()}</p><a href="#top">Back to top</a></div></footer>
     </div>
   </main>
 </SiteLayout>

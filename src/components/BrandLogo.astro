@@ -1,0 +1,18 @@
+---
+type Props = { full?: boolean; decorative?: boolean };
+const { full = false, decorative = true } = Astro.props;
+const box = full ? "230 288 800 670" : "230 288 800 500";
+---
+<svg
+  class:list={["personal-logo", { "personal-logo-full": full }]}
+  xmlns="http://www.w3.org/2000/svg"
+  width={full ? 144 : 58}
+  height={full ? 121 : 36}
+  viewBox={box}
+  role={decorative ? undefined : "img"}
+  aria-hidden={decorative ? "true" : undefined}
+  aria-label={decorative ? undefined : "Changjian Liu logo"}
+  focusable="false"
+>
+  <image href="/assets/brand/changjian-liu-logo.png" width="1254" height="1254" />
+</svg>

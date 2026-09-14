@@ -26,7 +26,7 @@ a { text-underline-offset: 4px; }
 .research-header { border-bottom: 1px solid var(--line); background: var(--bg); }
 .research-nav { display: flex; align-items: center; gap: 32px; min-height: 86px; }
 .research-nav .research-brand { color: var(--text); font-size: 16px; font-weight: 750; white-space: nowrap; }
-.research-brand span { font-size: 12px; font-weight: 400; padding-left: 12px; color: var(--muted); }
+.research-brand .research-brand-chinese { font-size: 12px; font-weight: 400; color: var(--muted); }
 .research-nav nav { display: flex; align-items: center; gap: 28px; margin-left: auto; font-size: 13px; }
 .research-nav nav a { color: var(--soft); }
 .research-nav .theme-toggle { min-width: 44px; height: 32px; padding: 0 9px; border: 1px solid var(--line); background: transparent; border-radius: 6px; color: var(--muted); font: inherit; font-size: 12px; box-shadow: none; }
@@ -138,7 +138,7 @@ a { text-underline-offset: 4px; }
   .research-container { width: min(1080px, calc(100% - 48px)); }
   .research-nav { gap: 22px; }
   .research-nav nav { gap: 20px; }
-  .research-brand span { display: none; }
+  .research-brand .research-brand-chinese { display: none; }
   .research-hero { grid-template-columns: 1fr 190px; gap: 38px; padding-top: 52px; }
   .intro-portrait { width: 190px; height: 240px; }
   .research-home .intro-copy h1 { font-size: 46px; }
@@ -153,7 +153,7 @@ a { text-underline-offset: 4px; }
   .research-container { width: calc(100% - 36px); }
   .research-nav { flex-wrap: wrap; padding: 17px 0 12px; gap: 10px 15px; }
   .research-nav .research-brand { flex: 1; }
-  .research-brand span { display: inline; }
+  .research-brand .research-brand-chinese { display: none; }
   .research-nav nav { order: 3; width: 100%; justify-content: space-between; margin: 0; font-size: 12px; }
   .research-nav .theme-toggle { margin-left: auto; }
   .research-hero { grid-template-columns: 1fr; gap: 25px; padding: 38px 0 28px; }
@@ -206,3 +206,17 @@ a { text-underline-offset: 4px; }
   .contact-email { font-size: 14px; overflow-wrap: anywhere; }
 }
 @media(prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { animation: none !important; transition: none !important; } }
+
+/* Original personal mark; viewports remove whitespace without redrawing its pixels. */
+.personal-logo { display: block; width: 58px; height: auto; aspect-ratio: 8 / 5; flex: 0 0 auto; background: #fff; border-radius: 5px; overflow: hidden; }
+.research-nav .research-brand { display: inline-flex; align-items: center; gap: 10px; }
+.research-brand .research-brand-name { color: var(--text); font-size: 16px; font-weight: 750; }
+.personal-logo-full { width: 144px; aspect-ratio: 80 / 67; border-radius: 7px; }
+.footer-aside .footer-logo-link { display: inline-block; margin: 0 0 12px; }
+@media (max-width: 640px) {
+  .personal-logo { width: 48px; }
+  .personal-logo-full { width: 132px; }
+  .research-nav .research-brand { gap: 8px; }
+  .research-brand .research-brand-name { font-size: 14px; }
+  .footer-aside .footer-logo-link { display: block; width: max-content; }
+}

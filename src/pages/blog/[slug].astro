@@ -1,6 +1,7 @@
 ---
 import { getCollection, render, type CollectionEntry } from "astro:content";
 import SiteLayout from "@layouts/SiteLayout.astro";
+import BrandLogo from "@components/BrandLogo.astro";
 import { profile } from "@data/site";
 
 type Props = {
@@ -62,7 +63,7 @@ function formatDate(date: Date) {
   <header class="site-header">
     <div class="container nav-wrap">
       <a class="brand" href="/" aria-label="Back to homepage">
-        <span class="brand-mark">{profile.initials}</span>
+        <BrandLogo />
         <span class="brand-text">
           <strong>{profile.name}</strong>
           <small>{entry.data.category}</small>

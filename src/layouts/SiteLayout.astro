@@ -23,7 +23,7 @@ const {
   title = defaultTitle,
   description = siteDescription,
   canonicalPath,
-  image = "/assets/earth/blue-marble-2048.jpg",
+  image = "/assets/brand/changjian-liu-logo.png",
   type = "website",
   publishedDate,
   updatedDate,
@@ -34,6 +34,7 @@ const {
 const site = Astro.site ?? new URL("https://whitneylcj.github.io");
 const canonicalUrl = new URL(canonicalPath ?? Astro.url.pathname, site).toString();
 const imageUrl = new URL(image, site).toString();
+const usesLogoPreview = image === "/assets/brand/changjian-liu-logo.png";
 const publishedIso = publishedDate ? new Date(publishedDate).toISOString() : undefined;
 const updatedIso = updatedDate ? new Date(updatedDate).toISOString() : undefined;
 const sameAs = profile.contacts.filter((contact) => contact.external).map((contact) => contact.href);
@@ -78,14 +79,18 @@ const jsonLdItems = [...baseJsonLd, ...pageJsonLd];
     <title>{title}</title>
     <link rel="canonical" href={canonicalUrl} />
     <link rel="sitemap" href="/sitemap-index.xml" />
+    <link rel="icon" type="image/png" sizes="64x64" href="/favicon.png" />
     <meta property="og:site_name" content={`${profile.name} Academic Homepage`} />
     <meta property="og:type" content={type} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalUrl} />
     <meta property="og:image" content={imageUrl} />
+    {usesLogoPreview && <meta property="og:image:alt" content="Changjian Liu logo" />}
+    {usesLogoPreview && <meta property="og:image:width" content="1254" />}
+    {usesLogoPreview && <meta property="og:image:height" content="1254" />}
     <meta property="og:locale" content="en_US" />
-    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:card" content={usesLogoPreview ? "summary" : "summary_large_image"} />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={imageUrl} />
