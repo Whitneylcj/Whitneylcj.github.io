@@ -1,0 +1,80 @@
+---
+import BrandLogo from "@components/BrandLogo.astro";
+import { profile } from "@data/site";
+const isHome = Astro.url.pathname === "/";
+const isNotes = Astro.url.pathname.startsWith("/blog");
+const links = [
+  { label: "About", id: "about" },
+  { label: "Research", id: "research" },
+  { label: "Publications", id: "publications" },
+  { label: "Experience", id: "experience" },
+  { label: "Notes", id: "blog" },
+  { label: "Contact", id: "contact" }
+];
+---
+<header class="site-header" data-home={isHome}>
+  <div class="container nav-wrap">
+    <a class="site-brand" href={isHome ? "#top" : "/"} aria-label="Changjian Liu homepage">
+      <BrandLogo />
+      <span>{profile.name}</span>
+      <span class="brand-chinese" lang="zh">刘昌健</span>
+    </a>
+    <nav class="site-nav" aria-label="Primary navigation">
+      {links.map(link => <a
+        href={link.id === "blog" ? "/blog/" : `${isHome ? "" : "/"}#${link.id}`}
+        data-section={link.id}
+        aria-current={isNotes && link.id === "blog" ? "page" : isHome && link.id === "about" ? "location" : undefined}
+      >{link.label}</a>)}
+    </nav>
+    <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle dark mode" aria-pressed="false">Dark</button>
+  </div>
+</header>
+<script>
+  const header = document.querySelector<HTMLElement>(".site-header");
+  if (header) {
+    const root = document.documentElement;
+    const links = [...header.querySelectorAll<HTMLAnchorElement>("[data-section]")];
+    const sections = links.map(link => document.getElementById(link.dataset.section!)).filter((section): section is HTMLElement => !!section);
+    let frame = 0;
+    let initialAnchorPending = true;
+    const updateActive = () => {
+      frame = 0;
+      if (header.dataset.home !== "true") return;
+      const threshold = header.getBoundingClientRect().height + 100;
+      let active = sections[0];
+      for (const section of sections) {
+        if (section.getBoundingClientRect().top <= threshold) active = section;
+      }
+      if (window.scrollY > 0 && window.innerHeight + window.scrollY >= root.scrollHeight - 2) active = sections.at(-1);
+      links.forEach(link => {
+        if (link.dataset.section === active?.id) link.setAttribute("aria-current", "location");
+        else link.removeAttribute("aria-current");
+      });
+    };
+    const queueUpdate = () => { if (!frame) frame = requestAnimationFrame(updateActive); };
+    const measureHeader = () => {
+      root.style.setProperty("--header-height", `${header.getBoundingClientRect().height}px`);
+      queueUpdate();
+    };
+    measureHeader();
+    new ResizeObserver(measureHeader).observe(header);
+    window.addEventListener("scroll", queueUpdate, { passive: true });
+    window.addEventListener("resize", queueUpdate, { passive: true });
+    window.addEventListener("hashchange", queueUpdate);
+    // Re-align a direct fragment after fonts and images settle, unless the reader has moved.
+    const cancelInitialAnchor = () => { initialAnchorPending = false; };
+    for (const event of ["wheel", "touchstart", "pointerdown", "keydown"]) {
+      window.addEventListener(event, cancelInitialAnchor, { once: true, passive: true });
+    }
+    const alignInitialAnchor = () => {
+      measureHeader();
+      if (initialAnchorPending && location.hash) {
+        try { document.getElementById(decodeURIComponent(location.hash.slice(1)))?.scrollIntoView({ behavior: "instant" }); } catch { /* Ignore malformed fragments. */ }
+      }
+      initialAnchorPending = false;
+      queueUpdate();
+    };
+    if (document.readyState === "complete") alignInitialAnchor();
+    else window.addEventListener("load", alignInitialAnchor, { once: true });
+  }
+</script>

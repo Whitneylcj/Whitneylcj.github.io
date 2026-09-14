@@ -1,6 +1,5 @@
 ---
 import SiteLayout from "@layouts/SiteLayout.astro";
-import BrandLogo from "@components/BrandLogo.astro";
 import { profile } from "@data/site";
 
 const pageDescription = "An archive note on the spatial visual from an earlier version of Changjian Liu's homepage.";
@@ -19,28 +18,8 @@ const pageJsonLd = {
   canonicalPath="/earth-demo/"
   jsonLd={pageJsonLd}
 >
-  <header class="site-header">
-    <div class="container nav-wrap">
-      <a class="brand" href="/" aria-label="Back to homepage">
-        <BrandLogo />
-        <span class="brand-text">
-          <strong>{profile.name}</strong>
-          <small>Spatial background</small>
-        </span>
-      </a>
-      <nav class="site-nav" aria-label="Legacy page navigation">
-        <a href="/#about">About</a>
-        <a href="/#publications">Publications</a>
-        <a href="/news/">News</a>
-        <a href="/blog/">Blog</a>
-      </nav>
-      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle color theme" aria-pressed="true">
-        Dark
-      </button>
-    </div>
-  </header>
 
-  <main class="subpage-main">
+  <main id="main-content" class="subpage-main" tabindex="-1">
     <section class="container subpage-hero legacy-demo-page">
       <p class="section-label">Spatial Visual</p>
       <h1>An earlier chapter of this homepage.</h1>

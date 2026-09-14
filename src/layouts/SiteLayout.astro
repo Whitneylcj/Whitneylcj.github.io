@@ -1,6 +1,9 @@
 ---
+import WorldBackdrop from "@components/WorldBackdrop.astro";
+import SiteHeader from "@components/SiteHeader.astro";
 import "../styles/global.css";
 import "../styles/research.css";
+import "../styles/backdrop.css";
 import { profile } from "@data/site";
 
 type Props = {
@@ -96,12 +99,7 @@ const jsonLdItems = [...baseJsonLd, ...pageJsonLd];
     <meta name="twitter:image" content={imageUrl} />
     {publishedIso && <meta property="article:published_time" content={publishedIso} />}
     {updatedIso && <meta property="article:modified_time" content={updatedIso} />}
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;650;700;800&family=IBM+Plex+Serif:wght@400;500&display=swap"
-      rel="stylesheet"
-    />
+    <link rel="preload" href="/assets/fonts/InterVariable.woff2" as="font" type="font/woff2" crossorigin />
     <script is:inline>
       (() => {
         let stored;
@@ -113,7 +111,14 @@ const jsonLdItems = [...baseJsonLd, ...pageJsonLd];
     {jsonLdItems.map((item) => <script type="application/ld+json" set:html={JSON.stringify(item)} />)}
   </head>
   <body class={bodyClass}>
-    <slot />
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <WorldBackdrop />
+    <SiteHeader />
+    <div class="page-sheet"><slot /></div>
+    <div class="page-colophon">
+      <p>Earth imagery: <a href="https://science.nasa.gov/earth/earth-observatory/blue-marble-next-generation/" target="_blank" rel="noopener noreferrer">NASA Earth Observatory</a></p>
+      <button class="background-toggle" type="button">Pause background</button>
+    </div>
     <script is:inline>
       (() => {
         const root = document.documentElement;

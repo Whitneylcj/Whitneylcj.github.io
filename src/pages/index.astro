@@ -20,15 +20,7 @@ const dateLabel = (date: Date) => new Intl.DateTimeFormat("en", {month:"short",y
 const homepageJsonLd = {"@context":"https://schema.org", "@type":"ProfilePage", name:`${profile.name} Academic Homepage`, description:profile.summary, url:"https://whitneylcj.github.io/", mainEntity:{"@type":"Person", "@id":"https://whitneylcj.github.io/#person",name:profile.name}};
 ---
 <SiteLayout description={profile.summary} canonicalPath="/" jsonLd={homepageJsonLd} bodyClass="research-home">
-  <a class="skip-link" href="#main-content">Skip to content</a>
-  <header class="research-header">
-    <div class="research-container research-nav">
-      <a class="research-brand" href="#top"><BrandLogo /><span class="research-brand-name">Changjian Liu</span><span class="research-brand-chinese" lang="zh">刘昌健</span></a>
-      <nav aria-label="Primary navigation"><a href="#research">Research</a><a href="#experience">Experience</a><a href="/blog/">Notes</a><a href="#contact">Contact</a></nav>
-      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle dark mode" aria-pressed="false">Dark</button>
-    </div>
-  </header>
-  <main id="main-content">
+  <main id="main-content" tabindex="-1">
     <div id="top" class="research-container">
       <section class="research-hero" id="about" aria-labelledby="intro-title">
         <div class="intro-copy">
@@ -41,13 +33,13 @@ const homepageJsonLd = {"@context":"https://schema.org", "@type":"ProfilePage", 
         </div>
         <aside class="intro-aside" aria-label="Portrait and current work">
           <img class="intro-portrait" src="/assets/profile/changjian-lifestyle.jpg" alt="Changjian Liu in Beijing" width="768" height="1024" fetchpriority="high" />
-          <div class="current-position"><span class="current-dot" aria-hidden="true"></span><div><strong>Now at Galbot</strong><span>Embodied intelligence brain</span><span>Research internship · Sep 2026–present</span></div></div>
+          <div class="current-position"><span class="current-dot" aria-hidden="true"></span><div><strong>Now at Galbot</strong><span>Embodied intelligence brain</span><span>Research internship</span><span>Sep 2026–present</span></div></div>
         </aside>
       </section>
-      <AgentLoop />
       <section class="research-section questions-section" id="research" aria-labelledby="questions-title">
         <div class="section-intro"><h2 id="questions-title">Research interests</h2><p>From learning signals to real-world decisions.</p></div>
         <div class="question-list">{researchAreas.map(area => <article><h3>{area.title}</h3><p>{area.summary}</p><ul class="research-tags">{area.keywords.map(keyword => <li>{keyword}</li>)}</ul></article>)}</div>
+        <AgentLoop />
       </section>
       <section class="research-section" id="publications" aria-labelledby="work-title">
         <div class="section-heading-v2"><div><h2 id="work-title">Selected research</h2><p>Current projects, submissions, and published work.</p></div><a class="quiet-link" href={profile.contacts.find(c => c.label === "Google Scholar")?.href} target="_blank" rel="noopener noreferrer">Google Scholar</a></div>

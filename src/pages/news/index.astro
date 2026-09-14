@@ -1,7 +1,6 @@
 ---
 import { getCollection } from "astro:content";
 import SiteLayout from "@layouts/SiteLayout.astro";
-import BrandLogo from "@components/BrandLogo.astro";
 import { profile } from "@data/site";
 
 const newsEntries = (await getCollection("news")).sort(
@@ -37,28 +36,8 @@ function formatDate(date: Date) {
   canonicalPath="/news/"
   jsonLd={collectionJsonLd}
 >
-  <header class="site-header">
-    <div class="container nav-wrap">
-      <a class="brand" href="/" aria-label="Back to homepage">
-        <BrandLogo />
-        <span class="brand-text">
-          <strong>{profile.name}</strong>
-          <small>News and updates</small>
-        </span>
-      </a>
-      <nav class="site-nav" aria-label="News navigation">
-        <a href="/#about">About</a>
-        <a href="/#publications">Publications</a>
-        <a href="/news/">News</a>
-        <a href="/blog/">Blog</a>
-      </nav>
-      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle color theme" aria-pressed="true">
-        Dark
-      </button>
-    </div>
-  </header>
 
-  <main class="subpage-main">
+  <main id="main-content" class="subpage-main" tabindex="-1">
     <section class="container subpage-hero">
       <p class="section-label">News</p>
       <h1>Recent updates</h1>

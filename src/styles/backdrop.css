@@ -1,0 +1,40 @@
+/* A quiet moving world around an opaque, narrower reading surface. */
+:root { --page-width: 980px; --page-gutter: 48px; --canvas: #E5EBF1; --panel-shadow: 0 14px 70px rgba(39, 61, 83, .1); }
+:root[data-theme="dark"] { --canvas: #0C141F; --panel-shadow: 0 16px 70px rgba(0, 0, 0, .24); }
+body { background: var(--canvas); isolation: isolate; }
+.world-backdrop { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; background: radial-gradient(ellipse at 80% 15%, #F3F6FA, transparent 70%), var(--canvas); }
+.world-globe { position: absolute; width: 1100px; height: 1100px; left: calc(50% - 850px); top: 14vh; overflow: hidden; border-radius: 50%; background: #BDCDDB; opacity: .4; box-shadow: 0 0 0 1px rgba(255,255,255,.4), 0 0 90px rgba(85, 133, 176, .22); transform: rotate(-14deg); }
+.world-texture { width: 400%; height: 100%; background: url('/assets/earth/blue-marble-2048.jpg') repeat-x 0 50% / 50% 100%; filter: saturate(.3); animation: world-rotation 180s linear infinite; }
+.world-globe::after { content: ''; position: absolute; inset: 0; border-radius: inherit; box-shadow: inset 60px 30px 140px rgba(222,235,246,.55), inset -120px -50px 170px rgba(28,58,86,.7); background: linear-gradient(115deg, rgba(230,241,248,.25), transparent 60%); }
+.world-orbit { position: absolute; width: 1550px; height: 600px; border: 1px solid rgba(94,123,151,.24); border-radius: 50%; left: calc(50% - 775px); top: 25vh; transform: rotate(-32deg); }
+.world-orbit::after { content: ''; position: absolute; width: 7px; height: 7px; border-radius: 50%; top: 50%; left: -4px; background: #7798B8; box-shadow: 0 0 0 6px rgba(119,152,184,.1); }
+.world-orbit-two { width: 1360px; height: 1100px; left: calc(50% - 680px); top: -10vh; transform: rotate(28deg); opacity: .5; }
+.world-coordinates { position: absolute; inset: 0; background-image: radial-gradient(circle, rgba(89,117,145,.32) 1px, transparent 1px); background-size: 64px 64px; opacity: .3; }
+:root[data-theme="dark"] .world-backdrop { background: radial-gradient(ellipse at 80% 15%, #1B3048, transparent 70%), var(--canvas); }
+:root[data-theme="dark"] .world-globe { opacity: .25; }
+:root[data-theme="dark"] .world-globe::after { box-shadow: inset 40px 30px 140px rgba(81,119,155,.22), inset -120px -50px 170px #071321; }
+.page-sheet { width: min(var(--page-width), calc(100% - 64px)); margin: 32px auto 20px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg); box-shadow: var(--panel-shadow); }
+.page-sheet .container, .page-sheet .research-container { width: calc(100% - var(--page-gutter) * 2); }
+.site-header .nav-wrap { width: min(var(--page-width), calc(100% - 64px)); }
+.page-sheet .blog-detail-grid { grid-template-columns: minmax(0, 1fr) 180px; column-gap: 36px; }
+.page-colophon { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; width: min(var(--page-width), calc(100% - 64px)); margin: 0 auto 32px; font-size: 12px; color: var(--muted); }
+.page-colophon a { color: inherit; text-decoration: underline; }
+.background-toggle { border: 1px solid var(--line); border-radius: 6px; background: var(--bg); color: var(--muted); min-height: 36px; padding: 4px 12px; font-size: 12px; }
+.background-toggle[hidden] { display: none; }
+@keyframes world-rotation { from { transform: translate3d(0,0,0); } to { transform: translate3d(-50%,0,0); } }
+:root[data-background-paused="true"] .world-texture { animation-play-state: paused; }
+@media (max-width: 1120px) { :root { --page-gutter: 40px; } }
+@media (max-width: 960px) {
+  .page-sheet .blog-detail-grid { grid-template-columns: minmax(0, 1fr); }
+  .world-globe { width: 850px; height: 850px; left: calc(50% - 600px); }
+}
+@media (max-width: 640px) {
+  :root { --page-gutter: 18px; }
+  .page-sheet { width: calc(100% - 24px); margin-top: 16px; }
+  .site-header .nav-wrap { width: calc(100% - 36px); }
+  .page-colophon { width: calc(100% - 36px); }
+  .world-globe { width: 600px; height: 600px; left: calc(50% - 450px); opacity: .22; }
+  .world-texture { animation: none; }
+  .background-toggle { display: none; }
+}
+@media (prefers-reduced-motion: reduce) { .world-texture { animation: none; } }

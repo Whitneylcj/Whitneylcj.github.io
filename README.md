@@ -35,7 +35,7 @@ npm run worker:deploy
 
 ## Assets
 
-The homepage uses the existing personal photograph. Archived Earth assets use NASA Blue Marble: Next Generation imagery (NASA Earth Observatory). The Earth is no longer the homepage hero.
+The homepage uses the existing personal photograph. The decorative moving background reuses NASA Blue Marble: Next Generation imagery (NASA Earth Observatory), credited in the page footer. Its source collection is https://science.nasa.gov/earth/earth-observatory/blue-marble-next-generation/. Animation pauses when the page is hidden, respects reduced-motion preferences, and can be paused with the footer control; it is static on phones. The research content remains focused on agentic learning and LLM decision making.
 
 ## Deployment
 

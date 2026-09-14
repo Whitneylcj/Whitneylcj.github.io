@@ -1,0 +1,28 @@
+<div class="world-backdrop" aria-hidden="true">
+  <div class="world-orbit world-orbit-one"></div>
+  <div class="world-orbit world-orbit-two"></div>
+  <div class="world-globe"><div class="world-texture"></div></div>
+  <div class="world-coordinates"></div>
+</div>
+<script>
+  const root = document.documentElement;
+  const motionPreference = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const button = document.querySelector<HTMLButtonElement>(".background-toggle");
+  let paused = false;
+  try { paused = localStorage.getItem("background-paused") === "true"; } catch {}
+  const updateMotion = () => {
+    root.dataset.backgroundPaused = String(paused || motionPreference.matches || document.hidden);
+    if (button) {
+      button.hidden = motionPreference.matches;
+      button.textContent = paused ? "Resume background" : "Pause background";
+    }
+  };
+  button?.addEventListener("click", () => {
+    paused = !paused;
+    try { localStorage.setItem("background-paused", String(paused)); } catch {}
+    updateMotion();
+  });
+  motionPreference.addEventListener("change", updateMotion);
+  document.addEventListener("visibilitychange", updateMotion);
+  updateMotion();
+</script>
