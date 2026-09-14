@@ -5,7 +5,10 @@ const { paper, compact = false } = Astro.props;
 const links = paper.links?.filter(link => link.href) ?? [];
 ---
 <article class:list={["research-entry", { "research-entry-compact": compact }]}>
-  {paper.figure && <div class="research-figure"><img src={paper.figure} alt={paper.figureAlt ?? ""} width="320" height="200" loading="lazy" /></div>}
+  {paper.figure && <a class="research-figure" href={paper.figure} aria-label={`View full-size figure for ${paper.title}`}>
+    <img src={paper.figure} alt={paper.figureAlt ?? ""} width="320" height="200" loading="lazy" />
+    <span class="research-figure-label" aria-hidden="true">View figure<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 3H3v3M10 3h3v3M3 10v3h3M13 10v3h-3" /></svg></span>
+  </a>}
   <div class="research-entry-body">
     <h4>{paper.title}</h4>
     {paper.authors && <p class="research-authors">{paper.authors.split("Changjian Liu").map((part, index) => <>{index > 0 && <strong>Changjian Liu</strong>}{part}</>)}</p>}

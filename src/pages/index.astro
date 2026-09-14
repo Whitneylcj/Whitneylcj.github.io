@@ -17,18 +17,26 @@ const notes = (await getCollection("blog")).filter(p => !p.data.draft && p.data.
 const visitorApiBase = import.meta.env.PUBLIC_VISITOR_API_BASE;
 const slug = (id: string) => id.replace(/\.mdx?$/, "");
 const dateLabel = (date: Date) => new Intl.DateTimeFormat("en", {month:"short",year:"numeric",timeZone:"UTC"}).format(date);
-const homepageJsonLd = {"@context":"https://schema.org", "@type":"ProfilePage", name:`${profile.name} Academic Homepage`, description:profile.summary, url:new URL("/", Astro.site).toString(), mainEntity:{"@type":"Person", "@id":new URL("/#person", Astro.site).toString(),name:profile.name}};
+const homepageDescription = "Changjian Liu (刘昌健), a master’s student at Peking University and research intern at Galbot, studies agentic reinforcement learning, LLM post-training, and sequential decision making.";
+const homepageJsonLd = {"@context":"https://schema.org", "@type":"ProfilePage", name:`${profile.name} Academic Homepage`, description:homepageDescription, url:new URL("/", Astro.site).toString(), mainEntity:{"@type":"Person", "@id":new URL("/#person", Astro.site).toString(),name:profile.name}};
 ---
-<SiteLayout description={profile.summary} canonicalPath="/" jsonLd={homepageJsonLd} bodyClass="research-home">
+<SiteLayout description={homepageDescription} canonicalPath="/" jsonLd={homepageJsonLd} bodyClass="research-home">
   <main id="main-content" tabindex="-1">
     <div id="top" class="research-container">
       <section class="research-hero" id="about" aria-labelledby="intro-title">
         <div class="intro-copy">
-          <p class="intro-affiliation">Agentic RL <span>/</span> LLM decision making</p>
           <h1 id="intro-title">Changjian Liu</h1>
-          <p class="intro-statement">Learning to reason, decide, and act.</p>
-          <p class="intro-description">{profile.summary}</p>
-          <p class="intro-current">I am a master’s student at <strong>Peking University</strong> and a research intern at <strong>Galbot</strong>, working on agentic approaches to embodied reasoning and task execution.</p>
+          <div class="intro-biography">
+            <p>
+              Hi! I am Changjian Liu (刘昌健), a master’s student in Spatio-Temporal Big Data at <a href="https://english.pku.edu.cn/" target="_blank" rel="noopener noreferrer">Peking University</a>, where I study at the <a href="https://irsgis.pku.edu.cn/english/index.htm" target="_blank" rel="noopener noreferrer">Institute of Remote Sensing and Geographic Information Systems</a>, under the supervision of <a href="https://irsgis.pku.edu.cn/english/facultystaff/gis/gaoyong/index.htm" target="_blank" rel="noopener noreferrer">Prof. Yong Gao</a>. I am currently a Research Intern at <a href="https://www.galbot.com/" target="_blank" rel="noopener noreferrer">Galbot</a>, working on agentic systems for embodied brains and long-horizon tasks.
+            </p>
+            <p>
+              Previously, I was an Intern at <a href="https://www.alibabagroup.com/" target="_blank" rel="noopener noreferrer">Alibaba</a> · <a href="https://www.alibabagroup.com/en-US/about-alibaba-businesses" target="_blank" rel="noopener noreferrer">Taobao &amp; Tmall Group</a> · <a href="https://www.alimama.com/" target="_blank" rel="noopener noreferrer">Alimama</a>, where I worked on agentic reinforcement learning, causal decision systems, and large-scale decision optimization, and an Intern at <a href="https://www.didiglobal.com/" target="_blank" rel="noopener noreferrer">DiDi</a>, focusing on advertising algorithms and decision making. I received my B.Eng. in Computer Science and Technology from <a href="https://en.cugb.edu.cn/" target="_blank" rel="noopener noreferrer">China University of Geosciences, Beijing</a>.
+            </p>
+            <p>
+              My research interests lie broadly in agentic reinforcement learning, LLM post-training, and sequential decision making. I am particularly interested in how intelligent agents can learn from interaction, assign credit over long horizons, and reliably translate reasoning into actions in both digital and embodied environments.
+            </p>
+          </div>
           <div class="intro-links" aria-label="Profile links">{profile.contacts.map(link => <a href={link.href} target={link.external ? "_blank" : undefined} rel={link.external ? "noopener noreferrer" : undefined}>{link.label}</a>)}</div>
         </div>
         <aside class="intro-aside" aria-label="Portrait and current work">
@@ -45,7 +53,7 @@ const homepageJsonLd = {"@context":"https://schema.org", "@type":"ProfilePage", 
         <div class="section-heading-v2"><div><h2 id="work-title">Selected research</h2><p>Current projects, submissions, and published work.</p></div><a class="quiet-link" href={profile.contacts.find(c => c.label === "Google Scholar")?.href} target="_blank" rel="noopener noreferrer">Google Scholar</a></div>
         <div class="research-group agent-group"><h3>LLMs &amp; agentic learning</h3><div class="agent-entries">{groups.agents.map(paper => <ResearchEntry paper={paper} />)}</div></div>
         <div class="research-group"><h3>Causal decision making</h3><div>{groups.decisions.map(paper => <ResearchEntry paper={paper} />)}</div></div>
-        <details class="earlier-research"><summary><span>Graph learning &amp; GeoAI</span><span class="earlier-count">{groups.spatial.length} works</span><span class="details-icon" aria-hidden="true">+</span></summary><p class="earlier-intro">My earlier work on structured environments, mobility, and generalization.</p>{groups.spatial.map(paper => <ResearchEntry paper={paper} compact />)}</details>
+        <details class="earlier-research" open><summary><span>Graph learning &amp; GeoAI</span><span class="earlier-count">{groups.spatial.length} works</span><span class="details-icon" aria-hidden="true">+</span></summary><p class="earlier-intro">My earlier work on structured environments, mobility, and generalization.</p>{groups.spatial.map(paper => <ResearchEntry paper={paper} compact />)}</details>
       </section>
       <section class="research-section experience-section" id="experience" aria-labelledby="experience-title"><div class="section-intro"><h2 id="experience-title">Experience</h2><p>Learning and decision systems in practice.</p></div><div class="experience-list">{experience.map((item, index) => <article class:list={["experience-row", {"experience-current": index === 0}]}><p class="experience-date">{item.date}</p><h3>{item.organization}</h3><p class="experience-role">{item.role}</p><p>{item.summary}</p></article>)}</div></section>
       <section class="research-section education-section" aria-labelledby="education-title"><div class="section-intro"><h2 id="education-title">Education</h2></div><div>{education.map(item => <article class="education-row"><div><h3>{item.organization}</h3><p>{item.degree}</p></div><span>{item.date}</span></article>)}<details class="honors-details"><summary>Selected honors</summary><ul>{honors.map(honor => <li>{honor.title}</li>)}</ul></details></div></section>

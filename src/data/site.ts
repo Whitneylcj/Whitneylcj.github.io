@@ -310,11 +310,18 @@ export const publications: Publication[] = [
     group: "spatial",
     year: "2026",
     title: "VEGAR: A tourist attraction recommender system based on signed feedback and a signed spatial-sentiment knowledge graph",
-    venue: "Journal of King Saud University – Science",
+    authors: "Renjun Cao, Yong Gao, Yi Zhang, Changjian Liu, Zhiyang Wang",
+    venue: "Journal of King Saud University Computer and Information Sciences",
     role: "Fourth author",
     summary: "Tourist attraction recommendation with signed feedback and a spatial-sentiment knowledge graph.",
     keywords: ["Recommendation", "Knowledge graphs"],
-    links: [{ label: "Paper", href: "https://link.springer.com/article/10.1007/s44443-026-01048-z", external: true }]
+    figure: "/assets/publications/vegar-propagation-layer.png",
+    figureAlt: "VEGAR propagation architecture combining signed attraction and user subgraphs through five propagation procedures and spatial-sentiment attention.",
+    links: [
+      { label: "Paper", href: "https://link.springer.com/article/10.1007/s44443-026-01048-z", external: true },
+      { label: "Figure 4", href: "https://link.springer.com/article/10.1007/s44443-026-01048-z/figures/4", external: true },
+      { label: "CC BY 4.0", href: "https://creativecommons.org/licenses/by/4.0/", external: true }
+    ]
   }
 ];
 

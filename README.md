@@ -37,6 +37,8 @@ npm run worker:deploy
 
 The homepage uses the existing personal photograph. The decorative moving background reuses NASA Blue Marble: Next Generation imagery (NASA Earth Observatory), credited in the page footer. Its source collection is https://science.nasa.gov/earth/earth-observatory/blue-marble-next-generation/. Animation pauses when the page is hidden, respects reduced-motion preferences, and can be paused with the footer control; it is static on phones. The research content remains focused on agentic learning and LLM decision making.
 
+The VEGAR preview is the unmodified Figure 4, “The framework of propagation layer,” by Renjun Cao, Yong Gao, Yi Zhang, Changjian Liu, and Zhiyang Wang (2026), from [the publisher figure page](https://link.springer.com/article/10.1007/s44443-026-01048-z/figures/4). It is shared under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/); the research entry retains the authors, paper/figure source, and license links. Publication thumbnails open their full-size local images.
+
 ## Deployment
 
 Push to `main`, then set GitHub Pages source to GitHub Actions in the repository settings.
@@ -54,7 +56,7 @@ If `PUBLIC_VISITOR_API_BASE` is not configured, the visitor section is omitted. 
 
 ## Content maintenance
 
-Profile, research, experience, and education live in `src/data/site.ts`. Research is grouped as `agents`, `decisions`, and `spatial`; the last group appears in an expandable bibliography. Keep ongoing work, submissions, revisions, and publications distinct. Venue years on submissions are not publication dates.
+Profile, research, experience, and education live in `src/data/site.ts`. Research is grouped as `agents`, `decisions`, and `spatial`; the last group appears in an expandable bibliography that is open by default. Keep ongoing work, submissions, revisions, and publications distinct. Venue years on submissions are not publication dates.
 
 The September 2026 refresh uses the supplied CV and the Galbot internship update. The CV itself, phone number, and private contact handles are not bundled into the public site. Local review notes and screenshots belong in ignored `reports/` directories.
 
