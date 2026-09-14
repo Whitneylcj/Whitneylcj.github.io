@@ -34,7 +34,8 @@ const {
   bodyClass
 } = Astro.props;
 
-const site = Astro.site ?? new URL("https://whitneylcj.github.io");
+const site = Astro.site;
+if (!site) throw new Error("Set the canonical site URL in astro.config.mjs.");
 const canonicalUrl = new URL(canonicalPath ?? Astro.url.pathname, site).toString();
 const imageUrl = new URL(image, site).toString();
 const usesLogoPreview = image === "/assets/brand/changjian-liu-logo.png";

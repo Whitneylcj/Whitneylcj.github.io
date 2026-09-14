@@ -17,7 +17,7 @@ const notes = (await getCollection("blog")).filter(p => !p.data.draft && p.data.
 const visitorApiBase = import.meta.env.PUBLIC_VISITOR_API_BASE;
 const slug = (id: string) => id.replace(/\.mdx?$/, "");
 const dateLabel = (date: Date) => new Intl.DateTimeFormat("en", {month:"short",year:"numeric",timeZone:"UTC"}).format(date);
-const homepageJsonLd = {"@context":"https://schema.org", "@type":"ProfilePage", name:`${profile.name} Academic Homepage`, description:profile.summary, url:"https://whitneylcj.github.io/", mainEntity:{"@type":"Person", "@id":"https://whitneylcj.github.io/#person",name:profile.name}};
+const homepageJsonLd = {"@context":"https://schema.org", "@type":"ProfilePage", name:`${profile.name} Academic Homepage`, description:profile.summary, url:new URL("/", Astro.site).toString(), mainEntity:{"@type":"Person", "@id":new URL("/#person", Astro.site).toString(),name:profile.name}};
 ---
 <SiteLayout description={profile.summary} canonicalPath="/" jsonLd={homepageJsonLd} bodyClass="research-home">
   <main id="main-content" tabindex="-1">

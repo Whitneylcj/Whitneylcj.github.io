@@ -17,11 +17,11 @@ const collectionJsonLd = {
   "@type": "CollectionPage",
   name: `Blog | ${profile.name}`,
   description: pageDescription,
-  url: "https://whitneylcj.github.io/blog/",
+  url: new URL("/blog/", Astro.site).toString(),
   hasPart: blogEntries.map((entry) => ({
     "@type": "BlogPosting",
     headline: entry.data.title,
-    url: `https://whitneylcj.github.io/blog/${entry.id.replace(/\.mdx?$/, "")}/`,
+    url: new URL(`/blog/${entry.id.replace(/\.mdx?$/, "")}/`, Astro.site).toString(),
     datePublished: entry.data.date.toISOString()
   }))
 };

@@ -4,7 +4,7 @@ import react from "@astrojs/react";
 import sitemap from "@astrojs/sitemap";
 
 export default defineConfig({
-  site: "https://whitneylcj.github.io",
+  site: "https://changjianliu.cn",
   output: "static",
   trailingSlash: "always",
   integrations: [mdx(), react(), sitemap()],

@@ -19,7 +19,7 @@ const { entry } = Astro.props;
 const { Content } = await render(entry);
 const slug = entry.id.replace(/\.mdx?$/, "");
 const canonicalPath = `/news/${slug}/`;
-const canonicalUrl = new URL(canonicalPath, "https://whitneylcj.github.io").toString();
+const canonicalUrl = new URL(canonicalPath, Astro.site).toString();
 const articleJsonLd = {
   "@context": "https://schema.org",
   "@type": "Article",
@@ -29,12 +29,12 @@ const articleJsonLd = {
   dateModified: entry.data.date.toISOString(),
   author: {
     "@type": "Person",
-    "@id": "https://whitneylcj.github.io/#person",
+    "@id": new URL("/#person", Astro.site).toString(),
     name: profile.name
   },
   publisher: {
     "@type": "Person",
-    "@id": "https://whitneylcj.github.io/#person",
+    "@id": new URL("/#person", Astro.site).toString(),
     name: profile.name
   },
   mainEntityOfPage: canonicalUrl,

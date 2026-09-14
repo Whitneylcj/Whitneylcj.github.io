@@ -12,11 +12,11 @@ const collectionJsonLd = {
   "@type": "CollectionPage",
   name: `News | ${profile.name}`,
   description: pageDescription,
-  url: "https://whitneylcj.github.io/news/",
+  url: new URL("/news/", Astro.site).toString(),
   hasPart: newsEntries.map((entry) => ({
     "@type": "Article",
     headline: entry.data.title,
-    url: entry.data.externalUrl ?? `https://whitneylcj.github.io/news/${entry.id.replace(/\.mdx?$/, "")}/`,
+    url: entry.data.externalUrl ?? new URL(`/news/${entry.id.replace(/\.mdx?$/, "")}/`, Astro.site).toString(),
     datePublished: entry.data.date.toISOString()
   }))
 };
