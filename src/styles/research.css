@@ -10,10 +10,6 @@
 .intro-links a { display: inline-flex; align-items: center; min-height: 36px; text-decoration: underline; text-decoration-color: color-mix(in srgb, var(--cyan) 35%, transparent); }
 .intro-aside { padding-top: 4px; }
 .intro-portrait { display: block; width: 196px; height: 224px; object-fit: cover; object-position: center 40%; border-radius: var(--radius); }
-.current-position { padding: 14px 14px 16px; background: var(--bg-elevated); border: 1px solid var(--line); border-top: 0; border-radius: 0 0 6px 6px; color: var(--muted); font-size: var(--text-small); line-height: var(--leading-compact); }
-.current-position strong, .current-position span { display: block; }
-.current-position strong { color: var(--text); font-weight: 500; margin-bottom: 4px; }
-.current-dot { display: none !important; }
 .research-section { border-top: 1px solid var(--line); padding: 40px 0; scroll-margin-top: calc(var(--header-height) - 24px); }
 .section-heading-v2 { display: flex; justify-content: space-between; align-items: baseline; gap: 24px; margin-bottom: 28px; }
 .section-intro > p, .section-heading-v2 p { color: var(--muted); font-size: var(--text-small); margin-top: 8px; }
@@ -109,9 +105,8 @@
 }
 @media (max-width: 640px) {
   .research-hero { grid-template-columns: minmax(0, 1fr); gap: 24px; padding: 30px 0; }
-  .intro-aside { display: flex; align-items: center; gap: 16px; padding: 16px; background: var(--bg-elevated); border-radius: 6px; }
+  .intro-aside { padding: 0; }
   .intro-portrait { width: 72px; height: 100px; flex: 0 0 auto; }
-  .current-position { padding: 0; border: 0; background: none; }
   .research-section { padding: 36px 0; scroll-margin-top: calc(var(--header-height) - 12px); }
   .section-heading-v2 { flex-wrap: wrap; gap: 12px; margin-bottom: 24px; }
   .questions-section { padding-inline: var(--page-gutter); }
@@ -130,8 +125,6 @@
   .research-figure img { height: 144px; }
   .earlier-research summary { flex-wrap: wrap; gap: 8px 12px; }
   .updates-section > div { padding: 18px; }
-  .intro-aside { padding: 12px; }
-  .current-position { font-size: 12px; }
   .research-footer { flex-direction: column; gap: 28px; padding: 36px 0; }
   .footer-aside { text-align: left; }
   .desktop-break { display: none; }
