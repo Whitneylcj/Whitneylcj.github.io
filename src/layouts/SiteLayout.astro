@@ -1,4 +1,5 @@
 ---
+import visitorTracker from "../scripts/visitor-tracker.js?raw";
 import WorldBackdrop from "@components/WorldBackdrop.astro";
 import SiteHeader from "@components/SiteHeader.astro";
 import "../styles/global.css";
@@ -17,6 +18,8 @@ type Props = {
   jsonLd?: Record<string, unknown> | Record<string, unknown>[];
   bodyClass?: string;
 };
+
+const visitorApiBase = import.meta.env.PUBLIC_VISITOR_API_BASE;
 
 const defaultTitle = "Changjian Liu | Agentic RL & LLM Decision Making";
 const siteDescription =
@@ -77,6 +80,7 @@ const jsonLdItems = [...baseJsonLd, ...pageJsonLd];
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    {visitorApiBase && <script is:inline data-api-base={visitorApiBase} set:html={visitorTracker} />}
     <meta name="description" content={description} />
     <meta name="robots" content="index, follow" />
     <meta name="theme-color" content="#ffffff" />

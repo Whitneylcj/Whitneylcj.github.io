@@ -52,7 +52,13 @@ To enable live visitor analytics:
 5. In GitHub repository settings, add an Actions variable:
    `PUBLIC_VISITOR_API_BASE=https://<worker-name>.<subdomain>.workers.dev`
 
-If `PUBLIC_VISITOR_API_BASE` is not configured, the visitor section is omitted. If the configured API is unavailable, the map shows an unavailable state instead of fabricated traffic.
+If `PUBLIC_VISITOR_API_BASE` is configured, a small inline script in the shared page head sends `POST /collect` immediately, including direct visits to blog and news pages. Collection does not wait for scrolling, React, or the map. The map remains `client:visible` and only reads the 30-day summary after any pending collection finishes.
+
+Successful collection is deduplicated with `sessionStorage` (`cj-site-visitor-collected`): reloads and navigation within the same tab session normally count once, not once per page and not as globally unique people. The marker is set only after an HTTP-successful response with `collected: true`. Storage restrictions fall back to once per document; unsuccessful requests can retry on the next page. `keepalive` lets the browser continue an already-started request during navigation, but network failure, blocked JavaScript, and unknown-country responses can still prevent recording.
+
+If `PUBLIC_VISITOR_API_BASE` is not configured, collection and the visitor section are omitted. If the configured API is unavailable, the map shows an unavailable state instead of fabricated traffic.
+
+Run `npm run test:analytics` for the entry-collection, session-deduplication, and failure-handling regression checks.
 
 ## Content maintenance
 

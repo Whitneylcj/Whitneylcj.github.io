@@ -4,6 +4,12 @@ import { feature } from "topojson-client";
 import countries110 from "world-atlas/countries-110m.json";
 import { countryCatalog, type VisitorRegionStat, type VisitorSummary } from "@data/visitorStats";
 
+declare global {
+  interface Window {
+    __cjVisitorCollection?: Promise<void>;
+  }
+}
+
 type ApiCountryStat = {
   countryCode?: string;
   country_code?: string;
@@ -181,17 +187,11 @@ export default function VisitorWorldMap({ fallback, apiBase }: Props) {
     const controller = new AbortController();
     const base = apiBase.replace(/\/$/, "");
 
-    async function collectAndLoad() {
+    async function loadSummary() {
       try {
-        const storageKey = "cj-site-visitor-collected";
-        if (sessionStorage.getItem(storageKey) !== "1") {
-          await fetch(`${base}/collect`, {
-            method: "POST",
-            mode: "cors",
-            signal: controller.signal
-          });
-          sessionStorage.setItem(storageKey, "1");
-        }
+        // Include the current visit when the map is reached immediately.
+        await window.__cjVisitorCollection;
+        if (controller.signal.aborted) return;
 
         const response = await fetch(`${base}/summary?days=30`, {
           mode: "cors",
@@ -208,7 +208,7 @@ export default function VisitorWorldMap({ fallback, apiBase }: Props) {
       }
     }
 
-    void collectAndLoad();
+    void loadSummary();
     return () => controller.abort();
   }, [apiBase, fallback]);
 
