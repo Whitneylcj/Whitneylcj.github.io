@@ -1,3 +1,5 @@
+import type { OrganizationId } from "./organizations";
+
 export type Contact = {
   label: string;
   href: string;
@@ -45,6 +47,7 @@ export type PublicationLink = {
 };
 
 export type Experience = {
+  institution: OrganizationId;
   role: string;
   date: string;
   organization: string;
@@ -328,6 +331,7 @@ export const publications: Publication[] = [
 export const experience: Experience[] = [
   {
     date: "Sep 2026 – Present",
+    institution: "galbot",
     organization: "Galbot",
     role: "Research internship · Embodied intelligence brain",
     summary: "Working on agentic approaches to robot reasoning and task execution, exploring how robots can think through tasks and translate decisions into actions.",
@@ -335,6 +339,7 @@ export const experience: Experience[] = [
   },
   {
     date: "Nov 2025 – Jun 2026",
+    institution: "alibaba",
     organization: "Alibaba · Taotian Group · Alimama",
     role: "LLM Algorithm Intern",
     summary: "Worked on agentic reinforcement learning, self-evolving research agents, and causal decision systems. Projects covered execution-aware credit assignment, experimental attribution, pricing, and constrained multi-channel allocation.",
@@ -342,6 +347,7 @@ export const experience: Experience[] = [
   },
   {
     date: "Jun 2025 – Oct 2025",
+    institution: "didi",
     organization: "Didi · International Business",
     role: "Advertising Algorithm Intern",
     summary: "Developed models for personalized coupon allocation, combining purchase, redemption, and short-term value prediction with uncertainty-aware treatment modeling and budget-constrained optimization.",
@@ -349,9 +355,9 @@ export const experience: Experience[] = [
   }
 ];
 
-export const education = [
-  { date: "2025 – 2028 (expected)", organization: "Peking University", degree: "Master’s in Spatio-Temporal Big Data" },
-  { date: "2021 – 2025", organization: "China University of Geosciences, Beijing", degree: "Bachelor’s in Computer Science and Technology" }
+export const education: { institution: OrganizationId; date: string; organization: string; degree: string }[] = [
+  { institution: "pku", date: "2025 – 2028 (expected)", organization: "Peking University", degree: "Master’s in Spatio-Temporal Big Data" },
+  { institution: "cugb", date: "2021 – 2025", organization: "China University of Geosciences, Beijing", degree: "Bachelor’s in Computer Science and Technology" }
 ];
 
 export const honors: Honor[] = [

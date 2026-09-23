@@ -2,6 +2,9 @@
 import { getCollection } from "astro:content";
 import SiteLayout from "@layouts/SiteLayout.astro";
 import BrandLogo from "@components/BrandLogo.astro";
+import OrganizationLogo from "@components/OrganizationLogo.astro";
+import OrganizationLink from "@components/OrganizationLink.astro";
+import { organizations } from "@data/organizations";
 import ResearchEntry from "@components/ResearchEntry.astro";
 import AgentLoop from "@components/AgentLoop.astro";
 import VisitorWorldMap from "@components/VisitorWorldMap";
@@ -28,10 +31,10 @@ const homepageJsonLd = {"@context":"https://schema.org", "@type":"ProfilePage", 
           <h1 id="intro-title">Changjian Liu</h1>
           <div class="intro-biography">
             <p>
-              Hi! I am Changjian Liu (刘昌健), a master’s student in Spatio-Temporal Big Data at <a href="https://english.pku.edu.cn/" target="_blank" rel="noopener noreferrer">Peking University</a>, where I study at the <a href="https://irsgis.pku.edu.cn/english/index.htm" target="_blank" rel="noopener noreferrer">Institute of Remote Sensing and Geographic Information Systems</a>, under the supervision of <a href="https://irsgis.pku.edu.cn/english/facultystaff/gis/gaoyong/index.htm" target="_blank" rel="noopener noreferrer">Prof. Yong Gao</a>. I am currently a Research Intern at <a href="https://www.galbot.com/" target="_blank" rel="noopener noreferrer">Galbot</a>, working on agentic systems for embodied brains and long-horizon tasks.
+              Hi! I am Changjian Liu (刘昌健), a master’s student in Spatio-Temporal Big Data at <OrganizationLink organization="pku" />, where I study at the <OrganizationLink organization="irsgis" />, under the supervision of <a href="https://irsgis.pku.edu.cn/english/facultystaff/gis/gaoyong/index.htm" target="_blank" rel="noopener noreferrer">Prof. Yong Gao</a>. I am currently a Research Intern at <OrganizationLink organization="galbot" />, working on agentic systems for embodied brains and long-horizon tasks.
             </p>
             <p>
-              Previously, I was an Intern at <a href="https://www.alibabagroup.com/" target="_blank" rel="noopener noreferrer">Alibaba</a> · <a href="https://www.alibabagroup.com/en-US/about-alibaba-businesses" target="_blank" rel="noopener noreferrer">Taobao &amp; Tmall Group</a> · <a href="https://www.alimama.com/" target="_blank" rel="noopener noreferrer">Alimama</a>, where I worked on agentic reinforcement learning, causal decision systems, and large-scale decision optimization, and an Intern at <a href="https://www.didiglobal.com/" target="_blank" rel="noopener noreferrer">DiDi</a>, focusing on advertising algorithms and decision making. I received my B.Eng. in Computer Science and Technology from <a href="https://en.cugb.edu.cn/" target="_blank" rel="noopener noreferrer">China University of Geosciences, Beijing</a>.
+              Previously, I was an Intern at <OrganizationLink organization="alibaba" /> · <OrganizationLink organization="taotian" /> · <OrganizationLink organization="alimama" />, where I worked on agentic reinforcement learning, causal decision systems, and large-scale decision optimization, and an Intern at <OrganizationLink organization="didi" />, focusing on advertising algorithms and decision making. I received my B.Eng. in Computer Science and Technology from <OrganizationLink organization="cugb" />.
             </p>
             <p>
               My research interests lie broadly in agentic reinforcement learning, LLM post-training, and sequential decision making. I am particularly interested in how intelligent agents can learn from interaction, assign credit over long horizons, and reliably translate reasoning into actions in both digital and embodied environments.
@@ -54,8 +57,38 @@ const homepageJsonLd = {"@context":"https://schema.org", "@type":"ProfilePage", 
         <div class="research-group"><h3>Causal decision making</h3><div>{groups.decisions.map(paper => <ResearchEntry paper={paper} />)}</div></div>
         <details class="earlier-research" open><summary><span>Graph learning &amp; GeoAI</span><span class="earlier-count">{groups.spatial.length} works</span><span class="details-icon" aria-hidden="true">+</span></summary><p class="earlier-intro">My earlier work on structured environments, mobility, and generalization.</p>{groups.spatial.map(paper => <ResearchEntry paper={paper} compact />)}</details>
       </section>
-      <section class="research-section experience-section" id="experience" aria-labelledby="experience-title"><div class="section-intro"><h2 id="experience-title">Experience</h2><p>Learning and decision systems in practice.</p></div><div class="experience-list">{experience.map((item, index) => <article class:list={["experience-row", {"experience-current": index === 0}]}><p class="experience-date">{item.date}</p><h3>{item.organization}</h3><p class="experience-role">{item.role}</p><p>{item.summary}</p></article>)}</div></section>
-      <section class="research-section education-section" aria-labelledby="education-title"><div class="section-intro"><h2 id="education-title">Education</h2></div><div>{education.map(item => <article class="education-row"><div><h3>{item.organization}</h3><p>{item.degree}</p></div><span>{item.date}</span></article>)}<details class="honors-details"><summary>Selected honors</summary><ul>{honors.map(honor => <li>{honor.title}</li>)}</ul></details></div></section>
+      <section class="research-section experience-section" id="experience" aria-labelledby="experience-title">
+        <div class="section-intro"><h2 id="experience-title">Experience</h2><p>Learning and decision systems in practice.</p></div>
+        <div class="experience-list">
+          {experience.map((item, index) => (
+            <article class:list={["experience-row", { "experience-current": index === 0 }]}>
+              <OrganizationLogo organization={item.institution} badge />
+              <div class="experience-content">
+                <p class="experience-date">{item.date}</p>
+                <h3><a href={organizations[item.institution].href} target="_blank" rel="noopener noreferrer">{item.organization}</a></h3>
+                <p class="experience-role">{item.role}</p>
+                <p class="experience-summary">{item.summary}</p>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+      <section class="research-section education-section" id="education" aria-labelledby="education-title">
+        <div class="section-intro"><h2 id="education-title">Education</h2></div>
+        <div>
+          {education.map(item => (
+            <article class="education-row">
+              <OrganizationLogo organization={item.institution} badge />
+              <div class="education-content">
+                <h3><a href={organizations[item.institution].href} target="_blank" rel="noopener noreferrer">{item.organization}</a></h3>
+                <p>{item.degree}</p>
+                <p class="education-date">{item.date}</p>
+              </div>
+            </article>
+          ))}
+          <details class="honors-details"><summary>Selected honors</summary><ul>{honors.map(honor => <li>{honor.title}</li>)}</ul></details>
+        </div>
+      </section>
       <section class="research-section updates-section" aria-label="Writing and updates">
         <div id="blog"><div class="section-heading-v2"><h2>Research notes</h2><a class="quiet-link" href="/blog/">All notes</a></div>{notes.map(entry => <article class="note-row"><p class="note-category">{entry.data.category}</p><h3><a href={`/blog/${slug(entry.id)}/`}>{entry.data.title}</a></h3><p>{entry.data.summary}</p></article>)}</div>
         <div id="news"><div class="section-heading-v2"><h2>Updates</h2><a class="quiet-link" href="/news/">All news</a></div>{news.map(entry => <article class="update-row"><time datetime={entry.data.date.toISOString()}>{dateLabel(entry.data.date)}</time><div><h3><a href={entry.data.externalUrl ?? `/news/${slug(entry.id)}/`}>{entry.data.title}</a></h3><p>{entry.data.summary}</p></div></article>)}</div>

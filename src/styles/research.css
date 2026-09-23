@@ -6,6 +6,18 @@
 .intro-biography p + p { margin-top: 14px; }
 .intro-biography a { text-decoration: underline; text-decoration-color: color-mix(in srgb, var(--cyan) 30%, transparent); }
 .intro-biography a:hover { text-decoration-color: currentColor; }
+/* Marks are part of each text link; only the mark and first word stay together. */
+.organization-link-lead { white-space: nowrap; }
+.organization-logo { display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px; padding: 1px; overflow: hidden; background: #fff; border-radius: 3px; vertical-align: -4px; flex: 0 0 auto; }
+.organization-link .organization-logo { margin-right: 5px; }
+.organization-logo > :is(img, svg) { display: block; width: 100%; height: 100%; object-fit: contain; flex: 0 0 auto; }
+.organization-logo--galbot { background: #202733; }
+.organization-logo--taotian { width: 37px; gap: 3px; }
+.organization-logo--taotian > :is(img, svg) { width: 16px; height: 16px; }
+.organization-logo--badge { width: 48px; height: 48px; padding: 6px; border: 1px solid var(--line); border-radius: 10px; }
+.organization-logo--badge.organization-logo--galbot { padding: 3px; }
+.organization-logo--badge.organization-logo--alibaba { padding: 5px; }
+
 .intro-links { display: flex; flex-wrap: wrap; gap: 12px 24px; margin-top: 22px; font-size: var(--text-small); font-weight: 500; }
 .intro-links a { display: inline-flex; align-items: center; min-height: 36px; text-decoration: underline; text-decoration-color: color-mix(in srgb, var(--cyan) 35%, transparent); }
 .intro-aside { padding-top: 4px; }
@@ -58,14 +70,19 @@
 .earlier-research[open] .details-icon { transform: rotate(45deg); }
 .earlier-intro { color: var(--muted); font-size: var(--text-small); padding-bottom: 4px; }
 .experience-section, .education-section { display: grid; grid-template-columns: 180px minmax(0, 1fr); gap: 40px; }
-.experience-current { border-left: 2px solid var(--cyan); padding-left: 18px; }
-.experience-row + .experience-row { border-top: 1px solid var(--line); margin-top: 28px; padding-top: 28px; }
-.experience-date { color: var(--muted); font-size: var(--text-small); margin-bottom: 8px; }
+.experience-row, .education-row { display: grid; grid-template-columns: 48px minmax(0, 1fr); gap: 18px; align-items: start; }
+.experience-row > .organization-logo { margin-top: 27px; }
+.experience-current > .organization-logo { border-color: color-mix(in srgb, var(--cyan) 55%, var(--line)); }
+.experience-content, .education-content { min-width: 0; }
+:is(.experience-content, .education-content) h3 a { color: var(--text); }
+:is(.experience-content, .education-content) h3 a:hover { color: var(--cyan); }
+.experience-row + .experience-row { border-top: 1px solid var(--line); margin-top: 24px; padding-top: 24px; }
+.experience-date { color: var(--muted); font-size: var(--text-small); margin-bottom: 6px; }
 .experience-role { color: var(--cyan); font-size: var(--text-small); margin-top: 4px; }
-.experience-row > p:last-child { color: var(--muted); margin-top: 12px; }
-.education-row { display: flex; justify-content: space-between; align-items: baseline; gap: 24px; padding-bottom: 28px; }
+.experience-summary { color: var(--muted); margin-top: 10px; }
+.education-row { padding-bottom: 24px; }
 .education-row p { color: var(--muted); margin-top: 4px; }
-.education-row > span { color: var(--muted); font-size: var(--text-small); flex: 0 0 120px; text-align: right; }
+.education-date { font-size: var(--text-small); }
 .honors-details { font-size: var(--text-small); color: var(--muted); }
 .honors-details summary { cursor: pointer; color: var(--cyan); }
 .honors-details ul { padding: 16px 0 0 20px; }
@@ -92,8 +109,6 @@
   .intro-portrait { width: 190px; height: 232px; }
   .questions-section { grid-template-columns: 160px minmax(0, 1fr); gap: 28px; }
   .experience-section, .education-section { grid-template-columns: 180px minmax(0, 1fr); gap: 32px; }
-  .education-row { flex-direction: column; gap: 4px; }
-  .education-row > span { flex-basis: auto; text-align: left; }
   .research-figure { width: 160px; flex-basis: 160px; }
   .updates-section { gap: 36px; }
 }
@@ -105,6 +120,8 @@
 }
 @media (max-width: 640px) {
   .research-hero { grid-template-columns: minmax(0, 1fr); gap: 24px; padding: 30px 0; }
+  .experience-row, .education-row { grid-template-columns: 40px minmax(0, 1fr); gap: 12px; }
+  .organization-logo--badge { width: 40px; height: 40px; padding: 5px; border-radius: 8px; }
   .intro-aside { padding: 0; }
   .intro-portrait { width: 72px; height: 100px; flex: 0 0 auto; }
   .research-section { padding: 36px 0; scroll-margin-top: calc(var(--header-height) - 12px); }

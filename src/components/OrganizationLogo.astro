@@ -1,0 +1,19 @@
+---
+import { getOrganization, type OrganizationId } from "@data/organizations";
+
+interface Props {
+  organization: OrganizationId;
+  badge?: boolean;
+}
+const { organization, badge = false } = Astro.props;
+const { images } = getOrganization(organization);
+---
+<span class:list={["organization-logo", `organization-logo--${organization}`, { "organization-logo--badge": badge }]} aria-hidden="true">
+  {images.map(image => image.viewBox ? (
+    <svg viewBox={image.viewBox} width="20" height="20" focusable="false" aria-hidden="true">
+      <image href={`/assets/organizations/${image.src}`} width={image.width} height={image.height} />
+    </svg>
+  ) : (
+    <img src={`/assets/organizations/${image.src}`} alt="" width={image.width} height={image.height} decoding="async" loading={badge ? "lazy" : "eager"} />
+  ))}
+</span>
