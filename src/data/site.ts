@@ -361,6 +361,7 @@ export const education: { institution: OrganizationId; date: string; organizatio
 ];
 
 export const honors: Honor[] = [
+  { title: "Academic Scholarship, Peking University" },
   { title: "National Scholarship" },
   { title: "Xiaomi Scholarship" },
   { title: "National Second Prize, China Undergraduate Mathematical Contest in Modeling" },
