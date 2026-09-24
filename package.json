@@ -11,7 +11,8 @@
     "worker:deploy": "wrangler deploy --config workers/visitor-analytics/wrangler.toml",
     "worker:migrate": "wrangler d1 migrations apply personal-website-visitors --remote --config workers/visitor-analytics/wrangler.toml",
     "worker:migrate:local": "wrangler d1 migrations apply personal-website-visitors --local --config workers/visitor-analytics/wrangler.toml",
-    "test:analytics": "node --test tests/visitor-tracker.test.mjs"
+    "test:analytics": "node --test tests/visitor-tracker.test.mjs",
+    "test:visitor-map": "node --test tests/visitor-map.test.mjs"
   },
   "dependencies": {
     "@astrojs/mdx": "^6.0.3",

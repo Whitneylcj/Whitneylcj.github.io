@@ -58,7 +58,9 @@ Successful collection is deduplicated with `sessionStorage` (`cj-site-visitor-co
 
 If `PUBLIC_VISITOR_API_BASE` is not configured, collection and the visitor section are omitted. If the configured API is unavailable, the map shows an unavailable state instead of fabricated traffic.
 
-Run `npm run test:analytics` for the entry-collection, session-deduplication, and failure-handling regression checks.
+Run `npm run test:analytics` for the entry-collection, session-deduplication, and failure-handling regression checks. Run `npm run test:visitor-map` (Node 22.18+ or 24+) for geographic coverage, normalization, and color-scale regression checks.
+
+The map uses fixed blue bands (1, 2–4, 5–9, 10–19, 20+ visits), neutral gray for no recorded visits, and representative country markers so small countries omitted by the low-resolution geometry remain visible. All reported country totals remain in the list. Country names, ISO numeric codes, and reference coordinates cover 250 countries/territories, derived from [mledoze/countries](https://github.com/mledoze/countries) under ODbL 1.0; see `licenses/countries-source.md` for the pinned revision, transformation, and license. No geography is fetched at runtime.
 
 ## Content maintenance
 
