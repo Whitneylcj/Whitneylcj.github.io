@@ -159,13 +159,13 @@ export const publications: Publication[] = [
     year: "2026",
     title:
       "Learning Deployable Causal Action Geometry under Temporal Non-Stationarity",
-    venue: "Submitted to NeurIPS 2026",
+    venue: "NeurIPS 2026 · Accepted",
     role: "First author",
     summary:
       "A causal response learning framework for continuous decisions under temporal drift, using anchored link-scale contrasts, orthogonal pilots, and profiled morphology selection to learn deployable action geometry.",
     figure: "/assets/publications/deployable-action-geometry.png",
     figureAlt:
-      "Figure 1 from the NeurIPS submission, illustrating target mismatch under temporal drift and pooled action-response learning.",
+      "Figure 1 from the paper accepted at NeurIPS 2026, illustrating target mismatch under temporal drift and pooled action-response learning.",
     featured: true,
     keywords: ["causal action geometry", "temporal non-stationarity", "orthogonal learning"]
   },
