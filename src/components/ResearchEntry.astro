@@ -14,6 +14,6 @@ const links = paper.links?.filter(link => link.href) ?? [];
     {paper.authors && <p class="research-authors">{paper.authors.split("Changjian Liu").map((part, index) => <>{index > 0 && <strong>Changjian Liu</strong>}{part}</>)}</p>}
     <div class="research-entry-status"><span>{paper.venue}{paper.group === "spatial" && /^\d{4}$/.test(paper.year) && !/submitted/i.test(paper.venue) ? ` (${paper.year})` : ""}</span><span>{paper.role}</span></div>
     <p class="research-description">{paper.summary}</p>
-    {links.length > 0 && <div class="research-links">{links.map(link => <a href={link.href} target={link.external ? "_blank" : undefined} rel={link.external ? "noopener noreferrer" : undefined}>{link.label === "pdf" ? "PDF" : link.label === "webpage" ? "Paper" : link.label === "scholar" ? "Scholar" : link.label}</a>)}</div>}
+    {links.length > 0 && <div class="research-links">{links.map(link => <a class:list={{ "research-link-button": link.variant === "button" }} href={link.href} target={link.external ? "_blank" : undefined} rel={link.external ? "noopener noreferrer" : undefined}>{link.label === "pdf" ? "PDF" : link.label === "webpage" ? "Paper" : link.label === "scholar" ? "Scholar" : link.label}</a>)}</div>}
   </div>
 </article>

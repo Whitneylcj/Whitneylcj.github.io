@@ -5,3 +5,9 @@ dist/
 .idea/
 **/.wrangler/
 npm-debug.log*
+apps/cag-explorable/node_modules/
+apps/cag-explorable/dist/
+apps/cag-explorable/test-results/
+apps/cag-explorable/playwright-report/
+apps/cag-explorable/screenshots/
+public/experiments/cag/

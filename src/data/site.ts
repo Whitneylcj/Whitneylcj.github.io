@@ -44,6 +44,7 @@ export type PublicationLink = {
   label: string;
   href?: string;
   external?: boolean;
+  variant?: "button";
 };
 
 export type Experience = {
@@ -167,7 +168,8 @@ export const publications: Publication[] = [
     figureAlt:
       "Figure 1 from the paper accepted at NeurIPS 2026, illustrating target mismatch under temporal drift and pooled action-response learning.",
     featured: true,
-    keywords: ["causal action geometry", "temporal non-stationarity", "orthogonal learning"]
+    keywords: ["causal action geometry", "temporal non-stationarity", "orthogonal learning"],
+    links: [{ label: "Interactive demo", href: "/experiments/cag/", variant: "button" }]
   },
   {
     group: "spatial",

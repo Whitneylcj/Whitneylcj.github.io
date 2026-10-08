@@ -1,0 +1,74 @@
+.story-tabs { gap: 24px; overflow-x: auto; scrollbar-width: thin; }
+.story-tabs button { flex-shrink: 0; white-space: nowrap; }
+.geometry-controls, .future-controls { border-top: 1px solid var(--border); padding-top: 17px; }
+.preset-select { display: flex; flex-direction: column; gap: 7px; font-size: 12px; margin-bottom: 18px; }
+.preset-select select { padding: 8px; max-width: 100%; font-size: 12px; }
+.control-group { margin: 18px 0; }
+.control-label { display: block; margin-bottom: 8px; font-size: 11px; color: var(--muted); }
+.segmented { display: flex; gap: 6px; }
+.segmented button { flex: 1; border: 1px solid var(--border); border-radius: 4px; background: transparent; font-size: 11px; padding: 7px 8px; }
+.segmented button[aria-pressed='true'], .phase-controls button[aria-pressed='true'] { color: var(--blue); background: #eef3f9; border-color: #9bb4d4; }
+.phase-controls { display: flex; flex-direction: column; gap: 5px; }
+.phase-controls button { text-align: left; display: flex; align-items: center; gap: 9px; border: 1px solid var(--border); border-radius: 4px; background: transparent; padding: 7px 8px; font-size: 11px; }
+.phase-controls button > span { font-size: 10px; color: var(--muted); }
+.loss-comparison { border-top: 1px solid var(--border); padding: 16px 0 4px; }
+.loss-comparison table { width: 100%; border-collapse: collapse; font-size: 11px; margin-top: 12px; }
+.loss-comparison th { font-weight: 400; font-size: 10px; color: var(--muted); }
+.loss-comparison th, .loss-comparison td { padding: 6px 0; text-align: left; }
+.loss-comparison th:last-child, .loss-comparison td:last-child { text-align: right; }
+.loss-comparison tbody td { border-top: 1px solid #e5eaf0; }
+.loss-comparison output { font-variant-numeric: tabular-nums; }
+.selection-line, .geometry-action-line { display: flex; justify-content: space-between; gap: 8px; font-size: 11px; margin: 8px 0; }
+.selection-line strong { color: var(--blue); font-weight: 600; }
+.geometry-action-line output { color: var(--blue); }
+.anchor-control { margin: 14px 0 8px; }
+.anchor-control label { display: flex; justify-content: space-between; font-size: 11px; margin-top: 14px; }
+.anchor-summary { display: block; font-family: Georgia,serif; font-size: 12px; margin: 6px 0 16px; color: var(--muted); }
+.anchor-summary output { font-family: inherit; }
+.geometry-explanation { border-left: 1px solid var(--border); padding-left: 30px; font-size: 12px; color: var(--muted); }
+.geometry-explanation p { margin: 12px 0; }
+.geometry-equation { font-family: Georgia,serif; font-size: 18px; color: #26364a; line-height: 1.8; }
+.geometry-explanation details { margin-top: 18px; }
+.future-cases { margin-bottom: 22px; }
+.reveal-button { width: 100%; color: #fafbfc; background: var(--blue); border: 1px solid var(--blue); border-radius: 4px; padding: 10px; font-size: 12px; margin: 4px 0 8px; }
+.frozen-decision { border-top: 1px solid var(--border); margin-top: 18px; padding-top: 16px; font-size: 11px; }
+.frozen-decision > span { font-weight: 600; }
+.frozen-decision dl { margin: 10px 0 14px; }
+.frozen-decision dl > div, .future-readout dl > div { display: flex; gap: 12px; justify-content: space-between; margin: 6px 0; }
+.frozen-decision dd, .future-readout dd { margin: 0; text-align: right; font-variant-numeric: tabular-nums; }
+.future-decision-metrics { margin-top: 16px; }
+.future-readout { border-top: 1px solid var(--border); margin-top: 18px; padding-top: 14px; }
+.truth-diagnostic { font-size: 10px; color: #806019; margin: 0 0 12px; }
+.future-readout dl { font-size: 11px; margin: 8px 0; }
+.future-readout dt { color: var(--muted); }
+.future-readout dd { color: #26364a; }
+.structural-bound { border-top: 1px solid var(--border); padding-top: 14px; margin-top: 16px; font-size: 11px; }
+.structural-bound p { font-size: 10px; }
+.unrevealed-note, .branch-note, .audit-status { font-size: 11px; color: var(--muted); margin: 18px 0; line-height: 1.6; }
+.branch-note { border-left: 2px solid #b08728; padding-left: 10px; }
+.presentation-note { font-size: 10px; color: var(--muted); }
+.future-chart-section { border-top: 1px solid var(--border); padding-top: 20px; margin-top: 20px; }
+.estimator-disclosure ol { padding-left: 20px; }
+.estimator-disclosure li { margin: 10px 0; }
+@media (max-width: 1100px) {
+  .story-tabs { gap: 18px; }
+  .story-tabs button { font-size: 12px; }
+}
+@media (max-width: 760px) {
+  .story-tabs { gap: 17px; }
+  .geometry-controls .control-note, .future-controls .control-note { font-size: 11px; }
+  .geometry-explanation { border-left: 0; border-top: 1px solid var(--border); padding: 20px 0 0; }
+  .phase-controls { gap: 7px; }
+  .phase-controls button { min-height: 35px; }
+  .loss-comparison table, .selection-line, .geometry-action-line { font-size: 12px; }
+  .future-readout dl { font-size: 12px; }
+  .structural-bound p { font-size: 11px; }
+  .presentation-note { width: 100%; }
+}
+
+/* The narrative spans both rows; linked plots sit directly under the stage.
+   On mobile the existing flex order places stage, controls, then linked plots. */
+.p2-layout .narrative { grid-column: 1; grid-row: 1 / span 2; }
+.p2-layout .stage-shell { grid-column: 2; grid-row: 1; }
+.p2-linked-panel { grid-column: 2; grid-row: 2; min-width: 0; border-top: 1px solid var(--border); padding-top: 18px; }
+.p2-linked-panel .geometry-explanation { border-left: 0; border-top: 1px solid var(--border); padding: 18px 0 0; margin-top: 18px; }

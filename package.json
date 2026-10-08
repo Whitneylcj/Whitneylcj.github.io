@@ -4,8 +4,10 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "predev": "node tools/build-cag.mjs",
     "dev": "ASTRO_TELEMETRY_DISABLED=1 astro dev",
-    "build": "ASTRO_TELEMETRY_DISABLED=1 astro build",
+    "build:cag": "node tools/build-cag.mjs",
+    "build": "node tools/build-cag.mjs && ASTRO_TELEMETRY_DISABLED=1 astro build",
     "preview": "ASTRO_TELEMETRY_DISABLED=1 astro preview",
     "worker:dev": "wrangler dev --config workers/visitor-analytics/wrangler.toml",
     "worker:deploy": "wrangler deploy --config workers/visitor-analytics/wrangler.toml",

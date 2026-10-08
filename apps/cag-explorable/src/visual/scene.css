@@ -1,0 +1,22 @@
+.scene3d { width: 100%; height: 100%; min-height: 400px; position: relative; }
+.scene3d canvas { display: block; }
+.scene3d.is-interactive canvas { cursor: grab; touch-action: none; }
+.scene3d.is-interactive canvas:active { cursor: grabbing; }
+.scene3d.is-static canvas { touch-action: pan-y; }
+.scene-tag { font-family: inherit; color: #526772; font-size: 11px; line-height: 1.25; }
+.scene-axis { font-size: 12px; font-weight: 500; color: #40535c; }
+.scene-period { font-size: 11px; color: #5b7080; }
+.scene-optimum { font-size: 10px; background: rgb(250 251 250 / 90%); padding: 3px 5px; border-radius: 3px; }
+.scene-true-label { color: #876120; }
+.scene-pooled-label { color: #a83525; }
+.scene-cursor-label { color: #285b93; font-size: 10px; background: rgb(250 251 250 / 90%); padding: 3px 5px; }
+.scene-footnote { position: absolute; left: 12px; bottom: 10px; display: flex; align-items: center; gap: 6px; font-size: 11px; color: #526772; pointer-events: none; }
+.scene-density-symbol { width: 20px; height: 6px; display: inline-block; background: linear-gradient(90deg, #edf0f1, #748da6, #edf0f1); }
+.scene-unavailable { height: 100%; min-height: 350px; display: grid; place-content: center; padding: 40px; color: #5b7080; text-align: center; }
+@media (max-width: 700px) {
+  .scene3d { min-height: 340px; }
+  .scene-tag { font-size: 10px; }
+  .scene-axis { font-size: 10px; }
+  .scene-optimum { font-size: 10px; }
+  .scene-footnote { left: 8px; font-size: 10px; bottom: 8px; }
+}

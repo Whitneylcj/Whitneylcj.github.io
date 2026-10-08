@@ -1,0 +1,271 @@
+{
+  "kind": "illustrative-not-paper-results",
+  "version": 1,
+  "presets": {
+    "additive_default": {
+      "config": {
+        "mode": "additive",
+        "baseline_drift": 1.0,
+        "logging_drift": 1.0,
+        "amplitude_drift": 0.0,
+        "anchor": 0.5,
+        "peak": 0.68,
+        "exploration": 0.08,
+        "logging_width": 0.13,
+        "grid_size": 401,
+        "periods": 7
+      },
+      "pooled_action": 0.2175,
+      "identity_loss": 2.1703185817081363e-31,
+      "log_loss": 0.0002573687805164351,
+      "identity_action": 0.68,
+      "log_action": 0.68,
+      "selected_link": "identity",
+      "link_tie": false,
+      "future_audits": [
+        {
+          "shock": 0.0,
+          "oracle_action": 0.68,
+          "geometry_action": 0.68,
+          "pooled_action": 0.2175,
+          "geometry_raw_regret": 0.0,
+          "pooled_raw_regret": 0.7700625000000008,
+          "geometry_linked_regret": 0.0,
+          "twice_true_sup_residual": 1.7763568394002505e-15
+        },
+        {
+          "shock": 1.2,
+          "oracle_action": 0.5125,
+          "geometry_action": 0.68,
+          "pooled_action": 0.2175,
+          "geometry_raw_regret": 0.09999749999999974,
+          "pooled_raw_regret": 0.3150599999999999,
+          "geometry_linked_regret": 0.09999749999999974,
+          "twice_true_sup_residual": 1.4163056283193298
+        },
+        {
+          "shock": 2.4,
+          "oracle_action": 0.3475,
+          "geometry_action": 0.68,
+          "pooled_action": 0.2175,
+          "geometry_raw_regret": 0.39999749999999956,
+          "pooled_raw_regret": 0.06006,
+          "geometry_linked_regret": 0.39999749999999956,
+          "twice_true_sup_residual": 2.8326112566386614
+        }
+      ]
+    },
+    "no_baseline_drift": {
+      "config": {
+        "mode": "additive",
+        "baseline_drift": 0,
+        "logging_drift": 1.0,
+        "amplitude_drift": 0.0,
+        "anchor": 0.5,
+        "peak": 0.68,
+        "exploration": 0.08,
+        "logging_width": 0.13,
+        "grid_size": 401,
+        "periods": 7
+      },
+      "pooled_action": 0.68,
+      "identity_loss": 1.2711675227374357e-32,
+      "log_loss": 1.159375256243716e-32,
+      "identity_action": 0.68,
+      "log_action": 0.68,
+      "selected_link": "identity",
+      "link_tie": true,
+      "future_audits": [
+        {
+          "shock": 0.0,
+          "oracle_action": 0.68,
+          "geometry_action": 0.68,
+          "pooled_action": 0.68,
+          "geometry_raw_regret": 0.0,
+          "pooled_raw_regret": 0.0,
+          "geometry_linked_regret": 0.0,
+          "twice_true_sup_residual": 1.7763568394002505e-15
+        },
+        {
+          "shock": 1.2,
+          "oracle_action": 0.5125,
+          "geometry_action": 0.68,
+          "pooled_action": 0.68,
+          "geometry_raw_regret": 0.09999749999999974,
+          "pooled_raw_regret": 0.09999749999999974,
+          "geometry_linked_regret": 0.09999749999999974,
+          "twice_true_sup_residual": 1.4163056283193303
+        },
+        {
+          "shock": 2.4,
+          "oracle_action": 0.3475,
+          "geometry_action": 0.68,
+          "pooled_action": 0.68,
+          "geometry_raw_regret": 0.39999749999999956,
+          "pooled_raw_regret": 0.39999749999999956,
+          "geometry_linked_regret": 0.39999749999999956,
+          "twice_true_sup_residual": 2.832611256638662
+        }
+      ]
+    },
+    "no_logging_drift": {
+      "config": {
+        "mode": "additive",
+        "baseline_drift": 1.0,
+        "logging_drift": 0,
+        "amplitude_drift": 0.0,
+        "anchor": 0.5,
+        "peak": 0.68,
+        "exploration": 0.08,
+        "logging_width": 0.13,
+        "grid_size": 401,
+        "periods": 7
+      },
+      "pooled_action": 0.68,
+      "identity_loss": 2.1703185817081363e-31,
+      "log_loss": 0.0002573687805164351,
+      "identity_action": 0.68,
+      "log_action": 0.68,
+      "selected_link": "identity",
+      "link_tie": false,
+      "future_audits": [
+        {
+          "shock": 0.0,
+          "oracle_action": 0.68,
+          "geometry_action": 0.68,
+          "pooled_action": 0.68,
+          "geometry_raw_regret": 0.0,
+          "pooled_raw_regret": 0.0,
+          "geometry_linked_regret": 0.0,
+          "twice_true_sup_residual": 1.7763568394002505e-15
+        },
+        {
+          "shock": 1.2,
+          "oracle_action": 0.5125,
+          "geometry_action": 0.68,
+          "pooled_action": 0.68,
+          "geometry_raw_regret": 0.09999749999999974,
+          "pooled_raw_regret": 0.09999749999999974,
+          "geometry_linked_regret": 0.09999749999999974,
+          "twice_true_sup_residual": 1.4163056283193298
+        },
+        {
+          "shock": 2.4,
+          "oracle_action": 0.3475,
+          "geometry_action": 0.68,
+          "pooled_action": 0.68,
+          "geometry_raw_regret": 0.39999749999999956,
+          "pooled_raw_regret": 0.39999749999999956,
+          "geometry_linked_regret": 0.39999749999999956,
+          "twice_true_sup_residual": 2.8326112566386614
+        }
+      ]
+    },
+    "log_with_amplitude_drift": {
+      "config": {
+        "mode": "log",
+        "baseline_drift": 1.0,
+        "logging_drift": 1.0,
+        "amplitude_drift": 0.45,
+        "anchor": 0.5,
+        "peak": 0.68,
+        "exploration": 0.08,
+        "logging_width": 0.13,
+        "grid_size": 401,
+        "periods": 7
+      },
+      "pooled_action": 0.49,
+      "identity_loss": 0.0023131683418050088,
+      "log_loss": 3.6614125599728996e-32,
+      "identity_action": 0.68,
+      "log_action": 0.68,
+      "selected_link": "log",
+      "link_tie": false,
+      "future_audits": [
+        {
+          "shock": 0.0,
+          "oracle_action": 0.68,
+          "geometry_action": 0.68,
+          "pooled_action": 0.49,
+          "geometry_raw_regret": 0.0,
+          "pooled_raw_regret": 0.3722591848665653,
+          "geometry_linked_regret": 0.0,
+          "twice_true_sup_residual": 8.881784197001252e-16
+        },
+        {
+          "shock": 1.2,
+          "oracle_action": 0.5125,
+          "geometry_action": 0.68,
+          "pooled_action": 0.49,
+          "geometry_raw_regret": 0.2588375246231598,
+          "pooled_raw_regret": 0.005319222034487314,
+          "geometry_linked_regret": 0.09999750000000007,
+          "twice_true_sup_residual": 1.4163056283193307
+        },
+        {
+          "shock": 2.4,
+          "oracle_action": 0.3475,
+          "geometry_action": 0.68,
+          "pooled_action": 0.49,
+          "geometry_raw_regret": 0.9753094100167925,
+          "pooled_raw_regret": 0.21089855759215803,
+          "geometry_linked_regret": 0.3999975,
+          "twice_true_sup_residual": 2.8326112566386614
+        }
+      ]
+    },
+    "pure_multiplicative_tie": {
+      "config": {
+        "mode": "log",
+        "baseline_drift": 1.0,
+        "logging_drift": 1.0,
+        "amplitude_drift": 0,
+        "anchor": 0.5,
+        "peak": 0.68,
+        "exploration": 0.08,
+        "logging_width": 0.13,
+        "grid_size": 401,
+        "periods": 7
+      },
+      "pooled_action": 0.48,
+      "identity_loss": 5.17396979400823e-32,
+      "log_loss": 2.0831775826707963e-32,
+      "identity_action": 0.68,
+      "log_action": 0.68,
+      "selected_link": "identity",
+      "link_tie": true,
+      "future_audits": [
+        {
+          "shock": 0.0,
+          "oracle_action": 0.68,
+          "geometry_action": 0.68,
+          "pooled_action": 0.48,
+          "geometry_raw_regret": 0.0,
+          "pooled_raw_regret": 0.40965574076803746,
+          "geometry_linked_regret": 0.0,
+          "twice_true_sup_residual": 0.08635371410242865
+        },
+        {
+          "shock": 1.2,
+          "oracle_action": 0.5125,
+          "geometry_action": 0.68,
+          "pooled_action": 0.48,
+          "geometry_raw_regret": 0.2588375246231598,
+          "pooled_raw_regret": 0.010851557103788156,
+          "geometry_linked_regret": 0.2588375246231598,
+          "twice_true_sup_residual": 2.29470313254999
+        },
+        {
+          "shock": 2.4,
+          "oracle_action": 0.3475,
+          "geometry_action": 0.68,
+          "pooled_action": 0.48,
+          "geometry_raw_regret": 0.9753094100167925,
+          "pooled_raw_regret": 0.1833970395414446,
+          "geometry_linked_regret": 0.9753094100167925,
+          "twice_true_sup_residual": 3.9904879712801957
+        }
+      ]
+    }
+  }
+}

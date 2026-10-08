@@ -1,0 +1,32 @@
+.p2-chart .p2-chart-svg { width: 100%; display: block; margin-top: 9px; cursor: crosshair; touch-action: pan-y; }
+.p2-chart .p2-chart-svg text { font-family: inherit; font-size: 14px; fill: #536478; }
+.p2-chart .p2-chart-svg .axis-title { font-size: 14px; font-weight: 500; fill: #44576d; }
+.p2-chart .p2-chart-svg .p2-reference-label { fill: #536478; font-size: 13px; stroke: #fafbfc; stroke-width: 5px; stroke-linejoin: round; paint-order: stroke fill; }
+.p2-chart-note { margin: 12px 0 0; color: #536478; font-size: 12px; line-height: 1.55; max-width: 68ch; }
+.p2-chart-legend { margin-top: 5px; }
+.p2-legend-line { width: 21px; height: 0; display: inline-block; border-top: 2px solid #295ead; }
+.p2-legend-line.reference { border-color: #8c969f; border-top-style: dotted; }
+.p2-legend-line.known { border-color: #55708d; border-top-width: 1px; }
+.p2-legend-line.fitted { border-top-width: 3px; }
+.p2-legend-line.assumed { border-top-style: dashed; }
+.p2-legend-line.revealed { border-color: #b08728; }
+.p2-dot-key { width: 8px; height: 8px; display: inline-block; border-radius: 50%; background: #295ead; }
+.stage-scene-key { position: absolute; top: 12px; right: 13px; left: 13px; display: flex; flex-wrap: wrap; gap: 8px 16px; pointer-events: none; color: #526772; font-size: 11px; }
+.stage-scene-key > span { display: inline-flex; align-items: center; gap: 6px; }
+.stage-scale-caption { position: absolute; top: 31px; left: 13px; pointer-events: none; font-size: 11px; color: #40535c; }
+.stage-key-line { width: 20px; height: 0; display: inline-block; border-top: 2px solid #7190ae; }
+.stage-key-line.assumed { border-color: #7e8892; border-top-style: dashed; }
+.stage-key-line.revealed { border-color: #b08728; }
+.stage-anchor-label { color: #526772; font-size: 11px; background: rgb(250 251 250 / 95%); padding: 2px 4px; }
+.stage-scene-footnote { max-width: calc(100% - 24px); line-height: 1.45; }
+.slice-panel svg[data-testid='curve-slice'] text, .slice-panel svg[data-testid='curve-slice'] .axis-title { font-size: 14px; fill: #536478; }
+.mixture-panel svg text { font-size: 13px; fill: #536478; }
+.mixture-panel svg .mixture-period-number { font-size: 15px; font-weight: 600; fill: #26364a; }
+@media (max-width: 700px) {
+  .p2-chart .p2-chart-svg text, .p2-chart .p2-chart-svg .axis-title, .slice-panel svg[data-testid='curve-slice'] text, .slice-panel svg[data-testid='curve-slice'] .axis-title { font-size: 22px; }
+  .p2-chart .p2-chart-svg .p2-reference-label { font-size: 20px; }
+  .p2-chart-note { font-size: 11px; }
+  .stage-scene-key { top: 9px; left: 9px; right: 9px; font-size: 10px; gap: 7px 12px; }
+  .stage-scale-caption { top: 33px; left: 9px; font-size: 10px; }
+  .stage-anchor-label { font-size: 10px; }
+}

@@ -6,6 +6,7 @@ Academic homepage for `Whitneylcj.github.io`, focused on Agentic RL, LLM decisio
 
 ```bash
 npm install
+pnpm --dir apps/cag-explorable install --frozen-lockfile
 npm run dev
 npm run build
 npm run preview
@@ -14,6 +15,15 @@ npm run worker:migrate:local
 npm run worker:migrate
 npm run worker:deploy
 ```
+
+Use Node 24 and pnpm 11.25.0 for the standalone experiment. `npm run dev` and
+`npm run build` first build CAG with `/experiments/cag/` as its URL base, then
+serve/build the homepage. The NeurIPS publication's **Interactive demo** button
+opens this same-origin static page. The experiment retains its own pinned
+dependency graph; no experiment dependencies are added to the homepage package.
+Its generated `public/experiments/cag/` files are not committed.
+Homepage dev serves the built experiment; after changing CAG source, rerun
+`npm run build:cag` or use the app's standalone Vite dev server.
 
 ## Structure
 
@@ -30,6 +40,8 @@ npm run worker:deploy
 - `src/styles/research.css` - current homepage design and shared visual tokens
 - `src/components/` - research presentation and optional React visitor map
 - `public/assets/earth/` - Earth visual assets for the homepage hero
+- `apps/cag-explorable/` - independent CAG source, model tests and locked dependencies
+- `tools/build-cag.mjs` - experiment build and static publication to `/experiments/cag/`
 - `workers/visitor-analytics/` - Cloudflare Workers + D1 visitor analytics API
 - `.github/workflows/deploy.yml` - GitHub Pages deployment workflow
 
@@ -42,6 +54,9 @@ The VEGAR preview is the unmodified Figure 4, “The framework of propagation la
 ## Deployment
 
 Push to `main`, then set GitHub Pages source to GitHub Actions in the repository settings.
+
+The existing workflow verifies the CAG app, then uploads the combined Astro
+artifact. There is one Pages deployment for the homepage and experiment.
 
 To enable live visitor analytics:
 

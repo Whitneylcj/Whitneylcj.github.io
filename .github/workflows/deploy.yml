@@ -23,6 +23,18 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v6
 
+      - name: Set up CAG build runtime
+        uses: actions/setup-node@v7
+        with:
+          node-version: '24.19.0'
+
+      - name: Install and verify the standalone CAG experiment
+        run: |
+          npm install --global pnpm@11.25.0
+          pnpm --dir apps/cag-explorable install --frozen-lockfile
+          pnpm --dir apps/cag-explorable typecheck
+          pnpm --dir apps/cag-explorable test
+
       - name: Install, build, and upload site
         uses: withastro/action@v6
         with:
